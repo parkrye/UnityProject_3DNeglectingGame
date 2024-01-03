@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerActionHandler : MonoBehaviour
+public class EnemyActionHandler : MonoBehaviour
 {
     private BTBranch _root;
 

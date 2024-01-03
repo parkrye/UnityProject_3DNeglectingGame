@@ -2,6 +2,7 @@ using System.Collections.Generic;
 
 public enum BranchType
 {
+    BOTH,
     AND,
     OR,
 }
@@ -20,6 +21,12 @@ public class BTBranch : BTAction
     {
         switch (_branchType)
         {
+            case BranchType.BOTH:
+                foreach (var action in _actions)
+                {
+                    action.Work();
+                }
+                return true;
             case BranchType.AND:
                 foreach (var action in _actions)
                 {
