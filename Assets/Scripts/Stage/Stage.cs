@@ -28,7 +28,7 @@ public class Stage : MonoBehaviour
     public StageState _state;
     
     private Dictionary<int, Actor> _playerParty = new Dictionary<int, Actor>();
-    private ObjectPool<Actor> _enemyPool;
+    private Pool _actorPool = new Pool();
 
     private void Awake()
     {
@@ -39,47 +39,10 @@ public class Stage : MonoBehaviour
         _actorParent = GameObject.Find("Actors").transform;
 
         _state = StageState.Ready;
-
-        _enemyPool = new ObjectPool<Actor>(
-            createFunc: CreateFunc,
-            actionOnGet: OnGetActor,
-            actionOnRelease: OnReleaseActor,
-            actionOnDestroy: OnDestroyActor);
     }
 
-    public void SpawnActor(Actor actor, ActorType actorType, Vector3 spawnPosition)
+    public void SpawnActor(Actor actor, Vector3 spawnPosition, Quaternion rotation)
     {
-        switch(actorType)
-        {
-            case ActorType.PC:
-                break;
-            case ActorType.NPC:
-                break;
-            case ActorType.Enemy:
-                break;
-            case ActorType.Boss:
-                break;
-        }
-    }
-
-    private Actor CreateFunc()
-    {
-        var actorObject = new Actor();
-        return actorObject;
-    }
-
-    private void OnGetActor(Actor actor)
-    {
-
-    }
-
-    private void OnReleaseActor(Actor actor)
-    {
-
-    }
-
-    private void OnDestroyActor(Actor actor)
-    {
-
+        _actorPool.Get(actor, spawnPosition, rotation, _actorParent);
     }
 }
