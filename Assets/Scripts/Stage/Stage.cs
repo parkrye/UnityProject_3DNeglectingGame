@@ -51,8 +51,6 @@ public class Stage : MonoBehaviour
             .Where(t => t.Equals(enemySpawnPositionParent) == false)
             .ToArray();
 
-        _state = StageState.Battle;
-
         EnemySpawnRoutine().Forget();
 
         var navMeshSurfece = GetComponentInChildren<NavMeshSurface>();
@@ -61,16 +59,21 @@ public class Stage : MonoBehaviour
 
     public void SpawnPlayer(PlayerActor actor)
     {
-        SpawnActor(actor, _startPosition, Quaternion.identity);
+        var player = _actorPool.Get(actor, _startPosition, Quaternion.identity, _actorParent);
 
-        _playerActor = actor;
-        _actorCamera.m_Follow = actor.transform;
-        _actorCamera.m_LookAt = actor.transform;
+        if(player == null)
+        {
+            Debug.LogError("Player Actor is Null!");
+            return;
+        }
+        _playerActor = player;
+        _actorCamera.Follow = _playerActor.transform;
+        _actorCamera.LookAt = _playerActor.transform;
     }
 
     private void SpawnActor(Actor actor, Vector3 spawnPosition, Quaternion rotation)
     {
-        if (_state != StageState.Battle)
+        if (_state == StageState.Dead || _state == StageState.Clear)
             return;
 
         _actorPool.Get(actor, spawnPosition, rotation, _actorParent);
@@ -89,21 +92,19 @@ public class Stage : MonoBehaviour
 
         while (_state == StageState.Battle)
         {
-            var enemyIndex = Random.Range(0, _enemyPathList.Count + 1);
-            var enemyPosition = Random.Range(0, _enemySpawnPositionArray.Length + 1);
+            var enemyIndex = Random.Range(0, _enemyPathList.Count);
+            var enemyPosition = Random.Range(0, _enemySpawnPositionArray.Length);
             if(enemyCount < _emenySpawnCount)
             {
-                try
-                {
-                    SpawnActor(_enemyPathList[enemyIndex], _enemySpawnPositionArray[enemyPosition], Quaternion.identity);
-                    enemyCount++;
-                }
-                catch
-                {
-
-                }
+                SpawnActor(_enemyPathList[enemyIndex], _enemySpawnPositionArray[enemyPosition], Quaternion.identity);
+                enemyCount++;
             }
             await UniTask.Delay(_enemySpawnDelay);
         }
+    }
+
+    public void EndSetting()
+    {
+        _state = StageState.Battle;
     }
 }

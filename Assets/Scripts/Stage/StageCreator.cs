@@ -34,6 +34,7 @@ public class StageCreator : MonoBehaviour
             }
         }
 
+        stage.EndSetting();
         Destroy(gameObject);
     }
 }
