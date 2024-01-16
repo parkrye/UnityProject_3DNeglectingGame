@@ -35,7 +35,7 @@ public class Pool
             obj.transform.parent = parent;
             obj.transform.position = position;
             obj.transform.rotation = rotation;
-            return obj as T;
+            return obj.GetComponent<T>();
         }
     }
 
