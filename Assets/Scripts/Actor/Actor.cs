@@ -19,6 +19,6 @@ public enum ActorState
 
 public class Actor : MonoBehaviour
 {
-    protected ActorType type;
-    protected ActorState state;
+    protected ActorType _type;
+    protected ActorState _state;
 }

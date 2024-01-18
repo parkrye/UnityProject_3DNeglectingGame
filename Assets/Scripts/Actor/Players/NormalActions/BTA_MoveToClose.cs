@@ -36,14 +36,12 @@ public class BTA_MoveToClose : BTAction
                     _state = ActionState.End;
                     break;
                 }
-                player.gameObject.transform.LookAt(_enemyTransform);
-                player.gameObject.transform.Translate((_enemyTransform.position - player.transform.position).normalized
-                    * Global.UD.ActorData.MoveSpeed * 0.01f, Space.World);
+                player.SetDestination(_enemyTransform.position);
                 break;
             case ActionState.End:
                 break;
         }
-
-        return true;
+        
+        return _state == ActionState.End;
     }
 }
