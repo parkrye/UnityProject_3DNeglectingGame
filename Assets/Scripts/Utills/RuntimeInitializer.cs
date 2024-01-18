@@ -25,6 +25,24 @@ public class RuntimeInitializer
             playerActorData = JsonUtility.FromJson<ActorData>(playerActorDataFromJson);
         }
 
-        Global.UD.ActorData = playerActorData;
+        Global.Datas.UserData.ActorData = playerActorData;
+
+        for(int i = 1; i < 10; i++)
+        {
+            var enemyActorDataPath = $"Assets/Contents/Datas/EnemyActor{i}Data";
+            ActorData enemyActorData = new ActorData();
+            if (File.Exists(enemyActorDataPath) == false)
+            {
+                enemyActorData.Id = i;
+                enemyActorData.Level = 1;
+                enemyActorData.Hp = 10;
+                enemyActorData.MoveSpeed = 1;
+                enemyActorData.AttackSpeed = 1;
+                enemyActorData.AttackDamage = 1;
+                string enemyDataToJson = JsonUtility.ToJson(enemyActorData);
+                File.WriteAllText(enemyActorDataPath, enemyDataToJson);
+            }
+            Global.Datas.EnemyData.Add($"Enemy{i}", enemyActorData);
+        }
     }
 }

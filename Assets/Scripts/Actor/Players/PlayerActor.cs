@@ -2,10 +2,12 @@ using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class PlayerActor : Actor
+public class PlayerActor : Actor, IHitable
 {
     private PlayerActionHandler _actionHandler;
     private NavMeshAgent _navMesh;
+    private ActorData _data;
+    public ActorData Data { get { return _data; } }
 
     private void Awake()
     {
@@ -19,10 +21,12 @@ public class PlayerActor : Actor
     public void StageStarted()
     {
         _state = ActorState.Alive;
+        _data = Global.Datas.UserData.ActorData;
         ActionRoutine().Forget();
 
         _navMesh = gameObject.AddComponent<NavMeshAgent>();
         _navMesh.stoppingDistance = 2f;
+        _navMesh.speed = _data.MoveSpeed;
     }
 
     private async UniTask ActionRoutine()
@@ -32,7 +36,7 @@ public class PlayerActor : Actor
         while (_state == ActorState.Alive)
         {
             _actionHandler.Work();
-            await UniTask.WaitForFixedUpdate();
+            await UniTask.WaitForEndOfFrame();
         }
     }
 
@@ -42,5 +46,10 @@ public class PlayerActor : Actor
             return;
 
         _navMesh.SetDestination(position);
+    }
+
+    public bool Hit(float damage)
+    {
+        return true;
     }
 }

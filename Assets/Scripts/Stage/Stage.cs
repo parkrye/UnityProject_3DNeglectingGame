@@ -37,8 +37,8 @@ public class Stage : MonoBehaviour
     private int _enemySpawnDelay = 10000;
     private int _emenySpawnCount = 100;
 
-    private List<Actor> _spawnedEnemyList = new List<Actor>();
-    public List<Actor> Enemies { get { return _spawnedEnemyList; } }
+    private List<EnemyActor> _spawnedEnemyList = new List<EnemyActor>();
+    public List<EnemyActor> Enemies { get { return _spawnedEnemyList; } }
 
     public void Initialize()
     {
@@ -72,7 +72,7 @@ public class Stage : MonoBehaviour
         AllPCActorSpawned.AddListener(_playerActor.StageStarted);
     }
 
-    private Actor SpawnActor(Actor actor, Vector3 spawnPosition, Quaternion rotation)
+    private EnemyActor SpawnEnemy(EnemyActor actor, Vector3 spawnPosition, Quaternion rotation)
     {
         if (_state == StageState.Dead || _state == StageState.Clear)
             return null;
@@ -97,7 +97,9 @@ public class Stage : MonoBehaviour
             var enemyPosition = Random.Range(0, _enemySpawnPositionArray.Length);
             if(enemyCount < _emenySpawnCount)
             {
-                _spawnedEnemyList.Add(SpawnActor(_enemyPathList[enemyIndex], _enemySpawnPositionArray[enemyPosition], Quaternion.identity));
+                var enemy = SpawnEnemy(_enemyPathList[enemyIndex], _enemySpawnPositionArray[enemyPosition], Quaternion.identity);
+                enemy.EnemyDie.AddListener(EnemyDied);
+                _spawnedEnemyList.Add(enemy);
                 enemyCount++;
             }
             await UniTask.Delay(_enemySpawnDelay);
@@ -109,5 +111,11 @@ public class Stage : MonoBehaviour
         _state = StageState.Battle;
         AllPCActorSpawned?.Invoke();
         AllPCActorSpawned.RemoveAllListeners();
+    }
+
+    private void EnemyDied(EnemyActor enemy)
+    {
+        _spawnedEnemyList.Remove(enemy);
+        _actorPool.Release(enemy);
     }
 }
