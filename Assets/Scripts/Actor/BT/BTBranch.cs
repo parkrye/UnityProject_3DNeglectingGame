@@ -28,21 +28,27 @@ public class BTBranch : BTAction
                 }
                 return true;
             case BranchType.AND:
-                foreach (var action in _actions)
+                for(int i = 0; i < _actions.Count; i++)
                 {
-                    if (action.Work() == false)
+                    if (_actions[i].Work() == false)
                     {
-                        ResetChildren();
                         return false;
                     }
                 }
-                return true;
-            case BranchType.OR:
                 foreach (var action in _actions)
                 {
-                    if (action.Work() == true)
+                    action.Reset();
+                }
+                return true;
+            case BranchType.OR:
+                for (int i = 0; i < _actions.Count; i++)
+                {
+                    if (_actions[i].Work() == true)
                     {
-                        ResetChildren();
+                        for (int j = 0; j <= i; j++)
+                        {
+                            _actions[j].Reset();
+                        }
                         return true;
                     }
                 }

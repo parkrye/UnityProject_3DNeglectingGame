@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BTA_MoveToClose : BTAction
@@ -33,8 +31,14 @@ public class BTA_MoveToClose : BTAction
                 _enemyTransform = closestEnemy.transform;
                 break;
             case ActionState.Working:
-                player.transform.Translate((_enemyTransform.position - player.transform.position).normalized
-                    * Global.UD.ActorData.MoveSpeed * 0.01f);
+                if(Vector3.SqrMagnitude(player.transform.position - _enemyTransform.position) < 4f)
+                {
+                    _state = ActionState.End;
+                    break;
+                }
+                player.gameObject.transform.LookAt(_enemyTransform);
+                player.gameObject.transform.Translate((_enemyTransform.position - player.transform.position).normalized
+                    * Global.UD.ActorData.MoveSpeed * 0.01f, Space.World);
                 break;
             case ActionState.End:
                 break;
