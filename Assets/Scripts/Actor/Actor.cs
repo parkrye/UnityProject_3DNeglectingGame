@@ -10,7 +10,15 @@ public enum ActorType
     Boss,
 }
 
+public enum ActorState
+{
+    Ready,
+    Alive,
+    Dead,
+}
+
 public class Actor : MonoBehaviour
 {
     protected ActorType type;
+    protected ActorState state;
 }

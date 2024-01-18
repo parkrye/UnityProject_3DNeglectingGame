@@ -29,6 +29,7 @@ public class Stage : MonoBehaviour
     public StageState _state = StageState.Ready;
 
     private PlayerActor _playerActor;
+    public PlayerActor PlayerActor { get { return _playerActor; } }
     private Pool _actorPool = new Pool();
 
     private List<EnemyActor> _enemyPathList = new List<EnemyActor>();
@@ -36,8 +37,13 @@ public class Stage : MonoBehaviour
     private int _enemySpawnDelay = 10000;
     private int _emenySpawnCount = 100;
 
+    private List<Actor> _spawnedEnemyList = new List<Actor>();
+    public List<Actor> Enemies { get { return _spawnedEnemyList; } }
+
     public void Initialize()
     {
+        Global.CurrentStage = this;
+
         _actorCamera = GetComponentInChildren<CinemachineVirtualCamera>();
         _mainLight = GetComponentInChildren<Light>();
 
@@ -60,23 +66,18 @@ public class Stage : MonoBehaviour
     public void SpawnPlayer(PlayerActor actor)
     {
         var player = _actorPool.Get(actor, _startPosition, Quaternion.identity, _actorParent);
-
-        if(player == null)
-        {
-            Debug.LogError("Player Actor is Null!");
-            return;
-        }
         _playerActor = player;
         _actorCamera.Follow = _playerActor.transform;
         _actorCamera.LookAt = _playerActor.transform;
+        AllPCActorSpawned.AddListener(_playerActor.StageStarted);
     }
 
-    private void SpawnActor(Actor actor, Vector3 spawnPosition, Quaternion rotation)
+    private Actor SpawnActor(Actor actor, Vector3 spawnPosition, Quaternion rotation)
     {
         if (_state == StageState.Dead || _state == StageState.Clear)
-            return;
+            return null;
 
-        _actorPool.Get(actor, spawnPosition, rotation, _actorParent);
+        return _actorPool.Get(actor, spawnPosition, rotation, _actorParent);
     }
 
     public void AddEnemyActor(EnemyActor enemy)
@@ -96,7 +97,7 @@ public class Stage : MonoBehaviour
             var enemyPosition = Random.Range(0, _enemySpawnPositionArray.Length);
             if(enemyCount < _emenySpawnCount)
             {
-                SpawnActor(_enemyPathList[enemyIndex], _enemySpawnPositionArray[enemyPosition], Quaternion.identity);
+                _spawnedEnemyList.Add(SpawnActor(_enemyPathList[enemyIndex], _enemySpawnPositionArray[enemyPosition], Quaternion.identity));
                 enemyCount++;
             }
             await UniTask.Delay(_enemySpawnDelay);
@@ -106,5 +107,7 @@ public class Stage : MonoBehaviour
     public void EndSetting()
     {
         _state = StageState.Battle;
+        AllPCActorSpawned?.Invoke();
+        AllPCActorSpawned.RemoveAllListeners();
     }
 }

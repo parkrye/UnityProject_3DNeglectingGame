@@ -9,6 +9,11 @@ public class PlayerActionHandler : MonoBehaviour
     private void Awake()
     {
         _root = new BTBranch(BranchType.BOTH);
+
+        BTBranch findAndMove = new BTBranch(BranchType.AND);
+        findAndMove.AddChild(new BTA_MoveToClose());
+
+        _root.AddChild(findAndMove);
     }
 
     public void Work()

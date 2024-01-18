@@ -50,6 +50,11 @@ public class BTBranch : BTAction
         }
         return false;
     }
+
+    public void AddChild(BTAction child)
+    {
+        _actions.Add(child);
+    }
     
     public void ResetChildren()
     {

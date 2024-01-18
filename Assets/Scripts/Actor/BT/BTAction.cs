@@ -5,12 +5,22 @@ public enum ActionState
     End,
 }
 
-public class BTAction
+public abstract class BTAction
 {
-    private ActionState _state;
+    protected ActionState _state;
 
     public virtual bool Work()
     {
+        switch (_state)
+        {
+            case ActionState.Ready:
+                break;
+            case ActionState.Working:
+                break;
+            case ActionState.End:
+                break;
+        }
+
         return true;
     }
 
