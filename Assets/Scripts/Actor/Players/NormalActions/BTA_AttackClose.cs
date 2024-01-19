@@ -4,6 +4,12 @@ using UnityEngine;
 public class BTA_AttackClose : BTAction
 {
     private bool _isAttackable = false;
+    private NormalAnimationController _anim;
+
+    public BTA_AttackClose(NormalAnimationController anim)
+    {
+        _anim = anim;
+    }
 
     public override bool Work()
     {
@@ -22,6 +28,7 @@ public class BTA_AttackClose : BTAction
                 {
                     _state = ActionState.End;
                     _isAttackable = true;
+                    _anim.PlayAttackAnimation();
                     var colliders = Physics.OverlapSphere(player.transform.position + player.transform.forward, 2f, 1 << 10);
                     foreach (var target in colliders)
                     {

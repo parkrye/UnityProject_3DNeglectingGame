@@ -3,6 +3,12 @@ using UnityEngine;
 public class BTA_MoveToClose : BTAction
 {
     private Transform _enemyTransform;
+    private NormalAnimationController _anim;
+
+    public BTA_MoveToClose(NormalAnimationController anim)
+    {
+        _anim = anim;
+    }
 
     public override bool Work()
     {
@@ -34,8 +40,10 @@ public class BTA_MoveToClose : BTAction
                 if(Vector3.SqrMagnitude(player.transform.position - _enemyTransform.position) < 4f)
                 {
                     _state = ActionState.End;
+                    _anim.StopMoveAnimation();
                     break;
                 }
+                _anim.PlayMoveAnimation();
                 player.SetDestination(_enemyTransform.position);
                 break;
             case ActionState.End:
