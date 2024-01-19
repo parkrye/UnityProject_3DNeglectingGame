@@ -4,12 +4,6 @@ using UnityEngine;
 public class BTA_AttackClose : BTAction
 {
     private bool _isAttackable = false;
-    private NormalAnimationController _anim;
-
-    public BTA_AttackClose(NormalAnimationController anim)
-    {
-        _anim = anim;
-    }
 
     public override bool Work()
     {
@@ -28,16 +22,8 @@ public class BTA_AttackClose : BTAction
                 {
                     _state = ActionState.End;
                     _isAttackable = true;
-                    _anim.PlayAttackAnimation();
-                    var colliders = Physics.OverlapSphere(player.transform.position + player.transform.forward, 2f, 1 << 10);
-                    foreach (var target in colliders)
-                    {
-                        var enemy = target.GetComponent<EnemyActor>();
-                        if (enemy != null)
-                        {
-                            enemy.Hit(player.Data.AttackDamage);
-                        }
-                    }
+                    player.Anim.AttackEndEvent.AddListener(AttackReaction);
+                    player.Anim.PlayAttackAnimation();
                 }
                 break;
             case ActionState.End:
@@ -58,5 +44,20 @@ public class BTA_AttackClose : BTAction
         _isAttackable = false;
         await UniTask.Delay(1000 / Global.CurrentStage.PlayerActor.Data.AttackSpeed);
         _isAttackable = true;
+    }
+
+    private void AttackReaction()
+    {
+        var player = Global.CurrentStage.PlayerActor;
+        player.Anim.AttackEndEvent.RemoveAllListeners();
+        var colliders = Physics.OverlapSphere(player.transform.position + player.transform.forward, 3f, 1 << 10);
+        foreach (var target in colliders)
+        {
+            var enemy = target.GetComponent<EnemyActor>();
+            if (enemy != null)
+            {
+                enemy.Hit(player.Data.AttackDamage);
+            }
+        }
     }
 }

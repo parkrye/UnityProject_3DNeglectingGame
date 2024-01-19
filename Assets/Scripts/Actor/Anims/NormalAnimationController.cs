@@ -1,8 +1,14 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class NormalAnimationController : MonoBehaviour
 {
     private Animator _animator;
+
+    public UnityEvent AttackEndEvent = new UnityEvent(), 
+        HitEndEvent = new UnityEvent(), 
+        DieEndEvent = new UnityEvent(), 
+        RecoveryEndEvent = new UnityEvent();
 
     private void Awake()
     {
@@ -85,5 +91,25 @@ public class NormalAnimationController : MonoBehaviour
         {
             return false;
         }
+    }
+
+    public void OnAttackEndEvent()
+    {
+        AttackEndEvent?.Invoke();
+    }
+
+    public void OnHitEndEvent()
+    {
+        HitEndEvent?.Invoke();
+    }
+
+    public void OnDieEndEvent()
+    {
+        DieEndEvent?.Invoke();
+    }
+    
+    public void OnRecoveryEndEvent()
+    {
+        RecoveryEndEvent?.Invoke();
     }
 }

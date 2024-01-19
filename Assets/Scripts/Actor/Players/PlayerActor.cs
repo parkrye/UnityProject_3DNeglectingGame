@@ -5,15 +5,20 @@ using UnityEngine.AI;
 public class PlayerActor : Actor, IHitable
 {
     private PlayerActionHandler _actionHandler;
+    private NormalAnimationController _anim;
     private NavMeshAgent _navMesh;
     private ActorData _data;
     public ActorData Data { get { return _data; } }
+    public NormalAnimationController Anim { get { return _anim; } }
 
     private void Awake()
     {
         _actionHandler = GetComponent<PlayerActionHandler>();
         if(_actionHandler == null)
             _actionHandler = gameObject.AddComponent<PlayerActionHandler>();
+        _anim = GetComponent<NormalAnimationController>();
+        if(_anim == null)
+            _anim = gameObject.AddComponent<NormalAnimationController>();
         _type = ActorType.PC;
         _state = ActorState.Ready;
     }
@@ -25,7 +30,7 @@ public class PlayerActor : Actor, IHitable
         ActionRoutine().Forget();
 
         _navMesh = gameObject.AddComponent<NavMeshAgent>();
-        _navMesh.stoppingDistance = 2f;
+        _navMesh.stoppingDistance = 3f;
         _navMesh.speed = _data.MoveSpeed;
     }
 
