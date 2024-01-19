@@ -9,7 +9,6 @@ public class BTA_AttackClose : BTAction
         var enemies = Global.CurrentStage.Enemies;
         if (enemies.Count == 0)
             return false;
-
         var player = Global.CurrentStage.PlayerActor;
         switch (_state)
         {
@@ -22,7 +21,8 @@ public class BTA_AttackClose : BTAction
                 if (_attackCooltime >= player.Data.AttackSpeed)
                 {
                     _attackCooltime = 0f;
-                    foreach(var target in Physics.OverlapSphere(player.transform.position + Vector3.up * 1f + player.transform.forward, 1f))
+                    var colliders = Physics.OverlapSphere(player.transform.position + player.transform.forward, 2f, 1 << 10);
+                    foreach (var target in colliders)
                     {
                         var enemy = target.GetComponent<EnemyActor>();
                         if (enemy != null)
@@ -42,6 +42,6 @@ public class BTA_AttackClose : BTAction
     public override void Reset()
     {
         base.Reset();
-        _attackCooltime = Global.Datas.UserData.ActorData.AttackSpeed;
+        _attackCooltime = 0f;
     }
 }
