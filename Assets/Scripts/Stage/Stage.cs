@@ -98,6 +98,7 @@ public class Stage : MonoBehaviour
             if(enemyCount < _emenySpawnCount)
             {
                 var enemy = SpawnEnemy(_enemyPathList[enemyIndex], _enemySpawnPositionArray[enemyPosition], Quaternion.identity);
+                enemy.EnemyDie.RemoveAllListeners();
                 enemy.EnemyDie.AddListener(EnemyDied);
                 _spawnedEnemyList.Add(enemy);
                 enemyCount++;

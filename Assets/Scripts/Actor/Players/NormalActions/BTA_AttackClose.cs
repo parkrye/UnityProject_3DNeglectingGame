@@ -1,8 +1,9 @@
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 public class BTA_AttackClose : BTAction
 {
-    private float _attackCooltime = 0f;
+    private bool _isAttackable = false;
 
     public override bool Work()
     {
@@ -14,13 +15,13 @@ public class BTA_AttackClose : BTAction
         {
             case ActionState.Ready:
                 _state = ActionState.Working;
-                _attackCooltime += player.Data.AttackSpeed;
+                AttackCoolTimeRoutine().Forget();
                 break;
             case ActionState.Working:
-                _attackCooltime += Time.deltaTime;
-                if (_attackCooltime >= player.Data.AttackSpeed)
+                if (_isAttackable)
                 {
-                    _attackCooltime = 0f;
+                    _state = ActionState.End;
+                    _isAttackable = true;
                     var colliders = Physics.OverlapSphere(player.transform.position + player.transform.forward, 2f, 1 << 10);
                     foreach (var target in colliders)
                     {
@@ -42,6 +43,13 @@ public class BTA_AttackClose : BTAction
     public override void Reset()
     {
         base.Reset();
-        _attackCooltime = 0f;
+        _isAttackable = false;
+    }
+
+    private async UniTask AttackCoolTimeRoutine()
+    {
+        _isAttackable = false;
+        await UniTask.Delay(1000 / Global.CurrentStage.PlayerActor.Data.AttackSpeed);
+        _isAttackable = true;
     }
 }

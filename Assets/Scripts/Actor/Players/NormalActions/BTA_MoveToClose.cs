@@ -41,7 +41,7 @@ public class BTA_MoveToClose : BTAction
             case ActionState.End:
                 break;
         }
-        
+
         return _state == ActionState.End;
     }
 }

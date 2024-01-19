@@ -23,7 +23,6 @@ public class EnemyActor : Actor, IHitable
 
     public bool Hit(float damage)
     {
-        Debug.Log($"Hit! {damage}");
         _data.Hp -= (int)damage;
         if(_data.Hp <= 0)
         {
