@@ -1,11 +1,12 @@
-using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
 
 public class EnemyActor : Actor, IHitable
 {
     private ActorData _data;
-    private NavMeshAgent navMesh;
+    private int _hp;
+    private NavMeshAgent _navMesh;
+
     public UnityEvent<EnemyActor> EnemyDie = new UnityEvent<EnemyActor>();
 
     private void Awake()
@@ -17,14 +18,15 @@ public class EnemyActor : Actor, IHitable
     {
         if(_data == null)
             _data = Global.Datas.GetEnemyData(1);
-        if(navMesh == null)
-            navMesh = gameObject.AddComponent<NavMeshAgent>();
+        _hp = _data.Hp;
+        if (_navMesh == null)
+            _navMesh = gameObject.AddComponent<NavMeshAgent>();
     }
 
     public bool Hit(float damage)
     {
-        _data.Hp -= (int)damage;
-        if(_data.Hp <= 0)
+        _hp -= (int)damage;
+        if(_hp <= 0)
         {
             EnemyDie?.Invoke(this);
             _state = ActorState.Dead;

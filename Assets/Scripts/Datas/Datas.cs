@@ -12,6 +12,6 @@ public class Datas
         if (_enemyData.ContainsKey(id) == false)
             return null;
 
-        return _enemyData[id];
+        return _enemyData[id].Clone();
     }
 }

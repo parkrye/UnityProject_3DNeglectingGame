@@ -11,6 +11,19 @@ public class ActorData
     public int MoveSpeed;
     public int AttackSpeed;
     public int AttackDamage;
+
+    public ActorData Clone()
+    {
+        ActorData clone = new ActorData();
+        clone.Id = Id;
+        clone.Name = Name;
+        clone.Level = Level;
+        clone.Hp = Hp;
+        clone.MoveSpeed = MoveSpeed;
+        clone.AttackSpeed = AttackSpeed;
+        clone.AttackDamage = AttackDamage;
+        return clone;
+    }
 }
 
 [Serializable]
