@@ -4,14 +4,14 @@ public class Datas
 {
     private UserData _userData = new UserData();
     public UserData UserData { get { return _userData; } }
-    private Dictionary<string, ActorData> _enemyData = new Dictionary<string, ActorData>();
-    public Dictionary<string, ActorData> EnemyData { get { return _enemyData;} set { _enemyData = value; } }
+    private Dictionary<int, ActorData> _enemyData = new Dictionary<int, ActorData>();
+    public Dictionary<int, ActorData> EnemyData { get { return _enemyData;} set { _enemyData = value; } }
     
-    public ActorData GetEnemyData(string name)
+    public ActorData GetEnemyData(int id)
     {
-        if (_enemyData.ContainsKey(name) == false)
+        if (_enemyData.ContainsKey(id) == false)
             return null;
 
-        return _enemyData[name];
+        return _enemyData[id];
     }
 }

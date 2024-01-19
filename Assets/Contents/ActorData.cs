@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 [Serializable]
 public class ActorData
@@ -10,4 +11,15 @@ public class ActorData
     public int MoveSpeed;
     public int AttackSpeed;
     public int AttackDamage;
+}
+
+[Serializable]
+public class ActorDataList
+{
+    public List<ActorData> Data = new List<ActorData>();
+
+    public void Add(ActorData data)
+    {
+        Data.Add(data);
+    }
 }
