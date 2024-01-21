@@ -1,7 +1,7 @@
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-public class BTA_AttackClose : BTAction
+public class BTA_CloseAttack : BTAction
 {
     private bool _isAttackable = false;
 

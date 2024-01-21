@@ -10,7 +10,7 @@ public class PlayerActionHandler : MonoBehaviour
 
         BTBranch findAndMove = new BTBranch(BranchType.AND);
         findAndMove.AddChild(new BTA_MoveToClose());
-        findAndMove.AddChild(new BTA_AttackClose());
+        findAndMove.AddChild(new BTA_CloseAttack());
 
         _root.AddChild(findAndMove);
     }
