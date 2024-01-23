@@ -12,4 +12,9 @@ public static class Resource
         var original = Load<T>(path);
         return Object.Instantiate(original, position, rotation, parent);
     }
+
+    public static T Instantiate<T>(T original, Vector3 position, Quaternion rotation, Transform parent) where T : Object
+    {
+        return Object.Instantiate(original, position, rotation, parent);
+    }
 }

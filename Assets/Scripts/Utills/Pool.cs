@@ -88,7 +88,7 @@ public class Pool
         ObjectPool<GameObject> pool = new ObjectPool<GameObject>(
             createFunc: () =>
             {
-                GameObject obj = Resource.Instantiate<GameObject>(key, Vector3.zero, Quaternion.identity, null);
+                GameObject obj = Resource.Instantiate<GameObject>(prefab, Vector3.zero, Quaternion.identity, null);
                 obj.gameObject.name = key;
                 return obj;
             },
