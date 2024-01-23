@@ -1,12 +1,15 @@
 using UnityEngine.AI;
 using UnityEngine.Events;
+using UnityEngine;
 
 public class EnemyActor : Actor, IHitable
 {
     private ActorData _data;
+    public ActorData Data { get { return _data; } }
     private int _hp;
     private NavMeshAgent _navMesh;
     private NormalAnimationController _anim;
+    public NormalAnimationController Anim { get { return _anim; } }
 
     public UnityEvent<EnemyActor> EnemyDie = new UnityEvent<EnemyActor>();
 
@@ -46,5 +49,13 @@ public class EnemyActor : Actor, IHitable
     private void DieReaction()
     {
         EnemyDie?.Invoke(this);
+    }
+
+    public void SetDestination(Vector3 position)
+    {
+        if (_navMesh == null)
+            return;
+
+        _navMesh.SetDestination(position);
     }
 }

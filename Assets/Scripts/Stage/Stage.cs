@@ -69,6 +69,7 @@ public class Stage : MonoBehaviour
         _playerActor = player;
         _actorCamera.Follow = _playerActor.transform;
         _actorCamera.LookAt = _playerActor.transform;
+        _playerActor.Anim.PlayRecoveryAnimation();
         AllPCActorSpawned.AddListener(_playerActor.StageStarted);
     }
 
@@ -77,7 +78,9 @@ public class Stage : MonoBehaviour
         if (_state == StageState.Dead || _state == StageState.Clear)
             return null;
 
-        return _actorPool.Get(actor, spawnPosition, rotation, _actorParent);
+        var spawned = _actorPool.Get(actor, spawnPosition, rotation, _actorParent);
+        spawned.Anim.PlayRecoveryAnimation();
+        return spawned;
     }
 
     public void AddEnemyActor(EnemyActor enemy)
