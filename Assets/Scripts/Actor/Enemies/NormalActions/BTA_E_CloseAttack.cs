@@ -31,6 +31,7 @@ public class BTA_E_CloseAttack : BTAction
                     _enemyActor.Anim.AttackEndEvent.AddListener(AttackReaction);
                     _enemyActor.Anim.PlayAttackAnimation();
                 }
+                _enemyActor.LookAt(player.transform.position);
                 break;
             case ActionState.End:
                 return true;

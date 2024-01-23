@@ -52,6 +52,11 @@ public class PlayerActor : Actor, IHitable
 
         _navMesh.SetDestination(position);
     }
+    
+    public void LookAt(Vector3 position)
+    {
+        transform.LookAt(position);
+    }
 
     public bool Hit(float damage)
     {

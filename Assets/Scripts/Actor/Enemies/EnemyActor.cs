@@ -1,12 +1,14 @@
 using UnityEngine.AI;
 using UnityEngine.Events;
 using UnityEngine;
+using Cysharp.Threading.Tasks;
 
 public class EnemyActor : Actor, IHitable
 {
     private ActorData _data;
     public ActorData Data { get { return _data; } }
     private int _hp;
+    private EnemyActionHandler _actionHandler;
     private NavMeshAgent _navMesh;
     private NormalAnimationController _anim;
     public NormalAnimationController Anim { get { return _anim; } }
@@ -15,10 +17,14 @@ public class EnemyActor : Actor, IHitable
 
     private void Awake()
     {
-        _type = ActorType.Enemy;
+        _actionHandler = GetComponent<EnemyActionHandler>();
+        if (_actionHandler == null)
+            _actionHandler = gameObject.AddComponent<EnemyActionHandler>();
         _anim = GetComponent<NormalAnimationController>();
         if( _anim == null )
             _anim = gameObject.AddComponent<NormalAnimationController>();
+
+        _type = ActorType.Enemy;
     }
 
     private void OnEnable()
@@ -26,8 +32,21 @@ public class EnemyActor : Actor, IHitable
         if(_data == null)
             _data = Global.Datas.GetEnemyData(1);
         _hp = _data.Hp;
+        _state = ActorState.Alive;
         if (_navMesh == null)
             _navMesh = gameObject.AddComponent<NavMeshAgent>();
+        ActionRoutine().Forget();
+    }
+
+    private async UniTask ActionRoutine()
+    {
+        await UniTask.WaitUntil(() => _state == ActorState.Alive);
+
+        while (_state == ActorState.Alive)
+        {
+            _actionHandler.Work();
+            await UniTask.WaitForEndOfFrame();
+        }
     }
 
     public bool Hit(float damage)
@@ -57,5 +76,10 @@ public class EnemyActor : Actor, IHitable
             return;
 
         _navMesh.SetDestination(position);
+    }
+
+    public void LookAt(Vector3 position)
+    {
+        transform.LookAt(position);
     }
 }

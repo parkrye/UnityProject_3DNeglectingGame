@@ -10,6 +10,7 @@ public class BTA_CloseAttack : BTAction
         var enemies = Global.CurrentStage.Enemies;
         if (enemies.Count == 0)
             return false;
+
         var player = Global.CurrentStage.PlayerActor;
         switch (_state)
         {
