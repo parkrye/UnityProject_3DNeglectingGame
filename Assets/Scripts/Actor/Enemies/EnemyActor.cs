@@ -14,7 +14,7 @@ public class EnemyActor : Actor, IHitable
     public NormalAnimationController Anim { get { return _anim; } }
 
     public UnityEvent<EnemyActor> EnemyDie = new UnityEvent<EnemyActor>();
-    public UnityEvent<float> HPRatioEvent = new UnityEvent<float>();
+    public UnityEvent<float, bool> HPRatioEvent = new UnityEvent<float, bool>();
 
     private void Awake()
     {
@@ -40,7 +40,7 @@ public class EnemyActor : Actor, IHitable
         if (_navMesh == null)
             _navMesh = gameObject.AddComponent<NavMeshAgent>();
         ActionRoutine().Forget();
-        HPRatioEvent?.Invoke(1f);
+        HPRatioEvent?.Invoke(1f, true);
     }
 
     private async UniTask ActionRoutine()
@@ -57,7 +57,7 @@ public class EnemyActor : Actor, IHitable
     public bool Hit(float damage)
     {
         _hp -= (int)damage;
-        HPRatioEvent?.Invoke((float)_hp / Data.Hp);
+        HPRatioEvent?.Invoke((float)_hp / Data.Hp, true);
         if (_hp <= 0)
         {
             _state = ActorState.Dead;

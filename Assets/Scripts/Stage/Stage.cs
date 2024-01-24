@@ -5,6 +5,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public enum StageState
 {
@@ -70,6 +71,7 @@ public class Stage : MonoBehaviour
         _actorCamera.Follow = _playerActor.transform;
         _actorCamera.LookAt = _playerActor.transform;
         _playerActor.Anim.PlayRecoveryAnimation();
+        _playerActor.DieEvent.AddListener(ResetStage);
         AllPCActorSpawned.AddListener(_playerActor.StageStarted);
     }
 
@@ -121,5 +123,10 @@ public class Stage : MonoBehaviour
     {
         _spawnedEnemyList.Remove(enemy);
         _actorPool.Release(enemy);
+    }
+
+    private void ResetStage()
+    {
+        SceneManager.LoadScene("MainScene");
     }
 }

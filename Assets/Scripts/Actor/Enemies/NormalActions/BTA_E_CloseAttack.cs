@@ -56,7 +56,7 @@ public class BTA_E_CloseAttack : BTAction
     private void AttackReaction()
     {
         _enemyActor.Anim.AttackEndEvent.RemoveAllListeners();
-        var colliders = Physics.OverlapSphere(_enemyActor.transform.position + _enemyActor.transform.forward, 3f, 1 << 10);
+        var colliders = Physics.OverlapSphere(_enemyActor.transform.position + _enemyActor.transform.forward, 3f, 1 << 9);
         foreach (var target in colliders)
         {
             var player = target.GetComponent<PlayerActor>();
