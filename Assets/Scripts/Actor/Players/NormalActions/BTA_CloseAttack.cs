@@ -15,8 +15,8 @@ public class BTA_CloseAttack : BTAction
                 AttackCoolTimeRoutine().Forget();
                 break;
             case ActionState.Working:
-                if (Args.TArg != null)
-                    player.LookAt(Args.TArg.position);
+                if (_args.TArg != null)
+                    player.LookAt(_args.TArg.position);
 
                 if (_isAttackable)
                 {

@@ -33,7 +33,7 @@ public class Stage : MonoBehaviour
     public PlayerActor PlayerActor { get { return _playerActor; } }
     private Pool _actorPool = new Pool();
 
-    private List<EnemyActor> _enemyPathList = new List<EnemyActor>();
+    private List<EnemyActor> _enemyOriginalList = new List<EnemyActor>();
     private Vector3[] _enemySpawnPositionArray;
     private int _enemySpawnDelay = 10000;
     private int _emenySpawnCount = 100;
@@ -87,7 +87,7 @@ public class Stage : MonoBehaviour
 
     public void AddEnemyActor(EnemyActor enemy)
     {
-        _enemyPathList.Add(enemy);
+        _enemyOriginalList.Add(enemy);
     }
 
     private async UniTask EnemySpawnRoutine()
@@ -98,11 +98,11 @@ public class Stage : MonoBehaviour
 
         while (_state == StageState.Battle)
         {
-            var enemyIndex = Random.Range(0, _enemyPathList.Count);
+            var enemyIndex = Random.Range(0, _enemyOriginalList.Count);
             var enemyPosition = Random.Range(0, _enemySpawnPositionArray.Length);
             if(enemyCount < _emenySpawnCount)
             {
-                var enemy = SpawnEnemy(_enemyPathList[enemyIndex], _enemySpawnPositionArray[enemyPosition], Quaternion.identity);
+                var enemy = SpawnEnemy(_enemyOriginalList[enemyIndex], _enemySpawnPositionArray[enemyPosition], Quaternion.identity);
                 enemy.EnemyDie.RemoveAllListeners();
                 enemy.EnemyDie.AddListener(EnemyDied);
                 _spawnedEnemyList.Add(enemy);
@@ -127,6 +127,11 @@ public class Stage : MonoBehaviour
 
     private void ResetStage()
     {
+        for(int i = 0; i < _spawnedEnemyList.Count; i++)
+        {
+            _actorPool.Release(_spawnedEnemyList[i]);
+        }
+
         SceneManager.LoadScene("MainScene");
     }
 }

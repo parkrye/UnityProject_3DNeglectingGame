@@ -14,4 +14,12 @@ public class BTArgs
 
         return false;
     }
+
+    public void Reset()
+    {
+        IArg = 0;
+        FArg = float.NaN;
+        VArg = Vector3.zero;
+        TArg = null;
+    }
 }

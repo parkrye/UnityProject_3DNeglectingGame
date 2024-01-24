@@ -29,5 +29,6 @@ public abstract class BTAction
     public virtual void Reset()
     {
         _state = ActionState.Ready;
+        _args.Reset();
     }
 }

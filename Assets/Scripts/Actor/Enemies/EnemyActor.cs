@@ -43,6 +43,11 @@ public class EnemyActor : Actor, IHitable
         HPRatioEvent?.Invoke(1f, true);
     }
 
+    private void OnDisable()
+    {
+        _state = ActorState.Dead;
+    }
+
     private async UniTask ActionRoutine()
     {
         await UniTask.WaitUntil(() => _state == ActorState.Alive);
