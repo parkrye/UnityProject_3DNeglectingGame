@@ -8,6 +8,8 @@ public enum ActionState
 public abstract class BTAction
 {
     protected ActionState _state;
+    protected BTArgs _args = new BTArgs();
+    public BTArgs Args { get { return _args; } set { _args = value; } }
 
     public virtual bool Work()
     {

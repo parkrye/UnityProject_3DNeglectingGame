@@ -29,6 +29,7 @@ public class BTA_MoveToClose : BTAction
                 }
 
                 _enemyTransform = closestEnemy.transform;
+                _args.TArg = _enemyTransform;
                 break;
             case ActionState.Working:
                 if(Vector3.SqrMagnitude(player.transform.position - _enemyTransform.position) < 9f)
