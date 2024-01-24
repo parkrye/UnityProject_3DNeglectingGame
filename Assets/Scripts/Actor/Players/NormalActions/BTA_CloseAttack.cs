@@ -7,10 +7,6 @@ public class BTA_CloseAttack : BTAction
 
     public override bool Work()
     {
-        var enemies = Global.CurrentStage.Enemies;
-        if (enemies.Count == 0)
-            return false;
-
         var player = Global.CurrentStage.PlayerActor;
         switch (_state)
         {
@@ -19,6 +15,9 @@ public class BTA_CloseAttack : BTAction
                 AttackCoolTimeRoutine().Forget();
                 break;
             case ActionState.Working:
+                if (Args.TArg != null)
+                    player.LookAt(Args.TArg.position);
+
                 if (_isAttackable)
                 {
                     _state = ActionState.End;
