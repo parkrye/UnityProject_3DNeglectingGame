@@ -29,6 +29,7 @@ public class BTA_MoveToClose : BTAction
                 }
 
                 _enemyTransform = closestEnemy.transform;
+                _args.IsNull = false;
                 _args.TArg = _enemyTransform;
                 break;
             case ActionState.Working:

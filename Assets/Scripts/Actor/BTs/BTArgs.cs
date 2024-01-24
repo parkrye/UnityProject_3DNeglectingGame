@@ -2,21 +2,15 @@
 
 public class BTArgs
 {
-    public int IArg;
-    public float FArg;
-    public Vector3 VArg;
-    public Transform TArg;
-
-    public bool IsNull()
-    {
-        if (IArg == 0 && FArg == float.NaN && VArg == null && TArg == null)
-            return true;
-
-        return false;
-    }
+    public bool IsNull = true;
+    public int IArg = 0;
+    public float FArg = float.NaN;
+    public Vector3 VArg = Vector3.zero;
+    public Transform TArg = null;
 
     public void Reset()
     {
+        IsNull = true;
         IArg = 0;
         FArg = float.NaN;
         VArg = Vector3.zero;
