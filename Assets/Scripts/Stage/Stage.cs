@@ -121,6 +121,9 @@ public class Stage : MonoBehaviour
 
     private void EnemyDied(EnemyActor enemy)
     {
+        Global.Datas.UserData.AddCurrency(CurrencyType.Gold, 1);
+        Global.Datas.UserData.AddCurrency(CurrencyType.Exp, 1);
+
         _spawnedEnemyList.Remove(enemy);
         _actorPool.Release(enemy);
     }

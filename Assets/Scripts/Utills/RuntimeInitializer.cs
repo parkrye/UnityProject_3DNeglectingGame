@@ -15,10 +15,10 @@ public class RuntimeInitializer
         PlayerData playerData = new PlayerData();
         if (File.Exists(playerDataPath) == false)
         {
-            playerData.Data.Add(new CurrencyData(CurrencyType.Gold, 0));
-            playerData.Data.Add(new CurrencyData(CurrencyType.Diamond, 0));
-            playerData.Data.Add(new CurrencyData(CurrencyType.Ruby, 0));
-            playerData.Data.Add(new CurrencyData(CurrencyType.Exp, 0));
+            playerData.Currency.Add(new CurrencyData(CurrencyType.Gold, 0));
+            playerData.Currency.Add(new CurrencyData(CurrencyType.Diamond, 0));
+            playerData.Currency.Add(new CurrencyData(CurrencyType.Ruby, 0));
+            playerData.Currency.Add(new CurrencyData(CurrencyType.Exp, 0));
             string playerDataToJson = JsonUtility.ToJson(playerData);
             File.WriteAllText(playerDataPath, playerDataToJson);
         }

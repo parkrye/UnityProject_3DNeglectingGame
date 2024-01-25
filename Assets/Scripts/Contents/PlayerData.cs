@@ -4,11 +4,11 @@ using System.Collections.Generic;
 [Serializable]
 public class PlayerData
 {
-    public List<CurrencyData> Data = new List<CurrencyData>();
+    public List<CurrencyData> Currency = new List<CurrencyData>();
 
-    public void Add(CurrencyData data)
+    public void AddCurrency(CurrencyData data)
     {
-        Data.Add(data);
+        Currency.Add(data);
     }
 }
 
