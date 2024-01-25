@@ -1,6 +1,7 @@
 public enum CurrencyType
 {
-    Gold,
+    Gold = 0,
     Diamond,
-    Ruby
+    Ruby,
+    Exp,
 }

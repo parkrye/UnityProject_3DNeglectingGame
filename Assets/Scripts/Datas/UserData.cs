@@ -2,8 +2,8 @@ using System.Collections.Generic;
 
 public class UserData
 {
-    private Dictionary<CurrencyType, double> _currency = new Dictionary<CurrencyType, double>();
-    public Dictionary<CurrencyType, double> Currency { get { return _currency; } }
     private ActorData _actorData;
     public ActorData ActorData { get { return _actorData; } set { _actorData = value; } }
+    private PlayerData _playerData;
+    public PlayerData PlayerData { get { return _playerData; } set { _playerData = value; } }
 }

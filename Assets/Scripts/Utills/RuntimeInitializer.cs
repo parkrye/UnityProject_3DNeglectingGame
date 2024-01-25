@@ -1,6 +1,4 @@
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using UnityEngine;
 
 public class RuntimeInitializer
@@ -8,6 +6,26 @@ public class RuntimeInitializer
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
     private static void Init()
     {
+        InitData();
+    }
+
+    private static void InitData()
+    {
+        var playerDataPath = "Assets/Contents/Datas/PlayerData";
+        PlayerData playerData = new PlayerData();
+        if (File.Exists(playerDataPath) == false)
+        {
+            playerData.Data.Add(new CurrencyData(CurrencyType.Gold, 0));
+            playerData.Data.Add(new CurrencyData(CurrencyType.Diamond, 0));
+            playerData.Data.Add(new CurrencyData(CurrencyType.Ruby, 0));
+            playerData.Data.Add(new CurrencyData(CurrencyType.Exp, 0));
+            string playerDataToJson = JsonUtility.ToJson(playerData);
+            File.WriteAllText(playerDataPath, playerDataToJson);
+        }
+        var playerDataFromJson = File.ReadAllText(playerDataPath);
+        playerData = JsonUtility.FromJson<PlayerData>(playerDataFromJson);
+        Global.Datas.UserData.PlayerData = playerData;
+
         var playerActorDataPath = "Assets/Contents/Datas/PlayerActorData";
         ActorData playerActorData = new ActorData();
         if (File.Exists(playerActorDataPath) == false)
@@ -18,8 +36,8 @@ public class RuntimeInitializer
             playerActorData.MoveSpeed = 1;
             playerActorData.AttackSpeed = 1;
             playerActorData.AttackDamage = 1;
-            string playerDataToJson = JsonUtility.ToJson(playerActorData);
-            File.WriteAllText(playerActorDataPath, playerDataToJson);
+            string playerActorDataToJson = JsonUtility.ToJson(playerActorData);
+            File.WriteAllText(playerActorDataPath, playerActorDataToJson);
         }
         var playerActorDataFromJson = File.ReadAllText(playerActorDataPath);
         playerActorData = JsonUtility.FromJson<ActorData>(playerActorDataFromJson);
@@ -46,7 +64,7 @@ public class RuntimeInitializer
         }
         var enemyActorDataFromJson = File.ReadAllText(enemyActorDataPath);
         var enemyActorDatas = JsonUtility.FromJson<ActorDataList>(enemyActorDataFromJson);
-        foreach(var enemyActorData in enemyActorDatas.Data)
+        foreach (var enemyActorData in enemyActorDatas.Data)
         {
             Global.Datas.EnemyData.Add(enemyActorData.Id, enemyActorData);
         }
