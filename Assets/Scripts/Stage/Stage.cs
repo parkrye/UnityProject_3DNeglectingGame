@@ -137,4 +137,9 @@ public class Stage : MonoBehaviour
 
         SceneManager.LoadScene("MainScene");
     }
+
+    private void OnApplicationQuit()
+    {
+        Global.Datas.UserData.SaveData();
+    }
 }

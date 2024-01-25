@@ -66,7 +66,7 @@ public class RuntimeInitializer
         var enemyActorDatas = JsonUtility.FromJson<ActorDataList>(enemyActorDataFromJson);
         foreach (var enemyActorData in enemyActorDatas.Data)
         {
-            Global.Datas.EnemyData.Add(enemyActorData.Id, enemyActorData);
+            Global.Datas.EnemyDatas.EnemyData.Add(enemyActorData.Id, enemyActorData);
         }
     }
 }

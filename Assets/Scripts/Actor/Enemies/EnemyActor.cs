@@ -34,7 +34,7 @@ public class EnemyActor : Actor, IHitable
     private void OnEnable()
     {
         if(_data == null)
-            _data = Global.Datas.GetEnemyData(1);
+            _data = Global.Datas.EnemyDatas.GetEnemyData(1);
         _hp = _data.Hp;
         _state = ActorState.Alive;
         if (_navMesh == null)

@@ -1,6 +1,7 @@
-using System.Collections.Generic;
+using UnityEngine;
+using System.IO;
 
-public class UserData
+public class UserDatas
 {
     private ActorData _actorData;
     public ActorData ActorData { get { return _actorData; } set { _actorData = value; } }
@@ -39,5 +40,16 @@ public class UserData
                 currencyData.Count = count;
             }
         }
+    }
+
+    public void SaveData()
+    {
+        var playerDataPath = "Assets/Contents/Datas/PlayerData";
+        string playerDataToJson = JsonUtility.ToJson(_playerData);
+        File.WriteAllText(playerDataPath, playerDataToJson);
+
+        var playerActorDataPath = "Assets/Contents/Datas/PlayerActorData";
+        string playerActorDataToJson = JsonUtility.ToJson(_actorData);
+        File.WriteAllText(playerActorDataPath, playerActorDataToJson);
     }
 }
