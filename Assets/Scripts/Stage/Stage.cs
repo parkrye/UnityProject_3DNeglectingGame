@@ -135,6 +135,8 @@ public class Stage : MonoBehaviour
             _actorPool.Release(_spawnedEnemyList[i]);
         }
 
+        _actorPool.Release(_playerActor);
+
         SceneManager.LoadScene("MainScene");
     }
 

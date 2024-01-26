@@ -46,6 +46,7 @@ public class EnemyActor : Actor, IHitable
     private void OnDisable()
     {
         _state = ActorState.Dead;
+        _actionHandler.ResetBT();
     }
 
     private async UniTask ActionRoutine()

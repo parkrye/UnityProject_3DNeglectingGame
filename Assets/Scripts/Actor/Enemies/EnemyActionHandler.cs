@@ -13,10 +13,9 @@ public class EnemyActionHandler : MonoBehaviour
 
         BTBranch battle = new BTBranch(BranchType.AND);
         battle.AddChild(new BTA_E_CheckBattle(_enemyActor));
-        BTBranch battleAndChace = new BTBranch(BranchType.AND);
-        battleAndChace.AddChild(new BTA_E_Chacing(_enemyActor));
-        battleAndChace.AddChild(new BTA_E_CloseAttack(_enemyActor));
-        battle.AddChild(battleAndChace);
+        BTBranch battleActions = new BTBranch(BranchType.BOTH);
+        battleActions.AddChild(new BTA_E_CloseAttack(_enemyActor));
+        battle.AddChild(battleActions);
 
         _root.AddChild(battle);
         _root.AddChild(new BTA_E_WalkAround());
@@ -25,5 +24,10 @@ public class EnemyActionHandler : MonoBehaviour
     public void Work()
     {
         _root.Work();
+    }
+
+    public void ResetBT()
+    {
+        _root.ResetChildren();
     }
 }

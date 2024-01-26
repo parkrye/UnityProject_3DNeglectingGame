@@ -8,15 +8,19 @@ public class PlayerActionHandler : MonoBehaviour
     {
         _root = new BTBranch(BranchType.BOTH);
 
-        BTBranch findAndMove = new BTBranch(BranchType.AND);
-        findAndMove.AddChild(new BTA_MoveToClose());
-        findAndMove.AddChild(new BTA_CloseAttack());
+        BTBranch battleBranch = new BTBranch(BranchType.BOTH);
+        battleBranch.AddChild(new BTA_CloseAttack());
 
-        _root.AddChild(findAndMove);
+        _root.AddChild(battleBranch);
     }
 
     public void Work()
     {
         _root.Work();
+    }
+
+    public void ResetBT()
+    {
+        _root.ResetChildren();
     }
 }

@@ -31,6 +31,11 @@ public class PlayerActor : Actor, IHitable
         _state = ActorState.Ready;
     }
 
+    private void OnDisable()
+    {
+        _actionHandler.ResetBT();
+    }
+
     public void StageStarted()
     {
         _state = ActorState.Alive;

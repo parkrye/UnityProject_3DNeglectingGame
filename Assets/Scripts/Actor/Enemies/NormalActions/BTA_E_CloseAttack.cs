@@ -21,17 +21,26 @@ public class BTA_E_CloseAttack : BTAction
         {
             case ActionState.Ready:
                 _state = ActionState.Working;
-                AttackCoolTimeRoutine().Forget();
+                _isAttackable = true;
                 break;
             case ActionState.Working:
-                if (_isAttackable)
+                if (Vector3.SqrMagnitude(player.transform.position - _enemyActor.transform.position) < 9f)
                 {
-                    _state = ActionState.End;
-                    _isAttackable = true;
-                    _enemyActor.Anim.AttackEndEvent.AddListener(AttackReaction);
-                    _enemyActor.Anim.PlayAttackAnimation();
+                    _enemyActor.LookAt(player.transform.position);
+                    _enemyActor.Anim.StopMoveAnimation();
+                    if (_isAttackable)
+                    {
+                        _isAttackable = false;
+                        _enemyActor.Anim.AttackEndEvent.AddListener(AttackReaction);
+                        _enemyActor.Anim.PlayAttackAnimation();
+                    }
+                    break;
                 }
-                _enemyActor.LookAt(player.transform.position);
+                else
+                {
+                    _enemyActor.SetDestination(player.transform.position);
+                    _enemyActor.Anim.PlayMoveAnimation();
+                }
                 break;
             case ActionState.End:
                 return true;
@@ -43,18 +52,19 @@ public class BTA_E_CloseAttack : BTAction
     public override void Reset()
     {
         base.Reset();
-        _isAttackable = false;
+        _isAttackable = true;
     }
 
     private async UniTask AttackCoolTimeRoutine()
     {
-        _isAttackable = false;
         await UniTask.Delay(1000 / _enemyActor.Data.AttackSpeed);
         _isAttackable = true;
     }
 
     private void AttackReaction()
     {
+        AttackCoolTimeRoutine().Forget();
+
         _enemyActor.Anim.AttackEndEvent.RemoveAllListeners();
         var colliders = Physics.OverlapSphere(_enemyActor.transform.position + _enemyActor.transform.forward, 3f, 1 << 9);
         foreach (var target in colliders)
