@@ -33,4 +33,25 @@ public abstract class UI : MonoBehaviour
     }
 
     protected abstract void Init();
+
+    protected TMP_Text GetText(string name)
+    {
+        if(texts.ContainsKey(name))
+            return texts[name];
+        return null;
+    }
+
+    protected Button GetButton(string name)
+    {
+        if(buttons.ContainsKey(name))
+            return buttons[name];
+        return null;
+    }
+
+    protected Image GetImage(string name)
+    {
+        if(images.ContainsKey(name))
+            return images[name];
+        return null;
+    }
 }

@@ -8,6 +8,7 @@ public class EnemyActor : Actor, IHitable
     private ActorData _data;
     public ActorData Data { get { return _data; } }
     private int _hp;
+    public bool IsDamaged { get { return _hp < _data.Hp; } }
     private EnemyActionHandler _actionHandler;
     private NavMeshAgent _navMesh;
     private NormalAnimationController _anim;
