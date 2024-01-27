@@ -40,10 +40,10 @@ public class StageCreator : MonoBehaviour
 
     private void SettingUI()
     {
-        var mainUI = GameObject.Find("MainView");
-        if (mainUI.TryGetComponent<MainView>(out var mainView) == true)
+        var mainUI = FindFirstObjectByType<MainView>();
+        if (mainUI != null)
         {
-            Global.UI.OpenView(mainView);
+            Global.UI.OpenView(mainUI);
         }
     }
 }

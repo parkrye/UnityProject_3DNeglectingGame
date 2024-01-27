@@ -13,7 +13,8 @@ public class UIManager
 
     public Dialog GetCurrentDialog()
     {
-        return _dialogStack.Peek();
+        _dialogStack.TryPeek(out var current);
+        return current;
     }
 
     public void OpenView<T>(T view) where T : View
