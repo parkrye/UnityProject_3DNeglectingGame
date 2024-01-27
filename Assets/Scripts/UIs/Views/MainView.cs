@@ -9,7 +9,7 @@ public class MainView : View
 
     private void OnLevelUpButtonClick()
     {
-
+        Global.UI.OpenDialog<LevelUpDialog>();
     }
 
     private void OnButton1Click()

@@ -1,4 +1,3 @@
-using System.Text;
 using UnityEngine;
 
 public class StageCreator : MonoBehaviour
@@ -6,9 +5,11 @@ public class StageCreator : MonoBehaviour
     private void Start()
     {
         CreateStage();
+        SettingUI();
+        Destroy(gameObject);
     }
 
-    public void CreateStage()
+    private void CreateStage()
     {
         var stage = Resource.Instantiate<Stage>("Stage", Vector3.zero, Quaternion.identity, null);
         stage.Initialize();
@@ -35,6 +36,14 @@ public class StageCreator : MonoBehaviour
         }
 
         stage.EndSetting();
-        Destroy(gameObject);
+    }
+
+    private void SettingUI()
+    {
+        var mainUI = GameObject.Find("MainView");
+        if (mainUI.TryGetComponent<MainView>(out var mainView) == true)
+        {
+            Global.UI.OpenView(mainView);
+        }
     }
 }

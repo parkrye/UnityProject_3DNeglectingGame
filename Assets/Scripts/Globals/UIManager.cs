@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 public class UIManager
 {
@@ -32,13 +33,21 @@ public class UIManager
         _currentView = null;
     }
 
-    public void OpenDialog<T>(T dialog) where T : Dialog
+    public void OpenDialog<T>() where T : Dialog
     {
         if (_dialogStack.Count > 0)
             _dialogStack.Peek().gameObject.SetActive(false);
-        
-        _dialogStack.Push(dialog);
-        dialog.gameObject.SetActive(true);
+
+        var dialog = Object.FindFirstObjectByType<T>();
+        if(_dialogStack.Peek().Equals(dialog) == false)
+        {
+            _dialogStack.Push(dialog);
+            dialog.gameObject.SetActive(true);
+        }
+        else
+        {
+            _dialogStack.Peek().gameObject.SetActive(false);
+        }
     }
 
     public void CloseCurrentDialog()
