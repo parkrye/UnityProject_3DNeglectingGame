@@ -17,7 +17,7 @@ public class UIManager
         return current;
     }
 
-    public void OpenView<T>(T view) where T : View
+    public void OpenView(View view)
     {
         CloseCurrentView();
 
@@ -34,21 +34,13 @@ public class UIManager
         _currentView = null;
     }
 
-    public void OpenDialog<T>() where T : Dialog
+    public void OpenDialog(Dialog dialog)
     {
         if (_dialogStack.Count > 0)
             _dialogStack.Peek().gameObject.SetActive(false);
 
-        var dialog = Object.FindFirstObjectByType<T>();
-        if(_dialogStack.Peek().Equals(dialog) == false)
-        {
-            _dialogStack.Push(dialog);
-            dialog.gameObject.SetActive(true);
-        }
-        else
-        {
-            _dialogStack.Peek().gameObject.SetActive(false);
-        }
+        _dialogStack.Push(dialog);
+        dialog.gameObject.SetActive(true);
     }
 
     public void CloseCurrentDialog()
@@ -56,8 +48,7 @@ public class UIManager
         if (_dialogStack.Count == 0)
             return;
 
-        _dialogStack.Peek().gameObject.SetActive(false);
-        _dialogStack.Pop();
+        _dialogStack.Pop().gameObject.SetActive(false);
     }
 
     public void CloseAllDialog()

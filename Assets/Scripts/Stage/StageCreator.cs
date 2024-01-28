@@ -45,5 +45,18 @@ public class StageCreator : MonoBehaviour
         {
             Global.UI.OpenView(mainUI);
         }
+
+        var views = FindObjectsByType<View>(FindObjectsSortMode.None);
+        foreach (var view in views) 
+        { 
+            if(view != mainUI)
+                view.gameObject.SetActive(false);
+        }
+
+        var dialogs = FindObjectsByType<Dialog>(FindObjectsSortMode.None);
+        foreach (var dialog in dialogs) 
+        { 
+            dialog.gameObject.SetActive(false);
+        }
     }
 }

@@ -1,4 +1,4 @@
-public class View : UI
+public class Template : UI
 {
     protected override void Init()
     {
