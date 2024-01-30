@@ -42,6 +42,24 @@ public class UserDatas
         }
     }
 
+    public bool TryUseCurrency(CurrencyType currencyType, int count)
+    {
+        foreach (var currencyData in _playerData.Currency)
+        {
+            if (currencyData.Id == (int)currencyType)
+            {
+                if(currencyData.Count >= count)
+                {
+                    currencyData.Count -= count;
+                    return true;
+                }
+                return false;
+            }
+        }
+
+        return false;
+    }
+
     public void SaveData()
     {
         var playerDataPath = "Assets/Contents/Datas/PlayerData";
