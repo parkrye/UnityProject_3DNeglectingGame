@@ -33,6 +33,11 @@ public class BTA_CloseAttack : BTAction
                 _isAttackable = true;
                 break;
             case ActionState.Working:
+                if(_enemyTransform.gameObject.activeInHierarchy == false)
+                {
+                    _state = ActionState.End;
+                    return false;
+                }
                 if (Vector3.SqrMagnitude(player.transform.position - _enemyTransform.position) < 9f)
                 {
                     player.LookAt(_enemyTransform.position);
@@ -52,6 +57,7 @@ public class BTA_CloseAttack : BTAction
                 }
                 break;
             case ActionState.End:
+                Reset();
                 return true;
         }
 

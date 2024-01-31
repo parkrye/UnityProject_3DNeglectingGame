@@ -41,7 +41,7 @@ public class Stage : MonoBehaviour
     private List<EnemyActor> _spawnedEnemyList = new List<EnemyActor>();
     public List<EnemyActor> Enemies { get { return _spawnedEnemyList; } }
 
-    private int _stageLevel;
+    private int _stageLevel = 1;
     public int StageLevel { get { return _stageLevel; } }
 
     public void Initialize()
@@ -126,8 +126,6 @@ public class Stage : MonoBehaviour
 
     private void EnemyDied(EnemyActor enemy)
     {
-        Global.Datas.User.AddCurrency(CurrencyType.Gold, 1);
-        Global.Datas.User.AddCurrency(CurrencyType.Exp, 1);
         foreach(var reward in enemy.Data.RewardData.Rewards)
         {
             Global.Datas.User.AddCurrency((CurrencyType)reward.Id, reward.Count);

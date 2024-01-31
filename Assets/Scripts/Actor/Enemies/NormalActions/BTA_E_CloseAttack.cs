@@ -15,7 +15,7 @@ public class BTA_E_CloseAttack : BTAction
     {
         var player = Global.CurrentStage.PlayerActor;
         if (player == null)
-            return false;
+            _state = ActionState.End;
 
         switch (_state)
         {
@@ -43,6 +43,7 @@ public class BTA_E_CloseAttack : BTAction
                 }
                 break;
             case ActionState.End:
+                Reset();
                 return true;
         }
 
