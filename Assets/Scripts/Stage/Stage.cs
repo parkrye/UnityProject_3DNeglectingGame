@@ -62,6 +62,8 @@ public class Stage : MonoBehaviour
 
         var navMeshSurfece = GetComponentInChildren<NavMeshSurface>();
         navMeshSurfece.BuildNavMesh();
+
+        Global.UI.CloseAllDialog();
     }
 
     public void SpawnPlayer(PlayerActor actor)
