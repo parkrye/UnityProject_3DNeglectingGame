@@ -53,22 +53,41 @@ public class LevelUpDialog : Dialog
         statSlotTemplate.gameObject.SetActive(false);
     }
 
-    private void UpdateCost()
+    private void UpdateCost(string target)
     {
         var userData = Global.Datas.UserData;
-
-        _templates["LV"].GetImage("LevelBar").fillAmount = userData.GetCurrency(CurrencyType.Exp) / userData.ActorData.Level * 10;
-        _templates["HP"].GetText("StatUpCost").text = $"{userData.ActorData.Hp * 5}";
-        _templates["MS"].GetText("StatUpCost").text = $"{userData.ActorData.MoveSpeed * 5}";
-        _templates["AD"].GetText("StatUpCost").text = $"{userData.ActorData.AttackDamage * 5}";
-        _templates["AS"].GetText("StatUpCost").text = $"{userData.ActorData.AttackSpeed * 5}";
+        switch (target)
+        {
+            case "LV":
+                _templates[target].GetImage("LevelBar").fillAmount = userData.GetCurrency(CurrencyType.Exp) / userData.ActorData.Level * 10;
+                break;
+            case "HP":
+                _templates[target].GetText("StatUpCost").text = $"{userData.ActorData.Hp * 5}";
+                break;
+            case "MS":
+                _templates[target].GetText("StatUpCost").text = $"{userData.ActorData.MoveSpeed * 5}";
+                break;
+            case "AD":
+                _templates[target].GetText("StatUpCost").text = $"{userData.ActorData.AttackDamage * 5}";
+                break;
+            case "AS":
+                _templates[target].GetText("StatUpCost").text = $"{userData.ActorData.AttackSpeed * 5}";
+                break;
+            default:
+                _templates["LV"].GetImage("LevelBar").fillAmount = userData.GetCurrency(CurrencyType.Exp) / userData.ActorData.Level * 10;
+                _templates["HP"].GetText("StatUpCost").text = $"{userData.ActorData.Hp * 5}";
+                _templates["MS"].GetText("StatUpCost").text = $"{userData.ActorData.MoveSpeed * 5}";
+                _templates["AD"].GetText("StatUpCost").text = $"{userData.ActorData.AttackDamage * 5}";
+                _templates["AS"].GetText("StatUpCost").text = $"{userData.ActorData.AttackSpeed * 5}";
+                break;
+        }
     }
 
-    private void OnClickLevelUpButton(string name)
+    private void OnClickLevelUpButton(string target)
     {
         var userData = Global.Datas.UserData;
 
-        switch (name)
+        switch (target)
         {
             default:
                 break;
@@ -76,35 +95,35 @@ public class LevelUpDialog : Dialog
                 if (userData.TryUseCurrency(CurrencyType.Exp, userData.ActorData.Level * 10) == true)
                 {
                     userData.ActorData.Level += 1;
-                    UpdateCost();
+                    UpdateCost(target);
                 }
                 break;
             case "HP":
                 if (userData.TryUseCurrency(CurrencyType.Ruby, userData.ActorData.Hp * 5) == true)
                 {
                     userData.ActorData.Hp += 1;
-                    UpdateCost();
+                    UpdateCost(target);
                 }
                 break;
             case "MS":
                 if (userData.TryUseCurrency(CurrencyType.Ruby, userData.ActorData.MoveSpeed * 5) == true)
                 {
                     userData.ActorData.MoveSpeed += 1;
-                    UpdateCost();
+                    UpdateCost(target);
                 }
                 break;
             case "AD":
                 if (userData.TryUseCurrency(CurrencyType.Ruby, userData.ActorData.AttackDamage * 5) == true)
                 {
                     userData.ActorData.AttackDamage += 1;
-                    UpdateCost();
+                    UpdateCost(target);
                 }
                 break;
             case "AS":
                 if (userData.TryUseCurrency(CurrencyType.Ruby, userData.ActorData.AttackSpeed * 5) == true)
                 {
                     userData.ActorData.AttackSpeed += 1;
-                    UpdateCost();
+                    UpdateCost(target);
                 }
                 break;
         }
