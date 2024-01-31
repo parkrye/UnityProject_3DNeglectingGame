@@ -9,10 +9,7 @@ public class LevelUpDialog : Dialog
     protected override void Init()
     {
         base.Init();
-    }
 
-    private void Start()
-    {
         var userData = Global.Datas.User;
 
         var levelSlotTemplate = GetTemplate("LevelFrameTemplate");
@@ -53,17 +50,20 @@ public class LevelUpDialog : Dialog
         instant.GetButton("StatUpButton").onClick.AddListener(() => OnClickLevelUpButton("AS"));
 
         statSlotTemplate.gameObject.SetActive(false);
+
+        _updateCurrencyAction = UpdateCurrency;
     }
 
-    private void OnEnable()
+    public override void OpenDialog()
     {
+        base.OpenDialog();
         UpdateCost();
-        _updateCurrencyAction = UpdateCurrency;
         Global.Datas.User.CurrencyUpdate.AddListener(_updateCurrencyAction);
     }
 
-    private void OnDisable()
+    public override void CloseDialog()
     {
+        base.CloseDialog();
         Global.Datas.User.CurrencyUpdate.RemoveListener(_updateCurrencyAction);
     }
 

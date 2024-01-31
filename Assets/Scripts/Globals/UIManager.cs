@@ -40,6 +40,7 @@ public class UIManager
         {
             var peek = _dialogStack.Peek();
             peek.gameObject.SetActive(false);
+            peek.CloseDialog();
             if (peek.Equals(dialog))
             {
                 _dialogStack.Pop();
@@ -49,6 +50,7 @@ public class UIManager
 
         _dialogStack.Push(dialog);
         dialog.gameObject.SetActive(true);
+        dialog.OpenDialog();
     }
 
     public void CloseCurrentDialog()
@@ -64,6 +66,7 @@ public class UIManager
         while(_dialogStack.Count > 0 )
         {
             _dialogStack.Peek().gameObject.SetActive(false);
+            _dialogStack.Peek().CloseDialog();
             _dialogStack.Pop();
         }
     }

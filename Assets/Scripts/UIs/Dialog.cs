@@ -4,4 +4,14 @@ public class Dialog : UI
     {
 
     }
+
+    public virtual void OpenDialog()
+    {
+
+    }
+
+    public virtual void CloseDialog()
+    {
+
+    }
 }
