@@ -36,3 +36,22 @@ public class ActorDataList
         Data.Add(data);
     }
 }
+
+public class EnemyData
+{
+    private ActorData _enemyActorData;
+    public ActorData EnemyActorData { get { return _enemyActorData; } }
+    private RewardData _rewardData;
+    public RewardData RewardData { get { return _rewardData; } }
+
+    public EnemyData(ActorData enemyActorData, RewardData rewardData)
+    {
+        _enemyActorData = enemyActorData;
+        _rewardData = rewardData;
+    }
+
+    public EnemyData Clone()
+    {
+        return new EnemyData(_enemyActorData.Clone(), _rewardData);
+    }
+}

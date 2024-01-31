@@ -24,7 +24,7 @@ public class RuntimeInitializer
         }
         var playerDataFromJson = File.ReadAllText(playerDataPath);
         playerData = JsonUtility.FromJson<PlayerData>(playerDataFromJson);
-        Global.Datas.UserData.PlayerData = playerData;
+        Global.Datas.User.PlayerData = playerData;
 
         var playerActorDataPath = "Assets/Contents/Datas/PlayerActorData";
         ActorData playerActorData = new ActorData();
@@ -41,7 +41,28 @@ public class RuntimeInitializer
         }
         var playerActorDataFromJson = File.ReadAllText(playerActorDataPath);
         playerActorData = JsonUtility.FromJson<ActorData>(playerActorDataFromJson);
-        Global.Datas.UserData.ActorData = playerActorData;
+        Global.Datas.User.ActorData = playerActorData;
+
+        var rewardDataPath = "Assets/Contents/Datas/RewardData";
+        if (File.Exists(rewardDataPath) == false)
+        {
+            RewardDataList rewardDataList = new RewardDataList();
+            for (int i = 0; i < 4; i++)
+            {
+                RewardData nowRewardData = new RewardData();
+                nowRewardData.Id = i;
+                nowRewardData.AddReawrd(new CurrencyData((CurrencyType)i, 10));
+                rewardDataList.Add(nowRewardData);
+            }
+            var rewardDataToJson = JsonUtility.ToJson(rewardDataList);
+            File.WriteAllText(rewardDataPath, rewardDataToJson);
+        }
+        var rewardDataFromJson = File.ReadAllText(rewardDataPath);
+        var rewardDatas = JsonUtility.FromJson<RewardDataList>(rewardDataFromJson);
+        foreach (var rewardData in rewardDatas.Data)
+        {
+            Global.Datas.Reward.AddRewardTable(rewardData);
+        }
 
         var enemyActorDataPath = "Assets/Contents/Datas/EnemyActorData";
         if (File.Exists(enemyActorDataPath) == false)
@@ -53,7 +74,7 @@ public class RuntimeInitializer
                 nowEnemyActorData.Id = i;
                 nowEnemyActorData.Name = $"Enemy{i}";
                 nowEnemyActorData.Level = 1;
-                nowEnemyActorData.Hp = 10;
+                nowEnemyActorData.Hp = 5;
                 nowEnemyActorData.MoveSpeed = 1;
                 nowEnemyActorData.AttackSpeed = 1;
                 nowEnemyActorData.AttackDamage = 1;
@@ -66,7 +87,7 @@ public class RuntimeInitializer
         var enemyActorDatas = JsonUtility.FromJson<ActorDataList>(enemyActorDataFromJson);
         foreach (var enemyActorData in enemyActorDatas.Data)
         {
-            Global.Datas.EnemyDatas.EnemyData.Add(enemyActorData.Id, enemyActorData);
+            Global.Datas.Enemy.AddEnemyTable(enemyActorData, Global.Datas.Reward.GetReward(enemyActorData.Id % 4));
         }
     }
 }

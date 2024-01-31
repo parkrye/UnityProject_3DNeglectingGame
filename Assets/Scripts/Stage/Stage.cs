@@ -123,8 +123,12 @@ public class Stage : MonoBehaviour
 
     private void EnemyDied(EnemyActor enemy)
     {
-        Global.Datas.UserData.AddCurrency(CurrencyType.Gold, 1);
-        Global.Datas.UserData.AddCurrency(CurrencyType.Exp, 1);
+        Global.Datas.User.AddCurrency(CurrencyType.Gold, 1);
+        Global.Datas.User.AddCurrency(CurrencyType.Exp, 1);
+        foreach(var reward in enemy.Data.RewardData.Rewards)
+        {
+            Global.Datas.User.AddCurrency((CurrencyType)reward.Id, reward.Count);
+        }
 
         _spawnedEnemyList.Remove(enemy);
         _actorPool.Release(enemy);
@@ -144,6 +148,6 @@ public class Stage : MonoBehaviour
 
     private void OnApplicationQuit()
     {
-        Global.Datas.UserData.SaveData();
+        Global.Datas.User.SaveData();
     }
 }

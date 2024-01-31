@@ -57,7 +57,7 @@ public class BTA_E_CloseAttack : BTAction
 
     private async UniTask AttackCoolTimeRoutine()
     {
-        await UniTask.Delay(1000 / _enemyActor.Data.AttackSpeed);
+        await UniTask.Delay(1000 / _enemyActor.Data.EnemyActorData.AttackSpeed);
         _isAttackable = true;
     }
 
@@ -72,7 +72,7 @@ public class BTA_E_CloseAttack : BTAction
             var player = target.GetComponent<PlayerActor>();
             if (player != null)
             {
-                player.Hit(_enemyActor.Data.AttackDamage);
+                player.Hit(_enemyActor.Data.EnemyActorData.AttackDamage);
             }
         }
     }

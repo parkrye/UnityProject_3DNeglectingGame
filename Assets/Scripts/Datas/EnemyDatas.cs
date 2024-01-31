@@ -2,14 +2,24 @@
 
 public class EnemyDatas
 {
-    private Dictionary<int, ActorData> _enemyData = new Dictionary<int, ActorData>();
-    public Dictionary<int, ActorData> EnemyData { get { return _enemyData; } set { _enemyData = value; } }
+    private Dictionary<int, EnemyData> _enemyData = new Dictionary<int, EnemyData>();
+    public Dictionary<int, EnemyData> EnemyData { get { return _enemyData; } set { _enemyData = value; } }
 
-    public ActorData GetEnemyData(int id)
+    public EnemyData GetEnemyData(int id)
     {
         if (_enemyData.ContainsKey(id) == false)
             return null;
 
         return _enemyData[id].Clone();
+    }
+
+    public void AddEnemyTable(ActorData actorData, RewardData rewardData)
+    {
+        if (_enemyData.ContainsKey(actorData.Id))
+            return;
+
+        EnemyData enemyActor = new EnemyData(actorData, rewardData);
+
+        _enemyData.Add(actorData.Id, enemyActor);
     }
 }

@@ -5,10 +5,10 @@ using Cysharp.Threading.Tasks;
 
 public class EnemyActor : Actor, IHitable
 {
-    private ActorData _data;
-    public ActorData Data { get { return _data; } }
+    private EnemyData _data;
+    public EnemyData Data { get { return _data; } }
     private int _hp;
-    public bool IsDamaged { get { return _hp < _data.Hp; } }
+    public bool IsDamaged { get { return _hp < _data.EnemyActorData.Hp; } }
     private EnemyActionHandler _actionHandler;
     private NavMeshAgent _navMesh;
     private NormalAnimationController _anim;
@@ -35,8 +35,8 @@ public class EnemyActor : Actor, IHitable
     private void OnEnable()
     {
         if(_data == null)
-            _data = Global.Datas.EnemyDatas.GetEnemyData(1);
-        _hp = _data.Hp;
+            _data = Global.Datas.Enemy.GetEnemyData(1);
+        _hp = _data.EnemyActorData.Hp;
         _state = ActorState.Alive;
         if (_navMesh == null)
             _navMesh = gameObject.AddComponent<NavMeshAgent>();
@@ -64,7 +64,7 @@ public class EnemyActor : Actor, IHitable
     public bool Hit(float damage)
     {
         _hp -= (int)damage;
-        HPRatioEvent?.Invoke((float)_hp / Data.Hp, true);
+        HPRatioEvent?.Invoke((float)_hp / Data.EnemyActorData.Hp, true);
         if (_hp <= 0)
         {
             _state = ActorState.Dead;

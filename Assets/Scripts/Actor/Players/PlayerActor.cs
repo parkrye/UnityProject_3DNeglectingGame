@@ -39,7 +39,7 @@ public class PlayerActor : Actor, IHitable
     public void StageStarted()
     {
         _state = ActorState.Alive;
-        _data = Global.Datas.UserData.ActorData;
+        _data = Global.Datas.User.ActorData;
         _hp = _data.Hp;
         ActionRoutine().Forget();
 

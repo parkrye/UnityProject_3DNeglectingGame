@@ -27,6 +27,7 @@ public class UserDatas
             if (currencyData.Id == (int)currencyType)
             {
                 currencyData.Count += count;
+                Debug.Log($"{currencyType} Added {count} / total {currencyData.Count}");
             }
         }
     }

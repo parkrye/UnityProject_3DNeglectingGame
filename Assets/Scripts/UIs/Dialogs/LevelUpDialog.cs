@@ -11,7 +11,7 @@ public class LevelUpDialog : Dialog
 
     private void Start()
     {
-        var userData = Global.Datas.UserData;
+        var userData = Global.Datas.User;
 
         var levelSlotTemplate = GetTemplate("LevelFrameTemplate");
         levelSlotTemplate.GetText("LevelText").text = $"Lv {userData.ActorData.Level}";
@@ -55,7 +55,7 @@ public class LevelUpDialog : Dialog
 
     private void UpdateCost(string target)
     {
-        var userData = Global.Datas.UserData;
+        var userData = Global.Datas.User;
         switch (target)
         {
             case "LV":
@@ -85,7 +85,7 @@ public class LevelUpDialog : Dialog
 
     private void OnClickLevelUpButton(string target)
     {
-        var userData = Global.Datas.UserData;
+        var userData = Global.Datas.User;
 
         switch (target)
         {
