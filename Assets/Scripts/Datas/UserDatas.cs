@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.IO;
+using UnityEngine.Events;
 
 public class UserDatas
 {
@@ -7,6 +8,7 @@ public class UserDatas
     public ActorData ActorData { get { return _actorData; } set { _actorData = value; } }
     private PlayerData _playerData;
     public PlayerData PlayerData { get { return _playerData; } set { _playerData = value; } }
+    public UnityEvent<CurrencyData> CurrencyUpdate = new UnityEvent<CurrencyData>();
 
     public int GetCurrency(CurrencyType currencyType)
     {
@@ -27,7 +29,7 @@ public class UserDatas
             if (currencyData.Id == (int)currencyType)
             {
                 currencyData.Count += count;
-                Debug.Log($"{currencyType} Added {count} / total {currencyData.Count}");
+                CurrencyUpdate?.Invoke(currencyData);
             }
         }
     }
@@ -39,6 +41,7 @@ public class UserDatas
             if (currencyData.Id == (int)currencyType)
             {
                 currencyData.Count = count;
+                CurrencyUpdate?.Invoke(currencyData);
             }
         }
     }
@@ -52,6 +55,7 @@ public class UserDatas
                 if(currencyData.Count >= count)
                 {
                     currencyData.Count -= count;
+                    CurrencyUpdate?.Invoke(currencyData);
                     return true;
                 }
                 return false;

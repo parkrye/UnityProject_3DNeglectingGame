@@ -1,8 +1,10 @@
 using System.Collections.Generic;
+using UnityEngine.Events;
 
 public class LevelUpDialog : Dialog
 {
     private Dictionary<string, Template> _templates = new Dictionary<string, Template>();
+    private UnityAction<CurrencyData> _updateCurrencyAction;
 
     protected override void Init()
     {
@@ -15,7 +17,7 @@ public class LevelUpDialog : Dialog
 
         var levelSlotTemplate = GetTemplate("LevelFrameTemplate");
         levelSlotTemplate.GetText("LevelText").text = $"Lv {userData.ActorData.Level}";
-        levelSlotTemplate.GetImage("LevelBar").fillAmount = userData.GetCurrency(CurrencyType.Exp) / userData.ActorData.Level * 10;
+        levelSlotTemplate.GetImage("LevelBar").fillAmount = (float)userData.GetCurrency(CurrencyType.Exp) / (userData.ActorData.Level * 10);
         _templates.Add("LV", levelSlotTemplate);
         levelSlotTemplate.GetButton("LevelUpButton").onClick.AddListener(() => OnClickLevelUpButton("LV"));
 
@@ -53,13 +55,26 @@ public class LevelUpDialog : Dialog
         statSlotTemplate.gameObject.SetActive(false);
     }
 
-    private void UpdateCost(string target)
+    private void OnEnable()
+    {
+        UpdateCost();
+        _updateCurrencyAction = UpdateCurrency;
+        Global.Datas.User.CurrencyUpdate.AddListener(_updateCurrencyAction);
+    }
+
+    private void OnDisable()
+    {
+        Global.Datas.User.CurrencyUpdate.RemoveListener(_updateCurrencyAction);
+    }
+
+    private void UpdateCost(string target = "")
     {
         var userData = Global.Datas.User;
         switch (target)
         {
             case "LV":
-                _templates[target].GetImage("LevelBar").fillAmount = userData.GetCurrency(CurrencyType.Exp) / userData.ActorData.Level * 10;
+                _templates[target].GetText("LevelText").text = $"Lv {userData.ActorData.Level}";
+                _templates[target].GetImage("LevelBar").fillAmount = (float)userData.GetCurrency(CurrencyType.Exp) / (userData.ActorData.Level * 10);
                 break;
             case "HP":
                 _templates[target].GetText("StatUpCost").text = $"{userData.ActorData.Hp * 5}";
@@ -74,7 +89,7 @@ public class LevelUpDialog : Dialog
                 _templates[target].GetText("StatUpCost").text = $"{userData.ActorData.AttackSpeed * 5}";
                 break;
             default:
-                _templates["LV"].GetImage("LevelBar").fillAmount = userData.GetCurrency(CurrencyType.Exp) / userData.ActorData.Level * 10;
+                _templates["LV"].GetImage("LevelBar").fillAmount = (float)userData.GetCurrency(CurrencyType.Exp) / (userData.ActorData.Level * 10);
                 _templates["HP"].GetText("StatUpCost").text = $"{userData.ActorData.Hp * 5}";
                 _templates["MS"].GetText("StatUpCost").text = $"{userData.ActorData.MoveSpeed * 5}";
                 _templates["AD"].GetText("StatUpCost").text = $"{userData.ActorData.AttackDamage * 5}";
@@ -125,6 +140,22 @@ public class LevelUpDialog : Dialog
                     userData.ActorData.AttackSpeed += 1;
                     UpdateCost(target);
                 }
+                break;
+        }
+    }
+
+    private void UpdateCurrency(CurrencyData currencyData)
+    {
+        switch(currencyData.Id)
+        {
+            case (int)CurrencyType.Gold:
+                break;
+            case (int)CurrencyType.Diamond:
+                break;
+            case (int)CurrencyType.Ruby:
+                break;
+            case (int)CurrencyType.Exp:
+                UpdateCost("LV");
                 break;
         }
     }
