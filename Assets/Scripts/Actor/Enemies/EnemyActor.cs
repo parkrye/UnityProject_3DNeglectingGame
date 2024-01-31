@@ -7,8 +7,9 @@ public class EnemyActor : Actor, IHitable
 {
     private EnemyData _data;
     public EnemyData Data { get { return _data; } }
-    private int _hp;
-    public bool IsDamaged { get { return _hp < _data.EnemyActorData.Hp; } }
+    private int _hp, _maxHp, _attackDamage;
+    public bool IsDamaged { get { return _hp < _maxHp; } }
+    public int AttackDamage { get { return _attackDamage; } }
     private EnemyActionHandler _actionHandler;
     private NavMeshAgent _navMesh;
     private NormalAnimationController _anim;
@@ -20,11 +21,9 @@ public class EnemyActor : Actor, IHitable
     private void Awake()
     {
         _actionHandler = GetComponent<EnemyActionHandler>();
-        if (_actionHandler == null)
-            _actionHandler = gameObject.AddComponent<EnemyActionHandler>();
+        _actionHandler ??= gameObject.AddComponent<EnemyActionHandler>();
         _anim = GetComponent<NormalAnimationController>();
-        if( _anim == null )
-            _anim = gameObject.AddComponent<NormalAnimationController>();
+        _anim ??= gameObject.AddComponent<NormalAnimationController>();
         var hpBar = GetComponentInChildren<HPBar>();
         if (hpBar != null)
             HPRatioEvent.AddListener(hpBar.ModifyBar);
@@ -32,22 +31,22 @@ public class EnemyActor : Actor, IHitable
         _type = ActorType.Enemy;
     }
 
-    private void OnEnable()
-    {
-        if(_data == null)
-            _data = Global.Datas.Enemy.GetEnemyData(1);
-        _hp = _data.EnemyActorData.Hp;
-        _state = ActorState.Alive;
-        if (_navMesh == null)
-            _navMesh = gameObject.AddComponent<NavMeshAgent>();
-        ActionRoutine().Forget();
-        HPRatioEvent?.Invoke(1f, true);
-    }
-
     private void OnDisable()
     {
         _state = ActorState.Dead;
         _actionHandler.ResetBT();
+    }
+
+    public void Init(int stageLevel)
+    {
+        _data ??= Global.Datas.Enemy.GetEnemyData(1);
+        _maxHp = (_hp + _data.EnemyActorData.Level) * stageLevel;
+        _hp = _maxHp;
+        _attackDamage += _data.EnemyActorData.Level + stageLevel;
+        _navMesh ??= gameObject.AddComponent<NavMeshAgent>();
+        ActionRoutine().Forget();
+        HPRatioEvent?.Invoke(1f, true);
+        _anim.PlayRecoveryAnimation();
     }
 
     private async UniTask ActionRoutine()
@@ -64,7 +63,7 @@ public class EnemyActor : Actor, IHitable
     public bool Hit(float damage)
     {
         _hp -= (int)damage;
-        HPRatioEvent?.Invoke((float)_hp / Data.EnemyActorData.Hp, true);
+        HPRatioEvent?.Invoke((float)_hp / _maxHp, true);
         if (_hp <= 0)
         {
             _state = ActorState.Dead;

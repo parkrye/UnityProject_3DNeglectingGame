@@ -72,7 +72,7 @@ public class BTA_E_CloseAttack : BTAction
             var player = target.GetComponent<PlayerActor>();
             if (player != null)
             {
-                player.Hit(_enemyActor.Data.EnemyActorData.AttackDamage);
+                player.Hit(_enemyActor.AttackDamage);
             }
         }
     }

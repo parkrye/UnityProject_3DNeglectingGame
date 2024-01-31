@@ -41,6 +41,9 @@ public class Stage : MonoBehaviour
     private List<EnemyActor> _spawnedEnemyList = new List<EnemyActor>();
     public List<EnemyActor> Enemies { get { return _spawnedEnemyList; } }
 
+    private int _stageLevel;
+    public int StageLevel { get { return _stageLevel; } }
+
     public void Initialize()
     {
         Global.CurrentStage = this;
@@ -83,7 +86,7 @@ public class Stage : MonoBehaviour
             return null;
 
         var spawned = _actorPool.Get(actor, spawnPosition, rotation, _actorParent);
-        spawned.Anim.PlayRecoveryAnimation();
+        spawned.Init(_stageLevel);
         return spawned;
     }
 
@@ -142,6 +145,8 @@ public class Stage : MonoBehaviour
         }
 
         _actorPool.Release(_playerActor);
+
+        _actorPool.Reset();
 
         SceneManager.LoadScene("MainScene");
     }
