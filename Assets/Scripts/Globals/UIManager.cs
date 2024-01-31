@@ -37,7 +37,15 @@ public class UIManager
     public void OpenDialog(Dialog dialog)
     {
         if (_dialogStack.Count > 0)
-            _dialogStack.Peek().gameObject.SetActive(false);
+        {
+            var peek = _dialogStack.Peek();
+            peek.gameObject.SetActive(false);
+            if (peek.Equals(dialog))
+            {
+                _dialogStack.Pop();
+                return;
+            }
+        }
 
         _dialogStack.Push(dialog);
         dialog.gameObject.SetActive(true);
