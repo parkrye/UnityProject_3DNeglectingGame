@@ -16,7 +16,13 @@ public class EnemyDatas
     public void AddEnemyTable(ActorData actorData, RewardData rewardData)
     {
         if (_enemyData.ContainsKey(actorData.Id))
+        {
+            foreach(var reward in rewardData.Rewards)
+            {
+                _enemyData[actorData.Id].RewardData.AddReawrd(reward);
+            }
             return;
+        }
 
         EnemyData enemyActor = new EnemyData(actorData, rewardData);
 
