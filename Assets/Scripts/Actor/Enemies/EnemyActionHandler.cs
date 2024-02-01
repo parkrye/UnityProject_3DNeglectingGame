@@ -13,9 +13,7 @@ public class EnemyActionHandler : MonoBehaviour
 
         BTBranch battle = new BTBranch(BranchType.AND);
         battle.AddChild(new BTA_E_CheckBattle(_enemyActor));
-        BTBranch battleActions = new BTBranch(BranchType.BOTH);
-        battleActions.AddChild(new BTA_E_CloseAttack(_enemyActor));
-        battle.AddChild(battleActions);
+        battle.AddChild(new BTA_E_CloseAttack(_enemyActor));
 
         _root.AddChild(battle);
         _root.AddChild(new BTA_E_WalkAround());
