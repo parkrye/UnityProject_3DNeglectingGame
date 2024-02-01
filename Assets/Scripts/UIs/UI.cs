@@ -16,30 +16,40 @@ public abstract class UI : MonoBehaviour
         var templateChildren = GetComponentsInChildren<Template>();
         foreach (var child in templateChildren)
         {
+            if (child.name.Contains("!"))
+                continue;
             templates[child.name] = child;
         }
 
         var textChildren = GetComponentsInChildren<TMP_Text>();
         foreach(var child in textChildren)
         {
+            if (child.name.Contains("!"))
+                continue;
             texts[child.name] = child;
         }
 
         var buttonChildren = GetComponentsInChildren<Button>();
         foreach(var child in buttonChildren)
         {
+            if (child.name.Contains("!"))
+                continue;
             buttons[child.name] = child;
         }
 
         var imageChildren = GetComponentsInChildren<Image>();
         foreach(var child in imageChildren)
         {
+            if (child.name.Contains("!"))
+                continue;
             images[child.name] = child;
         }
 
         var scrollChildren = GetComponentsInChildren<ScrollRect>();
         foreach(var child in scrollChildren)
         {
+            if (child.name.Contains("!"))
+                continue;
             var content = child.GetComponent<RectTransform>();
             while(content.childCount > 0)
             {

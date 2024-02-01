@@ -21,6 +21,10 @@ public class MainView : View
         }
 
         GetButton("LevelUpButton").onClick.AddListener(OnLevelUpButtonClick);
+        GetButton("SkillButton").onClick.AddListener(OnSkillButtonClick);
+        GetButton("EquipmentButton").onClick.AddListener(OnEquipmentButtonClick);
+        GetButton("InventoryButton").onClick.AddListener(OnInventoryButtonClick);
+        GetButton("ShopButton").onClick.AddListener(OnShopButtonClick);
         GetButton("MoreButton").onClick.AddListener(OnMoreButtonClick);
 
         GetImage("More").gameObject.SetActive(false);
@@ -50,22 +54,22 @@ public class MainView : View
         Global.UI.OpenDialog(_levelUpDialog);
     }
 
-    private void OnButton1Click()
+    private void OnSkillButtonClick()
     {
 
     }
 
-    private void OnButton2Click()
+    private void OnEquipmentButtonClick()
     {
 
     }
 
-    private void OnButton3Click()
+    private void OnInventoryButtonClick()
     {
 
     }
 
-    private void OnButton4Click()
+    private void OnShopButtonClick()
     {
 
     }

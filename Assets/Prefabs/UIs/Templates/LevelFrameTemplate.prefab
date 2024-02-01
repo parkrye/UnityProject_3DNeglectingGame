@@ -88,7 +88,7 @@ GameObject:
   - component: {fileID: 575636209089452627}
   - component: {fileID: 575636209089452626}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Text (TMP)!
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -223,7 +223,7 @@ GameObject:
   - component: {fileID: 575636209319070008}
   - component: {fileID: 575636209319070007}
   m_Layer: 5
-  m_Name: LevelBarBG
+  m_Name: LevelBarBG!
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

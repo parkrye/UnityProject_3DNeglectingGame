@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3554811712352805748}
   - component: {fileID: 3554811712352805749}
   m_Layer: 5
-  m_Name: Handle
+  m_Name: Handle!
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -140,7 +140,7 @@ GameObject:
   - component: {fileID: 3554811712442256121}
   - component: {fileID: 3554811712442256126}
   m_Layer: 5
-  m_Name: StatFrame
+  m_Name: StatFrame!
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -325,7 +325,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3554811712970942363}
   m_Layer: 5
-  m_Name: Sliding Area
+  m_Name: Sliding Area!
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -365,7 +365,7 @@ GameObject:
   - component: {fileID: 3554811713135217345}
   - component: {fileID: 3554811713135217350}
   m_Layer: 5
-  m_Name: Viewport
+  m_Name: Viewport!
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -456,7 +456,7 @@ GameObject:
   - component: {fileID: 3554811713522950336}
   - component: {fileID: 3554811713522950337}
   m_Layer: 5
-  m_Name: Scrollbar Vertical
+  m_Name: Scrollbar Vertical!
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -582,7 +582,7 @@ GameObject:
   - component: {fileID: 3554811713670161715}
   - component: {fileID: 3554811713670161714}
   m_Layer: 5
-  m_Name: Content
+  m_Name: Content!
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -660,7 +660,7 @@ GameObject:
   - component: {fileID: 3554811714165988574}
   - component: {fileID: 3554811714165988575}
   m_Layer: 5
-  m_Name: Bg
+  m_Name: Bg!
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
