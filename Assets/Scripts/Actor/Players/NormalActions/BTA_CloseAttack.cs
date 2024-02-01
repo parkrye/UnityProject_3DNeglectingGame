@@ -38,7 +38,7 @@ public class BTA_CloseAttack : BTAction
                     _state = ActionState.End;
                     return false;
                 }
-                if (Vector3.SqrMagnitude(player.transform.position - _enemyTransform.position) < 9f)
+                if (Vector3.SqrMagnitude(player.transform.position - _enemyTransform.position) < 16f)
                 {
                     player.LookAt(_enemyTransform.position);
                     player.Anim.StopMoveAnimation();
@@ -81,7 +81,7 @@ public class BTA_CloseAttack : BTAction
         var player = Global.CurrentStage.PlayerActor;
         player.Anim.AttackEndEvent.RemoveAllListeners();
 
-        var colliders = Physics.OverlapSphere(player.transform.position + player.transform.forward, 3f, 1 << 10);
+        var colliders = Physics.OverlapSphere(player.transform.position + player.transform.forward, 4f, 1 << 10);
         foreach (var target in colliders)
         {
             var enemy = target.GetComponent<EnemyActor>();

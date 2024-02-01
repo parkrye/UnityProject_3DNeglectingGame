@@ -24,7 +24,7 @@ public class BTA_E_CloseAttack : BTAction
                 _isAttackable = true;
                 break;
             case ActionState.Working:
-                if (Vector3.SqrMagnitude(player.transform.position - _enemyActor.transform.position) < 10f)
+                if (Vector3.SqrMagnitude(player.transform.position - _enemyActor.transform.position) < 16f)
                 {
                     _enemyActor.LookAt(player.transform.position);
                     _enemyActor.Anim.StopMoveAnimation();
@@ -67,7 +67,7 @@ public class BTA_E_CloseAttack : BTAction
         AttackCoolTimeRoutine().Forget();
 
         _enemyActor.Anim.AttackEndEvent.RemoveAllListeners();
-        var colliders = Physics.OverlapSphere(_enemyActor.transform.position + _enemyActor.transform.forward, 3f, 1 << 9);
+        var colliders = Physics.OverlapSphere(_enemyActor.transform.position + _enemyActor.transform.forward, 4f, 1 << 9);
         foreach (var target in colliders)
         {
             var player = target.GetComponent<PlayerActor>();
