@@ -20,8 +20,11 @@ public class BTA_E_CloseAttack : BTAction
         switch (_state)
         {
             case ActionState.Ready:
-                _state = ActionState.Working;
-                _isAttackable = true;
+                if (_enemyActor.State == ActorState.Alive)
+                {
+                    _state = ActionState.Working;
+                    _isAttackable = true;
+                }
                 break;
             case ActionState.Working:
                 if (Vector3.SqrMagnitude(player.transform.position - _enemyActor.transform.position) < G.V.SquareCloseAttackRange)

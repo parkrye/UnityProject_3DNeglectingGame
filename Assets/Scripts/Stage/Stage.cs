@@ -131,6 +131,7 @@ public class Stage : MonoBehaviour
             G.Data.User.AddCurrency((CurrencyType)reward.Id, reward.Count);
         }
 
+        enemy.ResetAction();
         _spawnedEnemyList.Remove(enemy);
         _actorPool.Release(enemy);
     }

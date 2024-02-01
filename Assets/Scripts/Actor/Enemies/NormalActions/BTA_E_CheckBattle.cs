@@ -14,7 +14,8 @@ public class BTA_E_CheckBattle : BTAction
         switch (_state)
         {
             case ActionState.Ready:
-                _state = ActionState.Working;
+                if(_enemyActor.State == ActorState.Alive)
+                    _state = ActionState.Working;
                 break;
             case ActionState.Working:
                 if (_enemyActor.IsDamaged)

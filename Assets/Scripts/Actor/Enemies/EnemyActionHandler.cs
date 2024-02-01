@@ -9,14 +9,13 @@ public class EnemyActionHandler : MonoBehaviour
     {
         _enemyActor = GetComponent<EnemyActor>();
 
-        _root = new BTBranch(BranchType.OR);
+        _root = new BTBranch(BranchType.BOTH);
 
         BTBranch battle = new BTBranch(BranchType.AND);
         battle.AddChild(new BTA_E_CheckBattle(_enemyActor));
         battle.AddChild(new BTA_E_CloseAttack(_enemyActor));
 
         _root.AddChild(battle);
-        _root.AddChild(new BTA_E_WalkAround());
     }
 
     public void Work()

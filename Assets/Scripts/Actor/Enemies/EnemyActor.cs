@@ -10,6 +10,7 @@ public class EnemyActor : Actor, IHitable
     private int _hp, _maxHp, _attackDamage;
     public bool IsDamaged { get { return _hp < _maxHp; } }
     public int AttackDamage { get { return _attackDamage; } }
+    public ActorState State { get { return _state; } }
     private EnemyActionHandler _actionHandler;
     private NavMeshAgent _navMesh;
     private NormalAnimationController _anim;
@@ -97,5 +98,10 @@ public class EnemyActor : Actor, IHitable
     public void LookAt(Vector3 position)
     {
         transform.LookAt(position);
+    }
+
+    public void ResetAction()
+    {
+
     }
 }
