@@ -40,7 +40,7 @@ public class EnemyActor : Actor, IHitable
     public void Init(int stageLevel)
     {
         _data ??= Global.Datas.Enemy.GetEnemyData(1);
-        _maxHp = (_hp + _data.EnemyActorData.Level) * stageLevel;
+        _maxHp = (_data.EnemyActorData.Hp + _data.EnemyActorData.Level) * stageLevel;
         _hp = _maxHp;
         _attackDamage += _data.EnemyActorData.Level + stageLevel;
         _navMesh ??= gameObject.AddComponent<NavMeshAgent>();

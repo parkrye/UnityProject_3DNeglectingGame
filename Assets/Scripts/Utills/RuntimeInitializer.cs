@@ -71,9 +71,10 @@ public class RuntimeInitializer
             ActorDataList enemyActorDataList = new ActorDataList();
             for (int i = 1; i < 10; i++)
             {
+                var index = i;
                 ActorData nowEnemyActorData = new ActorData();
-                nowEnemyActorData.Id = i;
-                nowEnemyActorData.Name = $"Enemy{i}";
+                nowEnemyActorData.Id = index;
+                nowEnemyActorData.Name = $"Enemy{index}";
                 nowEnemyActorData.Level = 1;
                 nowEnemyActorData.Hp = 10;
                 nowEnemyActorData.MoveSpeed = 1;
