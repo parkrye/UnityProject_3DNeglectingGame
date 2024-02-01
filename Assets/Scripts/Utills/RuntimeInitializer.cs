@@ -33,7 +33,7 @@ public class RuntimeInitializer
             playerActorData.Id = 0;
             playerActorData.Level = 1;
             playerActorData.Hp = 10;
-            playerActorData.MoveSpeed = 1;
+            playerActorData.MoveSpeed = 2;
             playerActorData.AttackSpeed = 1;
             playerActorData.AttackDamage = 1;
             string playerActorDataToJson = JsonUtility.ToJson(playerActorData);
@@ -49,9 +49,10 @@ public class RuntimeInitializer
             RewardDataList rewardDataList = new RewardDataList();
             for (int i = 0; i < 4; i++)
             {
+                var id = i;
                 RewardData nowRewardData = new RewardData();
-                nowRewardData.Id = i;
-                nowRewardData.AddReawrd(new CurrencyData((CurrencyType)i, 10));
+                nowRewardData.Id = id;
+                nowRewardData.AddReawrd(new CurrencyData((CurrencyType)id, 10));
                 rewardDataList.Add(nowRewardData);
             }
             var rewardDataToJson = JsonUtility.ToJson(rewardDataList);
@@ -74,7 +75,7 @@ public class RuntimeInitializer
                 nowEnemyActorData.Id = i;
                 nowEnemyActorData.Name = $"Enemy{i}";
                 nowEnemyActorData.Level = 1;
-                nowEnemyActorData.Hp = 5;
+                nowEnemyActorData.Hp = 10;
                 nowEnemyActorData.MoveSpeed = 1;
                 nowEnemyActorData.AttackSpeed = 1;
                 nowEnemyActorData.AttackDamage = 1;
