@@ -11,7 +11,7 @@ public class RuntimeInitializer
 
     private static void InitData()
     {
-        var playerDataPath = "Assets/Contents/Datas/PlayerData";
+        var playerDataPath = G.V.DataPath + "PlayerData";
         PlayerData playerData = new PlayerData();
         if (File.Exists(playerDataPath) == false)
         {
@@ -24,9 +24,9 @@ public class RuntimeInitializer
         }
         var playerDataFromJson = File.ReadAllText(playerDataPath);
         playerData = JsonUtility.FromJson<PlayerData>(playerDataFromJson);
-        Global.Datas.User.PlayerData = playerData;
+        G.Data.User.PlayerData = playerData;
 
-        var playerActorDataPath = "Assets/Contents/Datas/PlayerActorData";
+        var playerActorDataPath = G.V.DataPath + "PlayerActorData";
         ActorData playerActorData = new ActorData();
         if (File.Exists(playerActorDataPath) == false)
         {
@@ -41,9 +41,9 @@ public class RuntimeInitializer
         }
         var playerActorDataFromJson = File.ReadAllText(playerActorDataPath);
         playerActorData = JsonUtility.FromJson<ActorData>(playerActorDataFromJson);
-        Global.Datas.User.ActorData = playerActorData;
+        G.Data.User.ActorData = playerActorData;
 
-        var rewardDataPath = "Assets/Contents/Datas/RewardData";
+        var rewardDataPath = G.V.DataPath + "RewardData";
         if (File.Exists(rewardDataPath) == false)
         {
             RewardDataList rewardDataList = new RewardDataList();
@@ -62,10 +62,10 @@ public class RuntimeInitializer
         var rewardDatas = JsonUtility.FromJson<RewardDataList>(rewardDataFromJson);
         foreach (var rewardData in rewardDatas.Data)
         {
-            Global.Datas.Reward.AddRewardTable(rewardData);
+            G.Data.Reward.AddRewardTable(rewardData);
         }
 
-        var enemyActorDataPath = "Assets/Contents/Datas/EnemyActorData";
+        var enemyActorDataPath = G.V.DataPath + "EnemyActorData";
         if (File.Exists(enemyActorDataPath) == false)
         {
             ActorDataList enemyActorDataList = new ActorDataList();
@@ -89,8 +89,8 @@ public class RuntimeInitializer
         var enemyActorDatas = JsonUtility.FromJson<ActorDataList>(enemyActorDataFromJson);
         foreach (var enemyActorData in enemyActorDatas.Data)
         {
-            Global.Datas.Enemy.AddEnemyTable(enemyActorData, Global.Datas.Reward.GetReward(3));
-            Global.Datas.Enemy.AddEnemyTable(enemyActorData, Global.Datas.Reward.GetReward(enemyActorData.Id % 4));
+            G.Data.Enemy.AddEnemyTable(enemyActorData, G.Data.Reward.GetReward(3));
+            G.Data.Enemy.AddEnemyTable(enemyActorData, G.Data.Reward.GetReward(enemyActorData.Id % 4));
         }
     }
 }

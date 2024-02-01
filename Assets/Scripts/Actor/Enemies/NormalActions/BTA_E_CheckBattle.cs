@@ -23,7 +23,7 @@ public class BTA_E_CheckBattle : BTAction
                     break;
                 }
 
-                if (Vector3.SqrMagnitude(Global.CurrentStage.PlayerActor.transform.position - _enemyActor.transform.position) < 100f)
+                if (Vector3.SqrMagnitude(G.CurrentStage.PlayerActor.transform.position - _enemyActor.transform.position) < G.V.SquareEnenyFindRange)
                 {
                     _state = ActionState.End;
                     break;

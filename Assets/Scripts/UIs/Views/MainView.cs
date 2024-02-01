@@ -35,23 +35,23 @@ public class MainView : View
     public override void OpenView()
     {
         base.OpenView();
-        var userData = Global.Datas.User;
+        var userData = G.Data.User;
         GetText("GoldCount").text = $"{userData.GetCurrency(CurrencyType.Gold)}";
         GetText("DiamondCount").text = $"{userData.GetCurrency(CurrencyType.Diamond)}";
         GetText("RubyCount").text = $"{userData.GetCurrency(CurrencyType.Ruby)}";
         GetText("EXPCount").text = $"{userData.GetCurrency(CurrencyType.Exp)}";
-        Global.Datas.User.CurrencyUpdate.AddListener(_updateCurrencyAction);
+        G.Data.User.CurrencyUpdate.AddListener(_updateCurrencyAction);
     }
 
     public override void CloseView()
     {
         base.CloseView();
-        Global.Datas.User.CurrencyUpdate.RemoveListener(_updateCurrencyAction);
+        G.Data.User.CurrencyUpdate.RemoveListener(_updateCurrencyAction);
     }
 
     private void OnLevelUpButtonClick()
     {
-        Global.UI.OpenDialog(_levelUpDialog);
+        G.UI.OpenDialog(_levelUpDialog);
     }
 
     private void OnSkillButtonClick()

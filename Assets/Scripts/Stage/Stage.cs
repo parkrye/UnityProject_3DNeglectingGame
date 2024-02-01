@@ -46,7 +46,7 @@ public class Stage : MonoBehaviour
 
     public void Initialize()
     {
-        Global.CurrentStage = this;
+        G.CurrentStage = this;
 
         _actorCamera = GetComponentInChildren<CinemachineVirtualCamera>();
         _mainLight = GetComponentInChildren<Light>();
@@ -66,7 +66,7 @@ public class Stage : MonoBehaviour
         var navMeshSurfece = GetComponentInChildren<NavMeshSurface>();
         navMeshSurfece.BuildNavMesh();
 
-        Global.UI.CloseAllDialog();
+        G.UI.CloseAllDialog();
     }
 
     public void SpawnPlayer(PlayerActor actor)
@@ -128,7 +128,7 @@ public class Stage : MonoBehaviour
     {
         foreach(var reward in enemy.Data.RewardData.Rewards)
         {
-            Global.Datas.User.AddCurrency((CurrencyType)reward.Id, reward.Count);
+            G.Data.User.AddCurrency((CurrencyType)reward.Id, reward.Count);
         }
 
         _spawnedEnemyList.Remove(enemy);
@@ -151,6 +151,6 @@ public class Stage : MonoBehaviour
 
     private void OnApplicationQuit()
     {
-        Global.Datas.User.SaveData();
+        G.Data.User.SaveData();
     }
 }

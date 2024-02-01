@@ -10,7 +10,7 @@ public class LevelUpDialog : Dialog
     {
         base.Init();
 
-        var userData = Global.Datas.User;
+        var userData = G.Data.User;
 
         var levelSlotTemplate = GetTemplate("LevelFrameTemplate");
         levelSlotTemplate.GetText("LevelText").text = $"Lv {userData.ActorData.Level}";
@@ -58,18 +58,18 @@ public class LevelUpDialog : Dialog
     {
         base.OpenDialog();
         UpdateCost();
-        Global.Datas.User.CurrencyUpdate.AddListener(_updateCurrencyAction);
+        G.Data.User.CurrencyUpdate.AddListener(_updateCurrencyAction);
     }
 
     public override void CloseDialog()
     {
         base.CloseDialog();
-        Global.Datas.User.CurrencyUpdate.RemoveListener(_updateCurrencyAction);
+        G.Data.User.CurrencyUpdate.RemoveListener(_updateCurrencyAction);
     }
 
     private void UpdateCost(string target = "")
     {
-        var userData = Global.Datas.User;
+        var userData = G.Data.User;
         switch (target)
         {
             case "LV":
@@ -100,7 +100,7 @@ public class LevelUpDialog : Dialog
 
     private void OnClickLevelUpButton(string target)
     {
-        var userData = Global.Datas.User;
+        var userData = G.Data.User;
 
         switch (target)
         {

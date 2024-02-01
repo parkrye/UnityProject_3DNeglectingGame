@@ -43,7 +43,7 @@ public class StageCreator : MonoBehaviour
         var mainUI = FindFirstObjectByType<MainView>();
         if (mainUI != null)
         {
-            Global.UI.OpenView(mainUI);
+            G.UI.OpenView(mainUI);
         }
 
         var views = FindObjectsByType<View>(FindObjectsSortMode.None);

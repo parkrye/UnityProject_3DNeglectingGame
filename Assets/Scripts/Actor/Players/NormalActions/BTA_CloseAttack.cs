@@ -8,11 +8,11 @@ public class BTA_CloseAttack : BTAction
 
     public override bool Work()
     {
-        var enemies = Global.CurrentStage.Enemies;
+        var enemies = G.CurrentStage.Enemies;
         if (enemies.Count == 0)
             return false;
 
-        var player = Global.CurrentStage.PlayerActor;
+        var player = G.CurrentStage.PlayerActor;
         switch (_state)
         {
             case ActionState.Ready:
@@ -38,7 +38,7 @@ public class BTA_CloseAttack : BTAction
                     _state = ActionState.End;
                     return false;
                 }
-                if (Vector3.SqrMagnitude(player.transform.position - _enemyTransform.position) < 16f)
+                if (Vector3.SqrMagnitude(player.transform.position - _enemyTransform.position) < G.V.SquareCloseAttackRange)
                 {
                     player.LookAt(_enemyTransform.position);
                     player.Anim.StopMoveAnimation();
@@ -72,16 +72,16 @@ public class BTA_CloseAttack : BTAction
 
     private async UniTask AttackCoolTimeRoutine()
     {
-        await UniTask.Delay(1000 / Global.CurrentStage.PlayerActor.Data.AttackSpeed);
+        await UniTask.Delay(1000 / G.CurrentStage.PlayerActor.Data.AttackSpeed);
         _isAttackable = true;
     }
 
     private void AttackReaction()
     {
-        var player = Global.CurrentStage.PlayerActor;
+        var player = G.CurrentStage.PlayerActor;
         player.Anim.AttackEndEvent.RemoveAllListeners();
 
-        var colliders = Physics.OverlapSphere(player.transform.position + player.transform.forward, 4f, 1 << 10);
+        var colliders = Physics.OverlapSphere(player.transform.position + player.transform.forward, G.V.CloseAttackRange, 1 << 10);
         foreach (var target in colliders)
         {
             var enemy = target.GetComponent<EnemyActor>();
