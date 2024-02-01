@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using UnityEngine;
 
 public class UIManager
 {
@@ -22,6 +21,7 @@ public class UIManager
         CloseCurrentView();
 
         _currentView = view;
+        _currentView.OpenView();
         _currentView.gameObject.SetActive(true);
     }
 
@@ -31,6 +31,7 @@ public class UIManager
             return;
 
         _currentView.gameObject.SetActive(false);
+        _currentView.CloseView();
         _currentView = null;
     }
 

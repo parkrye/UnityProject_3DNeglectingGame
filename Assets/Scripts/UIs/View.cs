@@ -4,4 +4,14 @@ public class View : UI
     {
 
     }
+
+    public virtual void OpenView()
+    {
+
+    }
+
+    public virtual void CloseView() 
+    { 
+
+    }
 }
