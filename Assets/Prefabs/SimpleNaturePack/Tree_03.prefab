@@ -176,7 +176,7 @@ GameObject:
   m_Component:
   - component: {fileID: 880970725214738984}
   - component: {fileID: 5096517541735811467}
-  - component: {fileID: -1908955778690094580}
+  - component: {fileID: 8912408787143412165}
   m_Layer: 4
   m_Name: Tree_03
   m_TagString: Untagged
@@ -224,7 +224,7 @@ LODGroup:
     renderers:
     - renderer: {fileID: 287222047877186625}
   m_Enabled: 1
---- !u!208 &-1908955778690094580
+--- !u!208 &8912408787143412165
 NavMeshObstacle:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -234,9 +234,9 @@ NavMeshObstacle:
   m_Enabled: 1
   serializedVersion: 3
   m_Shape: 1
-  m_Extents: {x: 1, y: 2, z: 1}
+  m_Extents: {x: 0.22, y: 0.5, z: 0.275}
   m_MoveThreshold: 0.1
   m_Carve: 0
   m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 2, z: 0}
+  m_Center: {x: 0, y: 0, z: 0}
   m_TimeToStationary: 0.5

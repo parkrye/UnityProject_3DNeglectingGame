@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8783306491909106419}
   - component: {fileID: 8783306491909876435}
   - component: {fileID: 8783306491910875155}
-  - component: {fileID: -3455796481408925709}
+  - component: {fileID: -87125641813231241}
   m_Layer: 4
   m_Name: Rock_04
   m_TagString: Untagged
@@ -84,7 +84,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!208 &-3455796481408925709
+--- !u!208 &-87125641813231241
 NavMeshObstacle:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
