@@ -24,7 +24,7 @@ public class BTA_E_CloseAttack : BTAction
                 _isAttackable = true;
                 break;
             case ActionState.Working:
-                if (Vector3.SqrMagnitude(player.transform.position - _enemyActor.transform.position) < 9f)
+                if (Vector3.SqrMagnitude(player.transform.position - _enemyActor.transform.position) < 10f)
                 {
                     _enemyActor.LookAt(player.transform.position);
                     _enemyActor.Anim.StopMoveAnimation();

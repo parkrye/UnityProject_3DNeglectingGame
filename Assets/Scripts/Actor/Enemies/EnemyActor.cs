@@ -47,6 +47,7 @@ public class EnemyActor : Actor, IHitable
         ActionRoutine().Forget();
         HPRatioEvent?.Invoke(1f, true);
         _anim.PlayRecoveryAnimation();
+        _state = ActorState.Alive;
     }
 
     private async UniTask ActionRoutine()
@@ -62,6 +63,9 @@ public class EnemyActor : Actor, IHitable
 
     public bool Hit(float damage)
     {
+        if (_state != ActorState.Alive)
+            return false;
+
         _hp -= (int)damage;
         HPRatioEvent?.Invoke((float)_hp / _maxHp, true);
         if (_hp <= 0)
