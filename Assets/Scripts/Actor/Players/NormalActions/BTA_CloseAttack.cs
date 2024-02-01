@@ -78,10 +78,9 @@ public class BTA_CloseAttack : BTAction
 
     private void AttackReaction()
     {
-        AttackCoolTimeRoutine().Forget();
-
         var player = Global.CurrentStage.PlayerActor;
         player.Anim.AttackEndEvent.RemoveAllListeners();
+
         var colliders = Physics.OverlapSphere(player.transform.position + player.transform.forward, 3f, 1 << 10);
         foreach (var target in colliders)
         {
@@ -89,7 +88,10 @@ public class BTA_CloseAttack : BTAction
             if (enemy != null)
             {
                 enemy.Hit(player.Data.AttackDamage);
+                break;
             }
         }
+
+        AttackCoolTimeRoutine().Forget();
     }
 }
