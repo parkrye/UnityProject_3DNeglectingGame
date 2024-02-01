@@ -885,6 +885,7 @@ GameObject:
   - component: {fileID: -4078596133582083053}
   - component: {fileID: 5030645071554350878}
   - component: {fileID: 6082650801449248578}
+  - component: {fileID: 7933191107690046109}
   m_Layer: 10
   m_Name: Enemy2
   m_TagString: Untagged
@@ -922,6 +923,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EnemyDie:
+    m_PersistentCalls:
+      m_Calls: []
+  HPRatioEvent:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &-7509726709186524165
@@ -993,6 +997,19 @@ SphereCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 1
+  m_Center: {x: 0, y: 1, z: 0}
+--- !u!135 &7933191107690046109
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5030645071561653432}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
   m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &5030645071561653436
 GameObject:

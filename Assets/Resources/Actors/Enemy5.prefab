@@ -1536,7 +1536,8 @@ GameObject:
   - component: {fileID: 2740052484476548698}
   - component: {fileID: 7364410447717855441}
   - component: {fileID: 1362674670785100638}
-  - component: {fileID: 6458310894930347111}
+  - component: {fileID: 6491421803293504361}
+  - component: {fileID: 2900476395413054714}
   m_Layer: 10
   m_Name: Enemy5
   m_TagString: Untagged
@@ -1636,8 +1637,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90d895a2407e8774f9916685b596f1a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!136 &6458310894930347111
-CapsuleCollider:
+--- !u!135 &6491421803293504361
+SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -1646,9 +1647,21 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
+  serializedVersion: 2
   m_Radius: 1
-  m_Height: 2
-  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
+--- !u!135 &2900476395413054714
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4530003306004163418}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
   m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &4530003306004163420
 GameObject:

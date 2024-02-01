@@ -1263,7 +1263,8 @@ GameObject:
   - component: {fileID: 3320334589621564793}
   - component: {fileID: 6409985119212879150}
   - component: {fileID: 2066896392029128874}
-  - component: {fileID: 4430345032267803712}
+  - component: {fileID: 6376851452061979561}
+  - component: {fileID: 4126119288845010911}
   m_Layer: 9
   m_Name: Player
   m_TagString: Untagged
@@ -1364,8 +1365,8 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!65 &4430345032267803712
-BoxCollider:
+--- !u!135 &6376851452061979561
+SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -1375,7 +1376,20 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 2, z: 1}
+  m_Radius: 1
+  m_Center: {x: 0, y: 1, z: 0}
+--- !u!135 &4126119288845010911
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2066896392038628118}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
   m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &2066896392038628120
 GameObject:

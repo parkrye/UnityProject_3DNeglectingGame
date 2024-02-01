@@ -155,10 +155,11 @@ GameObject:
   m_Component:
   - component: {fileID: 2219292830553816709}
   - component: {fileID: 2219292830544548193}
-  - component: {fileID: 3664826660984278268}
   - component: {fileID: 5777487951602478989}
   - component: {fileID: 1605808193366889158}
   - component: {fileID: 4357141171489759366}
+  - component: {fileID: 3695513560613246569}
+  - component: {fileID: 2743324753829906357}
   m_Layer: 10
   m_Name: Enemy6
   m_TagString: Untagged
@@ -204,20 +205,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!136 &3664826660984278268
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2219292830553907877}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 1
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 1, z: 0}
 --- !u!114 &5777487951602478989
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -272,6 +259,32 @@ MonoBehaviour:
   RecoveryEndEvent:
     m_PersistentCalls:
       m_Calls: []
+--- !u!135 &3695513560613246569
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2219292830553907877}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1
+  m_Center: {x: 0, y: 1, z: 0}
+--- !u!135 &2743324753829906357
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2219292830553907877}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &2219292830553907879
 GameObject:
   m_ObjectHideFlags: 0
