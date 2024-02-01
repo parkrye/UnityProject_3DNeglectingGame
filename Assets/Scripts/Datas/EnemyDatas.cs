@@ -17,10 +17,7 @@ public class EnemyDatas
     {
         if (_enemyData.ContainsKey(actorData.Id))
         {
-            foreach(var reward in rewardData.Rewards)
-            {
-                _enemyData[actorData.Id].RewardData.AddReawrd(reward);
-            }
+            _enemyData[actorData.Id].AddReward(rewardData);
             return;
         }
 

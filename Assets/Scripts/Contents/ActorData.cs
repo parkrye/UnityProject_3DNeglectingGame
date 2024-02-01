@@ -54,4 +54,18 @@ public class EnemyData
     {
         return new EnemyData(_enemyActorData.Clone(), _rewardData);
     }
+
+    public void AddReward(RewardData rewardData)
+    {
+        var newRewardData = new RewardData();
+        foreach(var reward in _rewardData.Rewards)
+        {
+            newRewardData.AddReawrd(reward);
+        }
+        foreach(var reward in rewardData.Rewards)
+        {
+            newRewardData.AddReawrd(reward);
+        }
+        _rewardData = newRewardData;
+    }
 }
