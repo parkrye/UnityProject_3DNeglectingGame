@@ -23,9 +23,6 @@ public class PlayerActor : Actor, IHitable
         _anim = GetComponent<NormalAnimationController>();
         if(_anim == null)
             _anim = gameObject.AddComponent<NormalAnimationController>();
-        var hpBar = GetComponentInChildren<HPBar>();
-        if (hpBar != null)
-            HPRatioEvent.AddListener(hpBar.ModifyBar);
 
         _type = ActorType.PC;
         _state = ActorState.Ready;

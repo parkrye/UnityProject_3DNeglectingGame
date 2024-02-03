@@ -32,6 +32,7 @@ public class MainView : View
         GetText("StageLevelText").text = $"Stage {G.CurrentStage.StageLevel}";
 
         _updateCurrencyAction = UpdateMoreCurreny;
+        G.CurrentStage.PlayerActor.HPRatioEvent.AddListener(LifeGaugeEvent);
     }
 
     public override void OpenView()
@@ -79,6 +80,16 @@ public class MainView : View
     private void OnMoreButtonClick()
     {
         GetImage("More").gameObject.SetActive(GetImage("More").gameObject.activeSelf == false);
+    }
+
+    private void LifeGaugeEvent(float ratio, bool _)
+    {
+        GetImage("LifeGauge").fillAmount = ratio;
+    }
+
+    private void EnergyGaugeEvent(float ratio, bool _)
+    {
+        GetImage("EnergyGauge").fillAmount = ratio;
     }
 
     private void UpdateMoreCurreny(CurrencyData currencyData)
