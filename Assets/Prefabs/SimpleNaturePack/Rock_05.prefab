@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1576488453968494810}
   - component: {fileID: 1576488453969625626}
   - component: {fileID: 3245704551205064560}
-  m_Layer: 4
+  m_Layer: 0
   m_Name: Rock_05
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ NavMeshObstacle:
   m_Enabled: 1
   serializedVersion: 3
   m_Shape: 1
-  m_Extents: {x: 1.465, y: 0.97300005, z: 1.0960001}
+  m_Extents: {x: 1.75, y: 1.25, z: 1.775}
   m_MoveThreshold: 0.1
   m_Carve: 0
   m_CarveOnlyStationary: 1

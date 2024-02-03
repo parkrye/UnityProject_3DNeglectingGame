@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 108507113624698413}
   - component: {fileID: 3153294727251981205}
-  m_Layer: 4
+  m_Layer: 0
   m_Name: Stump_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -68,7 +68,7 @@ GameObject:
   - component: {fileID: 5968582415777641174}
   - component: {fileID: 3759092166302592149}
   - component: {fileID: 8011157136868685097}
-  m_Layer: 4
+  m_Layer: 0
   m_Name: Stump_01_LOD1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -152,7 +152,7 @@ GameObject:
   - component: {fileID: 6476173587137124530}
   - component: {fileID: 8313632506172493172}
   - component: {fileID: 8903114852176601504}
-  m_Layer: 4
+  m_Layer: 0
   m_Name: Stump_01_LOD0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
