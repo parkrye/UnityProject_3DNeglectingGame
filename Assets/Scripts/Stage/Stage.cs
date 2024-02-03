@@ -34,7 +34,7 @@ public class Stage : MonoBehaviour
     public PlayerActor PlayerActor { get { return _playerActor; } }
     private Pool _actorPool = new Pool();
 
-    private List<EnemyActor> _enemyOriginalList = new List<EnemyActor>();
+    private Dictionary<int, EnemyActor> _enemyOriginalList = new Dictionary<int, EnemyActor>();
     private Vector3[] _enemySpawnPositionArray;
 
     private List<EnemyActor> _spawnedEnemyList = new List<EnemyActor>();
@@ -89,9 +89,12 @@ public class Stage : MonoBehaviour
         return spawned;
     }
 
-    public void AddEnemyActor(EnemyActor enemy)
+    public void AddEnemyActor(int id, EnemyActor enemyprefab)
     {
-        _enemyOriginalList.Add(enemy);
+        if (_enemyOriginalList.ContainsKey(id))
+            return;
+
+        _enemyOriginalList.Add(id, enemyprefab);
     }
 
     private async UniTask EnemySpawnRoutine()
@@ -100,7 +103,7 @@ public class Stage : MonoBehaviour
 
         while (_state == StageState.Battle)
         {
-            var enemyIndex = Random.Range(0, _enemyOriginalList.Count);
+            var enemyIndex = _enemyOriginalList.Keys.ToList()[Random.Range(0, _enemyOriginalList.Count)];
             var enemyPosition = Random.Range(0, _enemySpawnPositionArray.Length);
             if(_spawnedEnemyList.Count < G.V.SpawnLimit)
             {
@@ -122,11 +125,9 @@ public class Stage : MonoBehaviour
 
     private void EnemyDied(EnemyActor enemy)
     {
-        Debug.Log(enemy.name);
         foreach (var reward in enemy.Data.RewardData.Rewards)
         {
-            G.Data.User.AddCurrency((CurrencyType)reward.Id, reward.Count);
-            Debug.Log((CurrencyType)reward.Id + " : " + reward.Count);
+            G.Data.User.AddCurrency(reward.Type, reward.Count);
         }
 
         enemy.ResetAction();

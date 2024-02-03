@@ -19,19 +19,20 @@ public class StageCreator : MonoBehaviour
             Debug.LogError("Player Actor is Null!");
         stage.SpawnPlayer(player);
 
-        var enemyCount = 1;
-        while (enemyCount > 0)
+        var id = 1;
+        while (id > 0)
         {
-            var enemy = Resource.Load<EnemyActor>($"Actors/Enemy{enemyCount}");
+            var enemy = Resource.Load<EnemyActor>($"Actors/Enemy{id}");
             if (enemy == null)
             {
-                enemyCount = -1;
+                id = -1;
                 break;
             }
             else
             {
-                stage.AddEnemyActor(enemy);
-                enemyCount++;
+                var enemyData = G.Data.Enemy.GetEnemyData(id);
+                stage.AddEnemyActor(id, enemy);
+                id++;
             }
         }
 

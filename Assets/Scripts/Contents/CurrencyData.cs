@@ -12,6 +12,7 @@ public class CurrencyData
 {
     public int Id;
     public int Count;
+    public CurrencyType Type { get { return (CurrencyType)Id; } }
 
     public CurrencyData(CurrencyType type, int count)
     {
