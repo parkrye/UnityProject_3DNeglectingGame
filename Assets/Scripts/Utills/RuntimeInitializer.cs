@@ -90,7 +90,7 @@ public class RuntimeInitializer
         foreach (var enemyActorData in enemyActorDatas.Data)
         {
             G.Data.Enemy.AddEnemyTable(enemyActorData, G.Data.Reward.GetReward(3));
-            G.Data.Enemy.AddEnemyTable(enemyActorData, G.Data.Reward.GetReward(enemyActorData.Id % 4));
+            G.Data.Enemy.AddEnemyTable(enemyActorData, G.Data.Reward.GetReward(enemyActorData.Id % 3));
         }
     }
 }

@@ -11,4 +11,10 @@ public class CurrencyData
         Id = (int)type;
         Count = count;
     }
+
+    public CurrencyData Clone()
+    {
+        var clone = new CurrencyData((CurrencyType)Id, Count);
+        return clone;
+    }
 }

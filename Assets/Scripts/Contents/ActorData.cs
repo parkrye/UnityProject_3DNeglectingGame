@@ -60,11 +60,11 @@ public class EnemyData
         var newRewardData = new RewardData();
         foreach(var reward in _rewardData.Rewards)
         {
-            newRewardData.AddReawrd(reward);
+            newRewardData.AddReawrd(reward.Clone());
         }
         foreach(var reward in rewardData.Rewards)
         {
-            newRewardData.AddReawrd(reward);
+            newRewardData.AddReawrd(reward.Clone());
         }
         _rewardData = newRewardData;
     }
