@@ -1,12 +1,13 @@
 using System.Collections.Generic;
 using UnityEngine.Events;
+using UnityEngine;
 
 public class LevelUpDialog : Dialog
 {
     private Dictionary<string, Template> _templates = new Dictionary<string, Template>();
     private UnityAction<CurrencyData> _updateCurrencyAction;
 
-    protected override void Init()
+    public override void Init()
     {
         base.Init();
 

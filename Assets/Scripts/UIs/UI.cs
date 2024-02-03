@@ -57,11 +57,9 @@ public abstract class UI : MonoBehaviour
             }
             contents[child.name] = content;
         }
-
-        Init();
     }
 
-    protected abstract void Init();
+    public abstract void Init();
 
     public Template GetTemplate(string name)
     {

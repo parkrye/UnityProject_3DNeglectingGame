@@ -6,7 +6,7 @@ public class MainView : View
     private LevelUpDialog _levelUpDialog;
     private UnityAction<CurrencyData> _updateCurrencyAction;
 
-    protected override void Init()
+    public override void Init()
     {
         base.Init();
 

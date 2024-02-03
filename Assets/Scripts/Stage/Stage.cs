@@ -141,10 +141,11 @@ public class Stage : MonoBehaviour
         {
             _actorPool.Release(_spawnedEnemyList[i]);
         }
-
         _actorPool.Release(_playerActor);
-
         _actorPool.Reset();
+
+        G.UI.CloseAllDialog();
+        G.UI.CloseCurrentView();
 
         SceneManager.LoadScene("MainScene");
     }

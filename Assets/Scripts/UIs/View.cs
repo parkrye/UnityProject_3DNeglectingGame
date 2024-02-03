@@ -1,6 +1,6 @@
 public class View : UI
 {
-    protected override void Init()
+    public override void Init()
     {
 
     }

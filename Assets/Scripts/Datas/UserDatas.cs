@@ -14,7 +14,7 @@ public class UserDatas
     {
         foreach(var currencyData in _playerData.Currency)
         {
-            if(currencyData.Id == (int)currencyType)
+            if(currencyData.Type == currencyType)
             {
                 return currencyData.Count;
             }
@@ -26,7 +26,7 @@ public class UserDatas
     {
         foreach (var currencyData in _playerData.Currency)
         {
-            if (currencyData.Id == (int)currencyType)
+            if (currencyData.Type == currencyType)
             {
                 currencyData.Count += count;
                 CurrencyUpdate?.Invoke(currencyData);
@@ -38,7 +38,7 @@ public class UserDatas
     {
         foreach (var currencyData in _playerData.Currency)
         {
-            if (currencyData.Id == (int)currencyType)
+            if (currencyData.Type == currencyType)
             {
                 currencyData.Count = count;
                 CurrencyUpdate?.Invoke(currencyData);
@@ -50,7 +50,7 @@ public class UserDatas
     {
         foreach (var currencyData in _playerData.Currency)
         {
-            if (currencyData.Id == (int)currencyType)
+            if (currencyData.Type == currencyType)
             {
                 if(currencyData.Count >= count)
                 {

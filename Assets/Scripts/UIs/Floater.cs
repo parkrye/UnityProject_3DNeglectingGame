@@ -5,7 +5,7 @@ public class Floater : UI
 {
     private CinemachineBrain _mainCamera;
 
-    protected override void Init()
+    public override void Init()
     {
         _mainCamera = FindObjectsOfType<CinemachineBrain>().FirstOrDefault();
     }
