@@ -29,6 +29,8 @@ public class MainView : View
 
         GetImage("More").gameObject.SetActive(false);
 
+        GetText("StageLevelText").text = $"Stage {G.CurrentStage.StageLevel}";
+
         _updateCurrencyAction = UpdateMoreCurreny;
     }
 
