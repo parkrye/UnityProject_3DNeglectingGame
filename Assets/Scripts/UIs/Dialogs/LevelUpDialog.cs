@@ -77,16 +77,16 @@ public class LevelUpDialog : Dialog
                 _templates[target].GetImage("LevelBar").fillAmount = (float)userData.GetCurrency(CurrencyType.Exp) / (userData.ActorData.Level * 10);
                 break;
             case "HP":
-                _templates[target].GetText("StatUpCost").text = $"Ruby {userData.ActorData.Hp * 5}";
+                _templates[target].GetText("StatUpCost").text = $"Diamond {userData.ActorData.Hp * 5}";
                 break;
             case "MS":
-                _templates[target].GetText("StatUpCost").text = $"Ruby {userData.ActorData.MoveSpeed * 5}";
+                _templates[target].GetText("StatUpCost").text = $"Diamond {userData.ActorData.MoveSpeed * 5}";
                 break;
             case "AD":
-                _templates[target].GetText("StatUpCost").text = $"Ruby {userData.ActorData.AttackDamage * 5}";
+                _templates[target].GetText("StatUpCost").text = $"Diamond {userData.ActorData.AttackDamage * 5}";
                 break;
             case "AS":
-                _templates[target].GetText("StatUpCost").text = $"Ruby {userData.ActorData.AttackSpeed * 5}";
+                _templates[target].GetText("StatUpCost").text = $"Diamond {userData.ActorData.AttackSpeed * 5}";
                 break;
             default:
                 _templates["LV"].GetImage("LevelBar").fillAmount = (float)userData.GetCurrency(CurrencyType.Exp) / (userData.ActorData.Level * 10);
