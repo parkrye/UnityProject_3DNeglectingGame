@@ -89,8 +89,10 @@ public class RuntimeInitializer
         var enemyActorDatas = JsonUtility.FromJson<ActorDataList>(enemyActorDataFromJson);
         foreach (var enemyActorData in enemyActorDatas.Data)
         {
-            G.Data.Enemy.AddEnemyTable(enemyActorData, G.Data.Reward.GetReward(3));
-            G.Data.Enemy.AddEnemyTable(enemyActorData, G.Data.Reward.GetReward(enemyActorData.Id % 3));
+            var reward = new RewardData();
+            reward.AddReawrd(G.Data.Reward.GetReward(3));
+            reward.AddReawrd(G.Data.Reward.GetReward(enemyActorData.Id % 3));
+            G.Data.Enemy.AddEnemyTable(enemyActorData, reward);
         }
     }
 }

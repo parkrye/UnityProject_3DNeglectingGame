@@ -16,13 +16,9 @@ public class EnemyDatas
     public void AddEnemyTable(ActorData actorData, RewardData rewardData)
     {
         if (_enemyData.ContainsKey(actorData.Id))
-        {
-            _enemyData[actorData.Id].AddReward(rewardData);
             return;
-        }
 
-        EnemyData enemyActor = new EnemyData(actorData, rewardData);
-
+        var enemyActor = new EnemyData(actorData, rewardData);
         _enemyData.Add(actorData.Id, enemyActor);
     }
 }

@@ -1,4 +1,3 @@
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 
@@ -11,6 +10,14 @@ public class RewardData
     public void AddReawrd(CurrencyData data)
     {
         Rewards.Add(data);
+    }
+
+    public void AddReawrd(RewardData data)
+    {
+        foreach(var item in data.Rewards)
+        {
+            Rewards.Add(item);
+        }
     }
 }
 

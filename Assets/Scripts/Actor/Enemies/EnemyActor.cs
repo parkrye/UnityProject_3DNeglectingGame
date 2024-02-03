@@ -38,9 +38,9 @@ public class EnemyActor : Actor, IHitable
         _actionHandler.ResetBT();
     }
 
-    public void Init(int stageLevel)
+    public void Init(int stageLevel, int index)
     {
-        _data ??= G.Data.Enemy.GetEnemyData(1);
+        _data ??= G.Data.Enemy.GetEnemyData(index);
         _maxHp = (_data.EnemyActorData.Hp + _data.EnemyActorData.Level) * stageLevel;
         _hp = _maxHp;
         _attackDamage += _data.EnemyActorData.Level + stageLevel;

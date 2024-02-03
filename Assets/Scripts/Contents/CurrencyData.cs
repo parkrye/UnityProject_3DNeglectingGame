@@ -1,4 +1,11 @@
 using System;
+public enum CurrencyType
+{
+    Gold = 0,
+    Diamond,
+    Ruby,
+    Exp,
+}
 
 [Serializable]
 public class CurrencyData

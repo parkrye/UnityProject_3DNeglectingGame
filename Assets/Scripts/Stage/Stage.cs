@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
+using static UnityEngine.InputSystem.LowLevel.InputStateHistory;
 
 public enum StageState
 {
@@ -78,13 +79,13 @@ public class Stage : MonoBehaviour
         AllPCActorSpawned.AddListener(_playerActor.StageStarted);
     }
 
-    private EnemyActor SpawnEnemy(EnemyActor actor, Vector3 spawnPosition, Quaternion rotation)
+    private EnemyActor SpawnEnemy(int index, EnemyActor actor, Vector3 spawnPosition, Quaternion rotation)
     {
         if (_state == StageState.Dead || _state == StageState.Clear)
             return null;
 
         var spawned = _actorPool.Get(actor, spawnPosition, rotation, _actorParent);
-        spawned.Init(_stageLevel);
+        spawned.Init(_stageLevel, index);
         return spawned;
     }
 
@@ -103,7 +104,7 @@ public class Stage : MonoBehaviour
             var enemyPosition = Random.Range(0, _enemySpawnPositionArray.Length);
             if(_spawnedEnemyList.Count < G.V.SpawnLimit)
             {
-                var enemy = SpawnEnemy(_enemyOriginalList[enemyIndex], _enemySpawnPositionArray[enemyPosition], Quaternion.identity);
+                var enemy = SpawnEnemy(enemyIndex, _enemyOriginalList[enemyIndex], _enemySpawnPositionArray[enemyPosition], Quaternion.identity);
                 enemy.EnemyDie.RemoveAllListeners();
                 enemy.EnemyDie.AddListener(EnemyDied);
                 _spawnedEnemyList.Add(enemy);
@@ -121,9 +122,11 @@ public class Stage : MonoBehaviour
 
     private void EnemyDied(EnemyActor enemy)
     {
-        foreach(var reward in enemy.Data.RewardData.Rewards)
+        Debug.Log(enemy.name);
+        foreach (var reward in enemy.Data.RewardData.Rewards)
         {
             G.Data.User.AddCurrency((CurrencyType)reward.Id, reward.Count);
+            Debug.Log((CurrencyType)reward.Id + " : " + reward.Count);
         }
 
         enemy.ResetAction();
