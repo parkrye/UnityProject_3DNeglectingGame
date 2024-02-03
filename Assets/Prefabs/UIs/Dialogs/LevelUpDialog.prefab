@@ -86,6 +86,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3554811712374305143}
   - component: {fileID: 3554811712374305142}
+  - component: {fileID: 2342586205208063609}
   m_Layer: 5
   m_Name: LevelUpDialog
   m_TagString: Untagged
@@ -128,6 +129,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e99ddb672c76494390c07805d55f611, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2342586205208063609
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3554811712374305140}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb662cbc328152f489b6086f382a3df3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AreaVector: 1
 --- !u!1 &3554811712442256124
 GameObject:
   m_ObjectHideFlags: 0
