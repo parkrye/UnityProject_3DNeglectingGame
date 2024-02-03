@@ -35,8 +35,6 @@ public class Stage : MonoBehaviour
 
     private List<EnemyActor> _enemyOriginalList = new List<EnemyActor>();
     private Vector3[] _enemySpawnPositionArray;
-    private int _enemySpawnDelay = 10000;
-    private int _emenySpawnCount = 100;
 
     private List<EnemyActor> _spawnedEnemyList = new List<EnemyActor>();
     public List<EnemyActor> Enemies { get { return _spawnedEnemyList; } }
@@ -99,21 +97,18 @@ public class Stage : MonoBehaviour
     {
         await UniTask.WaitUntil(() => _state == StageState.Battle);
 
-        var enemyCount = 0;
-
         while (_state == StageState.Battle)
         {
             var enemyIndex = Random.Range(0, _enemyOriginalList.Count);
             var enemyPosition = Random.Range(0, _enemySpawnPositionArray.Length);
-            if(enemyCount < _emenySpawnCount)
+            if(_spawnedEnemyList.Count < G.V.SpawnLimit)
             {
                 var enemy = SpawnEnemy(_enemyOriginalList[enemyIndex], _enemySpawnPositionArray[enemyPosition], Quaternion.identity);
                 enemy.EnemyDie.RemoveAllListeners();
                 enemy.EnemyDie.AddListener(EnemyDied);
                 _spawnedEnemyList.Add(enemy);
-                enemyCount++;
             }
-            await UniTask.Delay(_enemySpawnDelay);
+            await UniTask.Delay(G.V.SpawnDelay);
         }
     }
 
