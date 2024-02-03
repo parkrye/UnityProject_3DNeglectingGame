@@ -102,6 +102,6 @@ public class EnemyActor : Actor, IHitable
 
     public void ResetAction()
     {
-
+        _actionHandler.ResetBT();
     }
 }

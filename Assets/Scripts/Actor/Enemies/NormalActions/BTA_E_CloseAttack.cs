@@ -9,6 +9,7 @@ public class BTA_E_CloseAttack : BTAction
     public BTA_E_CloseAttack(EnemyActor enemyActor)
     {
         _enemyActor = enemyActor;
+        _enemyActor.Anim.AttackEndEvent.AddListener(AttackReaction);
     }
 
     public override bool Work()
@@ -24,6 +25,7 @@ public class BTA_E_CloseAttack : BTAction
                 {
                     _state = ActionState.Working;
                     _isAttackable = true;
+                    AttackCoolTimeRoutine().Forget();
                 }
                 break;
             case ActionState.Working:
@@ -34,7 +36,6 @@ public class BTA_E_CloseAttack : BTAction
                     if (_isAttackable)
                     {
                         _isAttackable = false;
-                        _enemyActor.Anim.AttackEndEvent.AddListener(AttackReaction);
                         _enemyActor.Anim.PlayAttackAnimation();
                     }
                     break;
@@ -61,15 +62,15 @@ public class BTA_E_CloseAttack : BTAction
 
     private async UniTask AttackCoolTimeRoutine()
     {
-        await UniTask.Delay(1000 / _enemyActor.Data.EnemyActorData.AttackSpeed);
-        _isAttackable = true;
+        while(_enemyActor.State == ActorState.Alive)
+        {
+            await UniTask.Delay(1000 / _enemyActor.Data.EnemyActorData.AttackSpeed);
+            _isAttackable = true;
+        }
     }
 
     private void AttackReaction()
     {
-        AttackCoolTimeRoutine().Forget();
-
-        _enemyActor.Anim.AttackEndEvent.RemoveAllListeners();
         var colliders = Physics.OverlapSphere(_enemyActor.transform.position + _enemyActor.transform.forward, G.V.CloseAttackRange, 1 << 9);
         foreach (var target in colliders)
         {
@@ -77,6 +78,7 @@ public class BTA_E_CloseAttack : BTAction
             if (player != null)
             {
                 player.Hit(_enemyActor.AttackDamage);
+                return;
             }
         }
     }

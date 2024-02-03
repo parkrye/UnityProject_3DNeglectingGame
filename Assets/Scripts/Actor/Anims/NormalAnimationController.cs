@@ -5,10 +5,10 @@ public class NormalAnimationController : MonoBehaviour
 {
     private Animator _animator;
 
-    public UnityEvent AttackEndEvent = new UnityEvent(), 
-        HitEndEvent = new UnityEvent(), 
-        DieEndEvent = new UnityEvent(), 
-        RecoveryEndEvent = new UnityEvent();
+    public UnityEvent AttackEndEvent = new UnityEvent();
+    public UnityEvent HitEndEvent = new UnityEvent();
+    public UnityEvent DieEndEvent = new UnityEvent();
+    public UnityEvent RecoveryEndEvent = new UnityEvent();
 
     private void Awake()
     {
