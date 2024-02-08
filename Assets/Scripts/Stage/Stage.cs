@@ -2,11 +2,11 @@ using Cinemachine;
 using Cysharp.Threading.Tasks;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
-using static UnityEngine.InputSystem.LowLevel.InputStateHistory;
 
 public enum StageState
 {
@@ -152,6 +152,21 @@ public class Stage : MonoBehaviour
 
     private void OnApplicationQuit()
     {
-        G.Data.User.SaveData();
+        SaveData();
+    }
+
+    public void SaveData()
+    {
+        var playerDataPath = G.V.DataPath + "PlayerData";
+        var playerDataToJson = JsonUtility.ToJson(G.Data.User.PlayerData);
+        File.WriteAllText(playerDataPath, playerDataToJson);
+
+        var playerActorDataPath = G.V.DataPath + "PlayerActorData";
+        var playerActorDataToJson = JsonUtility.ToJson(G.Data.User.ActorData);
+        File.WriteAllText(playerActorDataPath, playerActorDataToJson);
+
+        var equipmentData = G.V.DataPath + "EquipmentData";
+        var equipmentDataToJson = JsonUtility.ToJson(G.Data.Equipment);
+        File.WriteAllText(equipmentData, equipmentDataToJson);
     }
 }

@@ -1,5 +1,3 @@
-using UnityEngine;
-using System.IO;
 using UnityEngine.Events;
 
 public class UserDatas
@@ -63,16 +61,5 @@ public class UserDatas
         }
 
         return false;
-    }
-
-    public void SaveData()
-    {
-        var playerDataPath = G.V.DataPath + "PlayerData";
-        string playerDataToJson = JsonUtility.ToJson(_playerData);
-        File.WriteAllText(playerDataPath, playerDataToJson);
-
-        var playerActorDataPath = G.V.DataPath + "PlayerActorData";
-        string playerActorDataToJson = JsonUtility.ToJson(_actorData);
-        File.WriteAllText(playerActorDataPath, playerActorDataToJson);
     }
 }
