@@ -1,12 +1,7 @@
 using System.Collections.Generic;
-using Unity.Burst.CompilerServices;
-using UnityEngine.Events;
 
 public class InventoryDialog : Dialog
 {
-    private Dictionary<string, Template> _templates = new Dictionary<string, Template>();
-    private UnityAction<CurrencyData> _updateCurrencyAction;
-
     private int _selectIndex = 0;
     private Dictionary<int, Template> _inventorySlots = new Dictionary<int, Template>();
 
@@ -16,7 +11,7 @@ public class InventoryDialog : Dialog
 
         var equipmentDatas = G.Data.Equipment;
         var itemTemplate = GetTemplate("ItemTemplate");
-        var content = GetContent("IventoryScroll");
+        var content = GetContent("InventoryScroll");
         foreach (var equipmentId in equipmentDatas.EquipmentData.Keys)
         {
             var instant = Instantiate(itemTemplate, content);
@@ -172,7 +167,7 @@ public class InventoryDialog : Dialog
         if (equipment.Level == 0)
             return;
 
-        if (G.Data.User.TryUseCurrency(CurrencyType.Ruby, (equipment.Level) * 10))
+        if (G.Data.User.TryUseCurrency(CurrencyType.Ruby, (equipment.Level + equipment.Value) * 5))
         {
             equipment.Level++;
         }
