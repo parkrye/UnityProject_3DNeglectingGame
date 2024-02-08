@@ -9,13 +9,13 @@ public class InventoryDialog : Dialog
     {
         base.Init();
 
-        var equipmentDatas = G.Data.Equipment;
+        var equipmentDatas = G.Data.Item;
         var itemTemplate = GetTemplate("ItemTemplate");
         var content = GetContent("InventoryScroll");
-        foreach (var equipmentId in equipmentDatas.EquipmentData.Keys)
+        foreach (var equipmentId in equipmentDatas.Items.Keys)
         {
             var instant = Instantiate(itemTemplate, content);
-            var equipment = equipmentDatas.GetEquipmentData(equipmentId);
+            var equipment = equipmentDatas.GetItemData(equipmentId);
             instant.GetText("ItemName").text = equipment.Name;
             instant.GetText("ItemLevel").text = equipment.Level.ToString();
             instant.GetButton("ItemButton").onClick.AddListener(() => OnItemSlotClick(equipment.Id));
@@ -88,13 +88,13 @@ public class InventoryDialog : Dialog
     private void UpdateSelectItem()
     {
         var selected = GetTemplate("Select");
-        var firstItem = G.Data.Equipment.GetEquipmentData(_selectIndex);
+        var firstItem = G.Data.Item.GetItemData(_selectIndex);
         if (firstItem == null)
             return;
 
         selected.GetText("ItemName").text = firstItem.Name;
         selected.GetText("ItemLevel").text = firstItem.Level.ToString();
-        selected.GetText("ItemType").text = ((EquipmentType)firstItem.Type).ToString();
+        selected.GetText("ItemType").text = ((ItemType)firstItem.Type).ToString();
         selected.GetText("ItemValue").text = firstItem.Value.ToString();
     }
 
@@ -106,7 +106,7 @@ public class InventoryDialog : Dialog
             {
                 if (_inventorySlots.TryGetValue(slotId, out var slot) == false)
                     continue;
-                var equipment = G.Data.Equipment.GetEquipmentData(slotId);
+                var equipment = G.Data.Item.GetItemData(slotId);
                 if (equipment == null)
                     continue;
 
@@ -118,7 +118,7 @@ public class InventoryDialog : Dialog
         {
             if (_inventorySlots.TryGetValue(id, out var slot) == false)
                 return;
-            var equipment = G.Data.Equipment.GetEquipmentData(id);
+            var equipment = G.Data.Item.GetItemData(id);
             if (equipment == null) 
                 return;
 
@@ -139,21 +139,21 @@ public class InventoryDialog : Dialog
 
     private void OnItemEquipClick()
     {
-        var equipment = G.Data.Equipment.GetEquipmentData(_selectIndex);
+        var equipment = G.Data.Item.GetItemData(_selectIndex);
         if (equipment == null)
             return;
         if (equipment.Level == 0)
             return;
 
-        switch ((EquipmentType)equipment.Type)
+        switch ((ItemType)equipment.Type)
         {
-            case EquipmentType.Weapon:
+            case ItemType.Weapon:
                 G.Data.User.PlayerData.Weapon = equipment;
                 break;
-            case EquipmentType.Armor:
+            case ItemType.Armor:
                 G.Data.User.PlayerData.Armor = equipment;
                 break;
-            case EquipmentType.Accessory:
+            case ItemType.Accessory:
                 G.Data.User.PlayerData.Accessory = equipment;
                 break;
         }
@@ -161,7 +161,7 @@ public class InventoryDialog : Dialog
 
     private void OnItemEnhanceClick()
     {
-        var equipment = G.Data.Equipment.GetEquipmentData(_selectIndex);
+        var equipment = G.Data.Item.GetItemData(_selectIndex);
         if (equipment == null)
             return;
         if (equipment.Level == 0)

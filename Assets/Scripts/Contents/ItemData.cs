@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-public enum EquipmentType
+public enum ItemType
 {
     Weapon,
     Armor,
@@ -9,7 +9,7 @@ public enum EquipmentType
 }
 
 [Serializable]
-public class EquipmentData
+public class ItemData
 {
     public int Id;
     public string Name;
@@ -17,14 +17,14 @@ public class EquipmentData
     public int Type;
     public int Value;
 
-    public EquipmentType GetEquipmentType()
+    public ItemType GetItemType()
     {
-        return (EquipmentType)Type;
+        return (ItemType)Type;
     }
 
-    public EquipmentData Clone()
+    public ItemData Clone()
     {
-        EquipmentData clone = new EquipmentData();
+        ItemData clone = new ItemData();
         clone.Id = Id;
         clone.Name = Name;
         clone.Level = Level;
@@ -35,11 +35,11 @@ public class EquipmentData
 }
 
 [Serializable]
-public class EquipmentDataList
+public class ItemDataList
 {
-    public List<EquipmentData> Data = new List<EquipmentData>();
+    public List<ItemData> Data = new List<ItemData>();
 
-    public void Add(EquipmentData data)
+    public void Add(ItemData data)
     {
         Data.Add(data);
     }

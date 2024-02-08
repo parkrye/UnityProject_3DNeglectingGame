@@ -6,9 +6,9 @@ public class PlayerData
 {
     public List<CurrencyData> Currency = new List<CurrencyData>();
 
-    public EquipmentData Weapon;
-    public EquipmentData Armor;
-    public EquipmentData Accessory;
+    public ItemData Weapon;
+    public ItemData Armor;
+    public ItemData Accessory;
 
     public void AddCurrency(CurrencyData data)
     {

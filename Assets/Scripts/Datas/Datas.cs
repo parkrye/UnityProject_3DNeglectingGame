@@ -7,6 +7,6 @@ public class Datas
     readonly private RewardDatas _rewardDatas = new RewardDatas();
     public RewardDatas Reward { get { return _rewardDatas; } }
 
-    readonly private EquipmentDatas _equipmentDatas = new EquipmentDatas();
-    public EquipmentDatas Equipment { get {  return _equipmentDatas; } }
+    readonly private ItemDatas _item = new ItemDatas();
+    public ItemDatas Item { get {  return _item; } }
 }

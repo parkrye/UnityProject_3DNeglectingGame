@@ -43,29 +43,29 @@ public class RuntimeInitializer
         playerActorData = JsonUtility.FromJson<ActorData>(playerActorDataFromJson);
         G.Data.User.ActorData = playerActorData;
 
-        var equipmentDataPath = G.V.DataPath + "EquipmentData";
-        if (File.Exists(equipmentDataPath) == false)
+        var itemDataPath = G.V.DataPath + "ItemData";
+        if (File.Exists(itemDataPath) == false)
         {
-            var equipmentDataList = new EquipmentDataList();
+            var itemDataList = new ItemDataList();
             for (int i = 0; i < 9; i++)
             {
                 var index = i;
-                var nowEquipemntData = new EquipmentData();
-                nowEquipemntData.Id = index;
-                nowEquipemntData.Name = $"Equipment{index}";
-                nowEquipemntData.Level = 0;
-                nowEquipemntData.Type = (index % 3);
-                nowEquipemntData.Value = (index / 3) + 1;
-                equipmentDataList.Add(nowEquipemntData);
+                var nowItemData = new ItemData();
+                nowItemData.Id = index;
+                nowItemData.Name = $"Item{index}";
+                nowItemData.Level = 0;
+                nowItemData.Type = (index % 3);
+                nowItemData.Value = (index / 3) + 1;
+                itemDataList.Add(nowItemData);
             }
-            var equipmentDataToJson = JsonUtility.ToJson(equipmentDataList);
-            File.WriteAllText(equipmentDataPath, equipmentDataToJson);
+            var itemDataToJson = JsonUtility.ToJson(itemDataList);
+            File.WriteAllText(itemDataPath, itemDataToJson);
         }
-        var equipmentDataFromJson = File.ReadAllText(equipmentDataPath);
-        var equipmentDatas = JsonUtility.FromJson<EquipmentDataList>(equipmentDataFromJson);
-        foreach (var equipmentData in equipmentDatas.Data)
+        var itemDataFromJson = File.ReadAllText(itemDataPath);
+        var itemDatas = JsonUtility.FromJson<ItemDataList>(itemDataFromJson);
+        foreach (var itemData in itemDatas.Data)
         {
-            G.Data.Equipment.AddEquipmentData(equipmentData);
+            G.Data.Item.AddEquipmentData(itemData);
         }
 
         var rewardDataPath = G.V.DataPath + "RewardData";
