@@ -19,6 +19,13 @@ public class RewardData
             Rewards.Add(item);
         }
     }
+
+    public bool IsCorrect()
+    {
+        if (Id < G.V.RewardId || Id >= G.V.SkillId)
+            return false;
+        return true;
+    }
 }
 
 [Serializable]

@@ -1,8 +1,8 @@
 using Cinemachine;
 using Cysharp.Threading.Tasks;
 using System.Collections.Generic;
-using System.Linq;
 using System.IO;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
@@ -103,11 +103,11 @@ public class Stage : MonoBehaviour
 
         while (_state == StageState.Battle)
         {
-            var enemyIndex = _enemyOriginalList.Keys.ToList()[Random.Range(0, _enemyOriginalList.Count)];
+            var enemyId = _enemyOriginalList.Keys.ToList()[Random.Range(0, _enemyOriginalList.Count)];
             var enemyPosition = Random.Range(0, _enemySpawnPositionArray.Length);
             if(_spawnedEnemyList.Count < G.V.SpawnLimit)
             {
-                var enemy = SpawnEnemy(enemyIndex, _enemyOriginalList[enemyIndex], _enemySpawnPositionArray[enemyPosition], Quaternion.identity);
+                var enemy = SpawnEnemy(enemyId, _enemyOriginalList[enemyId], _enemySpawnPositionArray[enemyPosition], Quaternion.identity);
                 enemy.EnemyDie.RemoveAllListeners();
                 enemy.EnemyDie.AddListener(EnemyDied);
                 _spawnedEnemyList.Add(enemy);

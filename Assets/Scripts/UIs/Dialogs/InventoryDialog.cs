@@ -49,7 +49,7 @@ public class InventoryDialog : Dialog
 
         var weapon = playerData.Weapon;
         var weaponTemplate = GetTemplate("Weapon");
-        if (weapon != null)
+        if (weapon.IsCorrect())
         {
             weaponTemplate.GetText("ItemName").text = weapon.Name;
             weaponTemplate.GetText("ItemLevel").text = weapon.Level.ToString();
@@ -61,7 +61,7 @@ public class InventoryDialog : Dialog
         }
         var armor = playerData.Armor;
         var armorTemplate = GetTemplate("Armor");
-        if (armor != null)
+        if (armor.IsCorrect())
         {
             armorTemplate.GetText("ItemName").text = armor.Name;
             armorTemplate.GetText("ItemLevel").text = armor.Level.ToString();
@@ -73,7 +73,7 @@ public class InventoryDialog : Dialog
         }
         var accessory = playerData.Armor;
         var accessoryTemplate = GetTemplate("Accessory");
-        if (accessory != null)
+        if (accessory.IsCorrect())
         {
             accessoryTemplate.GetText("ItemName").text = accessory.Name;
             accessoryTemplate.GetText("ItemLevel").text = accessory.Level.ToString();

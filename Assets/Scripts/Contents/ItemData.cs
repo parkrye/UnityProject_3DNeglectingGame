@@ -32,6 +32,13 @@ public class ItemData
         clone.Value = Value;
         return clone;
     }
+
+    public bool IsCorrect()
+    {
+        if(Id < G.V.ItemId || Id >= G.V.RewardId)
+            return false;
+        return true;
+    }
 }
 
 [Serializable]

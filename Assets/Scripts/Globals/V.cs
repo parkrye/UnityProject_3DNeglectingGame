@@ -9,4 +9,6 @@ public class V
 
     public int ActorId = 1000;
     public int ItemId = 2000;
+    public int RewardId = 3000;
+    public int SkillId = 4000;
 }

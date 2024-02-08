@@ -30,7 +30,7 @@ public class RuntimeInitializer
         var playerActorData = new ActorData();
         if (File.Exists(playerActorDataPath) == false)
         {
-            playerActorData.Id = 0;
+            playerActorData.Id = G.V.ActorId + 0;
             playerActorData.Level = 1;
             playerActorData.Hp = 10;
             playerActorData.MoveSpeed = 2;
@@ -51,7 +51,7 @@ public class RuntimeInitializer
             {
                 var index = i;
                 var nowItemData = new ItemData();
-                nowItemData.Id = index;
+                nowItemData.Id = G.V.ItemId + index;
                 nowItemData.Name = $"Item{index}";
                 nowItemData.Level = 0;
                 nowItemData.Type = (index % 3);
@@ -98,7 +98,7 @@ public class RuntimeInitializer
             {
                 var index = i;
                 var nowEnemyActorData = new ActorData();
-                nowEnemyActorData.Id = index;
+                nowEnemyActorData.Id = G.V.ActorId + index;
                 nowEnemyActorData.Name = $"Enemy{index}";
                 nowEnemyActorData.Level = 1;
                 nowEnemyActorData.Hp = 10;

@@ -24,6 +24,13 @@ public class ActorData
         clone.AttackDamage = AttackDamage;
         return clone;
     }
+
+    public bool IsCorrect()
+    {
+        if (Id < G.V.ActorId || Id >= G.V.ItemId)
+            return false;
+        return true;
+    }
 }
 
 [Serializable]
