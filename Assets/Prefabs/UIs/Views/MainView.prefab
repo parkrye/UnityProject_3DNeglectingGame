@@ -301,7 +301,7 @@ GameObject:
   - component: {fileID: 832896446311133870}
   - component: {fileID: 832896446311133865}
   m_Layer: 5
-  m_Name: EquipmentButton
+  m_Name: CancleButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -355,7 +355,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -1730254177, guid: 132358e9bf26b60458b731bf001e31db, type: 3}
+  m_Sprite: {fileID: -1544809838, guid: 132358e9bf26b60458b731bf001e31db, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -704,7 +704,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -1107025847, guid: 132358e9bf26b60458b731bf001e31db, type: 3}
+  m_Sprite: {fileID: -1730254177, guid: 132358e9bf26b60458b731bf001e31db, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -946,7 +946,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 1870898176, guid: 132358e9bf26b60458b731bf001e31db, type: 3}
+  m_Sprite: {fileID: -1107025847, guid: 132358e9bf26b60458b731bf001e31db, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

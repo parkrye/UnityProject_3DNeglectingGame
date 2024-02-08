@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine.Events;
 
-public class LevelUpDialog : Dialog
+public class SkillDialog : Dialog
 {
     private Dictionary<string, Template> _templates = new Dictionary<string, Template>();
     private UnityAction<CurrencyData> _updateCurrencyAction;
@@ -146,7 +146,7 @@ public class LevelUpDialog : Dialog
 
     private void UpdateCurrency(CurrencyData currencyData)
     {
-        switch(currencyData.Id)
+        switch (currencyData.Id)
         {
             case (int)CurrencyType.Gold:
                 break;

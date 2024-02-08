@@ -4,6 +4,9 @@ using UnityEngine.Events;
 public class MainView : View
 {
     private LevelUpDialog _levelUpDialog;
+    private SkillDialog _skillDialog;
+    private InventoryDialog _inventoryDialog;
+    private ShopDialog _shopDialog;
     private UnityAction<CurrencyData> _updateCurrencyAction;
 
     public override void Init()
@@ -18,11 +21,29 @@ public class MainView : View
             {
                 _levelUpDialog = levelUpDialog.GetComponent<LevelUpDialog>();
             }
+
+            var skillDialog = canvas.transform.Find("SkillDialog");
+            if(skillDialog != null)
+            {
+                _skillDialog = skillDialog.GetComponent<SkillDialog>();
+            }
+
+            var inventoryDialog = canvas.transform.Find("InventoryDialog");
+            if(inventoryDialog != null)
+            {
+                _inventoryDialog = inventoryDialog.GetComponent<InventoryDialog>();
+            }
+
+            var shopDialog = canvas.transform.Find("ShopDialog");
+            if(shopDialog != null)
+            {
+                _shopDialog = shopDialog.GetComponent<ShopDialog>();
+            }
         }
 
         GetButton("LevelUpButton").onClick.AddListener(OnLevelUpButtonClick);
         GetButton("SkillButton").onClick.AddListener(OnSkillButtonClick);
-        GetButton("EquipmentButton").onClick.AddListener(OnEquipmentButtonClick);
+        GetButton("CancleButton").onClick.AddListener(OnCancleButtonClick);
         GetButton("InventoryButton").onClick.AddListener(OnInventoryButtonClick);
         GetButton("ShopButton").onClick.AddListener(OnShopButtonClick);
         GetButton("MoreButton").onClick.AddListener(OnMoreButtonClick);
@@ -59,22 +80,22 @@ public class MainView : View
 
     private void OnSkillButtonClick()
     {
-
+        G.UI.OpenDialog(_skillDialog);
     }
 
-    private void OnEquipmentButtonClick()
+    private void OnCancleButtonClick()
     {
-
+        G.UI.CloseCurrentDialog();
     }
 
     private void OnInventoryButtonClick()
     {
-
+        G.UI.OpenDialog(_inventoryDialog);
     }
 
     private void OnShopButtonClick()
     {
-
+        G.UI.OpenDialog(_shopDialog);
     }
 
     private void OnMoreButtonClick()
