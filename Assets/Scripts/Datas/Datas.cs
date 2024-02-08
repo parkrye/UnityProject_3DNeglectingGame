@@ -1,9 +1,12 @@
 public class Datas
 {
-    private UserDatas _userData = new UserDatas();
+    readonly private UserDatas _userData = new UserDatas();
     public UserDatas User { get { return _userData; } }
-    private EnemyDatas _enemyDatas = new EnemyDatas();
+    readonly private EnemyDatas _enemyDatas = new EnemyDatas();
     public EnemyDatas Enemy { get {  return _enemyDatas; } }
-    private RewardDatas _rewardDatas = new RewardDatas();
+    readonly private RewardDatas _rewardDatas = new RewardDatas();
     public RewardDatas Reward { get { return _rewardDatas; } }
+
+    readonly private EquipmentDatas _equipmentDatas = new EquipmentDatas();
+    public EquipmentDatas Equipment { get {  return _equipmentDatas; } }
 }

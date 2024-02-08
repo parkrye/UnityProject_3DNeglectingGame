@@ -7,10 +7,7 @@ public class RewardDatas
 
     public void AddRewardTable(RewardData rewardData)
     {
-        if (_rewards.ContainsKey(rewardData.Id))
-            return;
-
-        _rewards.Add(rewardData.Id, rewardData);
+        _rewards[rewardData.Id] = rewardData;
     }
 
     public RewardData GetReward(int id)

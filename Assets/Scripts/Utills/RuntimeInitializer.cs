@@ -12,14 +12,14 @@ public class RuntimeInitializer
     private static void InitData()
     {
         var playerDataPath = G.V.DataPath + "PlayerData";
-        PlayerData playerData = new PlayerData();
+        var playerData = new PlayerData();
         if (File.Exists(playerDataPath) == false)
         {
             playerData.Currency.Add(new CurrencyData(CurrencyType.Gold, 0));
             playerData.Currency.Add(new CurrencyData(CurrencyType.Diamond, 0));
             playerData.Currency.Add(new CurrencyData(CurrencyType.Ruby, 0));
             playerData.Currency.Add(new CurrencyData(CurrencyType.Exp, 0));
-            string playerDataToJson = JsonUtility.ToJson(playerData);
+            var playerDataToJson = JsonUtility.ToJson(playerData);
             File.WriteAllText(playerDataPath, playerDataToJson);
         }
         var playerDataFromJson = File.ReadAllText(playerDataPath);
@@ -27,7 +27,7 @@ public class RuntimeInitializer
         G.Data.User.PlayerData = playerData;
 
         var playerActorDataPath = G.V.DataPath + "PlayerActorData";
-        ActorData playerActorData = new ActorData();
+        var playerActorData = new ActorData();
         if (File.Exists(playerActorDataPath) == false)
         {
             playerActorData.Id = 0;
@@ -36,7 +36,7 @@ public class RuntimeInitializer
             playerActorData.MoveSpeed = 2;
             playerActorData.AttackSpeed = 1;
             playerActorData.AttackDamage = 1;
-            string playerActorDataToJson = JsonUtility.ToJson(playerActorData);
+            var playerActorDataToJson = JsonUtility.ToJson(playerActorData);
             File.WriteAllText(playerActorDataPath, playerActorDataToJson);
         }
         var playerActorDataFromJson = File.ReadAllText(playerActorDataPath);
@@ -46,7 +46,7 @@ public class RuntimeInitializer
         var rewardDataPath = G.V.DataPath + "RewardData";
         if (File.Exists(rewardDataPath) == false)
         {
-            RewardDataList rewardDataList = new RewardDataList();
+            var rewardDataList = new RewardDataList();
             for (int i = 0; i < 4; i++)
             {
                 var id = i;
@@ -68,11 +68,11 @@ public class RuntimeInitializer
         var enemyActorDataPath = G.V.DataPath + "EnemyActorData";
         if (File.Exists(enemyActorDataPath) == false)
         {
-            ActorDataList enemyActorDataList = new ActorDataList();
+            var enemyActorDataList = new ActorDataList();
             for (int i = 1; i < 10; i++)
             {
                 var index = i;
-                ActorData nowEnemyActorData = new ActorData();
+                var nowEnemyActorData = new ActorData();
                 nowEnemyActorData.Id = index;
                 nowEnemyActorData.Name = $"Enemy{index}";
                 nowEnemyActorData.Level = 1;
@@ -93,6 +93,32 @@ public class RuntimeInitializer
             reward.AddReawrd(G.Data.Reward.GetReward(3));
             reward.AddReawrd(G.Data.Reward.GetReward(enemyActorData.Id % 3));
             G.Data.Enemy.AddEnemyTable(enemyActorData, reward);
+        }
+
+        var equipmentDataPath = G.V.DataPath + "EquipmentData";
+        if(File.Exists(equipmentDataPath) == false)
+        {
+            var equipmentDataList = new EquipmentDataList();
+            for(int i = 0; i < 9; i++)
+            {
+                var index = i;
+                var nowEquipemntData = new EquipmentData();
+                nowEquipemntData.Id = index;
+                nowEquipemntData.Name = $"Equipment{index}";
+                nowEquipemntData.Level = 0;
+                nowEquipemntData.Type = (index % 3);
+                nowEquipemntData.Value = (index / 3) + 1;
+                equipmentDataList.Add(nowEquipemntData);
+            }
+            var equipmentDataToJson = JsonUtility.ToJson(equipmentDataList);
+            File.WriteAllText(equipmentDataPath, equipmentDataToJson);
+        }
+
+        var equipmentDataFromJson = File.ReadAllText(equipmentDataPath);
+        var equipmentDatas = JsonUtility.FromJson<EquipmentDataList>(equipmentDataFromJson);
+        foreach (var equipmentData in equipmentDatas.Data)
+        {
+            G.Data.Equipment.AddEquipmentData(equipmentData);
         }
     }
 }
