@@ -165,8 +165,13 @@ public class Stage : MonoBehaviour
         var playerActorDataToJson = JsonUtility.ToJson(G.Data.User.ActorData);
         File.WriteAllText(playerActorDataPath, playerActorDataToJson);
 
-        var equipmentData = G.V.DataPath + "EquipmentData";
-        var equipmentDataToJson = JsonUtility.ToJson(G.Data.Equipment);
-        File.WriteAllText(equipmentData, equipmentDataToJson);
+        var equipmentDataPath = G.V.DataPath + "EquipmentData";
+        var equipmentDataList = new EquipmentDataList();
+        foreach(var equipmnet in G.Data.Equipment.EquipmentData.Values)
+        {
+            equipmentDataList.Add(equipmnet);
+        }
+        var equipmentDataToJson = JsonUtility.ToJson(equipmentDataList);
+        File.WriteAllText(equipmentDataPath, equipmentDataToJson);
     }
 }

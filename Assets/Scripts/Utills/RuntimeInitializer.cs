@@ -43,6 +43,31 @@ public class RuntimeInitializer
         playerActorData = JsonUtility.FromJson<ActorData>(playerActorDataFromJson);
         G.Data.User.ActorData = playerActorData;
 
+        var equipmentDataPath = G.V.DataPath + "EquipmentData";
+        if (File.Exists(equipmentDataPath) == false)
+        {
+            var equipmentDataList = new EquipmentDataList();
+            for (int i = 0; i < 9; i++)
+            {
+                var index = i;
+                var nowEquipemntData = new EquipmentData();
+                nowEquipemntData.Id = index;
+                nowEquipemntData.Name = $"Equipment{index}";
+                nowEquipemntData.Level = 0;
+                nowEquipemntData.Type = (index % 3);
+                nowEquipemntData.Value = (index / 3) + 1;
+                equipmentDataList.Add(nowEquipemntData);
+            }
+            var equipmentDataToJson = JsonUtility.ToJson(equipmentDataList);
+            File.WriteAllText(equipmentDataPath, equipmentDataToJson);
+        }
+        var equipmentDataFromJson = File.ReadAllText(equipmentDataPath);
+        var equipmentDatas = JsonUtility.FromJson<EquipmentDataList>(equipmentDataFromJson);
+        foreach (var equipmentData in equipmentDatas.Data)
+        {
+            G.Data.Equipment.AddEquipmentData(equipmentData);
+        }
+
         var rewardDataPath = G.V.DataPath + "RewardData";
         if (File.Exists(rewardDataPath) == false)
         {
@@ -93,32 +118,6 @@ public class RuntimeInitializer
             reward.AddReawrd(G.Data.Reward.GetReward(3));
             reward.AddReawrd(G.Data.Reward.GetReward(enemyActorData.Id % 3));
             G.Data.Enemy.AddEnemyTable(enemyActorData, reward);
-        }
-
-        var equipmentDataPath = G.V.DataPath + "EquipmentData";
-        if(File.Exists(equipmentDataPath) == false)
-        {
-            var equipmentDataList = new EquipmentDataList();
-            for(int i = 0; i < 9; i++)
-            {
-                var index = i;
-                var nowEquipemntData = new EquipmentData();
-                nowEquipemntData.Id = index;
-                nowEquipemntData.Name = $"Equipment{index}";
-                nowEquipemntData.Level = 0;
-                nowEquipemntData.Type = (index % 3);
-                nowEquipemntData.Value = (index / 3) + 1;
-                equipmentDataList.Add(nowEquipemntData);
-            }
-            var equipmentDataToJson = JsonUtility.ToJson(equipmentDataList);
-            File.WriteAllText(equipmentDataPath, equipmentDataToJson);
-        }
-
-        var equipmentDataFromJson = File.ReadAllText(equipmentDataPath);
-        var equipmentDatas = JsonUtility.FromJson<EquipmentDataList>(equipmentDataFromJson);
-        foreach (var equipmentData in equipmentDatas.Data)
-        {
-            G.Data.Equipment.AddEquipmentData(equipmentData);
         }
     }
 }
