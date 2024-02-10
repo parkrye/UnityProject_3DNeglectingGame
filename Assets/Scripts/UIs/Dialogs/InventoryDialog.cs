@@ -65,7 +65,7 @@ public class InventoryDialog : Dialog
         {
             armorTemplate.GetText("ItemName").text = armor.Name;
             armorTemplate.GetText("ItemLevel").text = armor.Level.ToString();
-            weaponTemplate.GetButton("ItemButton").onClick.AddListener(() => OnItemSlotClick(armor.Id));
+            armorTemplate.GetButton("ItemButton").onClick.AddListener(() => OnItemSlotClick(armor.Id));
         }
         else
         {
@@ -77,7 +77,7 @@ public class InventoryDialog : Dialog
         {
             accessoryTemplate.GetText("ItemName").text = accessory.Name;
             accessoryTemplate.GetText("ItemLevel").text = accessory.Level.ToString();
-            weaponTemplate.GetButton("ItemButton").onClick.AddListener(() => OnItemSlotClick(accessory.Id));
+            accessoryTemplate.GetButton("ItemButton").onClick.AddListener(() => OnItemSlotClick(accessory.Id));
         }
         else
         {
