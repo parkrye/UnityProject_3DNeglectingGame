@@ -1,162 +1,192 @@
 using System.Collections.Generic;
-using UnityEngine.Events;
 
 public class SkillDialog : Dialog
 {
-    private Dictionary<string, Template> _templates = new Dictionary<string, Template>();
-    private UnityAction<CurrencyData> _updateCurrencyAction;
+    private int _selectSlotIndex = 0;
+    private int _selectIndex = 0;
+    private Dictionary<int, Template> _skillSlots = new Dictionary<int, Template>();
 
     public override void Init()
     {
         base.Init();
 
-        var userData = G.Data.User;
+        var skillDatas = G.Data.Skill;
+        var skillTemplate = GetTemplate("SkillTemplate");
+        var content = GetContent("SkillScroll");
+        foreach (var skillId in skillDatas.Skills.Keys)
+        {
+            var instant = Instantiate(skillTemplate, content);
+            var skill = skillDatas.GetSkillData(skillId);
+            instant.GetText("SkillName").text = skill.Name;
+            instant.GetText("Skillevel").text = skill.Level.ToString();
+            instant.GetButton("SkillButton").onClick.AddListener(() => OnSkillListClick(skill.Id));
+            _skillSlots.Add(skill.Id, instant);
+        }
+        skillTemplate.gameObject.SetActive(false);
 
-        var levelSlotTemplate = GetTemplate("LevelFrameTemplate");
-        levelSlotTemplate.GetText("LevelText").text = $"Lv {userData.ActorData.Level}";
-        levelSlotTemplate.GetImage("LevelBar").fillAmount = (float)userData.GetCurrency(CurrencyType.Exp) / (userData.ActorData.Level * 10);
-        _templates.Add("LV", levelSlotTemplate);
-        levelSlotTemplate.GetButton("LevelUpButton").onClick.AddListener(() => OnClickLevelUpButton("LV"));
+        var skill1Template = GetTemplate("Skill1");
+        skill1Template.GetButton("SkillButton").onClick.AddListener(() => OnSkillSlotClick(0));
+        var skill2Template = GetTemplate("Skill2");
+        skill2Template.GetButton("SkillButton").onClick.AddListener(() => OnSkillSlotClick(1));
+        var skill3Template = GetTemplate("Skill3");
+        skill3Template.GetButton("SkillButton").onClick.AddListener(() => OnSkillSlotClick(2));
 
-        var statSlotTemplate = GetTemplate("StatFrameTemplate");
-        var content = GetContent("StatScroll");
-
-        var instant = Instantiate(statSlotTemplate, content);
-        instant.GetText("StatName").text = "HP";
-        instant.GetText("StatDescription").text = $"{userData.ActorData.Hp}";
-        instant.GetText("StatUpCost").text = $"Diamond {userData.ActorData.Hp * 5}";
-        _templates.Add("HP", instant);
-        instant.GetButton("StatUpButton").onClick.AddListener(() => OnClickLevelUpButton("HP"));
-
-        instant = Instantiate(statSlotTemplate, content);
-        instant.GetText("StatName").text = "Move Speed";
-        instant.GetText("StatDescription").text = $"{userData.ActorData.MoveSpeed}";
-        instant.GetText("StatUpCost").text = $"Diamond {userData.ActorData.MoveSpeed * 5}";
-        _templates.Add("MS", instant);
-        instant.GetButton("StatUpButton").onClick.AddListener(() => OnClickLevelUpButton("MS"));
-
-        instant = Instantiate(statSlotTemplate, content);
-        instant.GetText("StatName").text = "Attack Damage";
-        instant.GetText("StatDescription").text = $"{userData.ActorData.AttackDamage}";
-        instant.GetText("StatUpCost").text = $"Diamond {userData.ActorData.AttackDamage * 5}";
-        _templates.Add("AD", instant);
-        instant.GetButton("StatUpButton").onClick.AddListener(() => OnClickLevelUpButton("AD"));
-
-        instant = Instantiate(statSlotTemplate, content);
-        instant.GetText("StatName").text = "Attack Speed";
-        instant.GetText("StatDescription").text = $"{userData.ActorData.AttackSpeed}";
-        instant.GetText("StatUpCost").text = $"Diamond {userData.ActorData.AttackSpeed * 5}";
-        _templates.Add("AS", instant);
-        instant.GetButton("StatUpButton").onClick.AddListener(() => OnClickLevelUpButton("AS"));
-
-        statSlotTemplate.gameObject.SetActive(false);
-
-        _updateCurrencyAction = UpdateCurrency;
+        var equipButton = GetButton("EquipButton");
+        equipButton.onClick.AddListener(OnSkillEquipClick);
+        var enhanceButton = GetButton("EnhanceButton");
+        enhanceButton.onClick.AddListener(OnSkillEnhanceClick);
     }
 
     public override void OpenDialog()
     {
         base.OpenDialog();
-        UpdateCost();
-        G.Data.User.CurrencyUpdate.AddListener(_updateCurrencyAction);
+
+        UpdateEquipSkill();
+        UpdateSelectSkill();
+        UpdateSkillSlots();
     }
 
     public override void CloseDialog()
     {
         base.CloseDialog();
-        G.Data.User.CurrencyUpdate.RemoveListener(_updateCurrencyAction);
     }
 
-    private void UpdateCost(string target = "")
+    private void UpdateEquipSkill()
     {
-        var userData = G.Data.User;
-        switch (target)
+        var playerData = G.Data.User.PlayerData;
+
+        var skill1 = playerData.Skill1;
+        var skill1Template = GetTemplate("Skill1");
+        if (skill1.IsCorrect())
         {
-            case "LV":
-                _templates[target].GetText("LevelText").text = $"Lv {userData.ActorData.Level}";
-                _templates[target].GetImage("LevelBar").fillAmount = (float)userData.GetCurrency(CurrencyType.Exp) / (userData.ActorData.Level * 10);
+            skill1Template.GetText("SkillName").text = skill1.Name;
+            skill1Template.GetText("SkillLevel").text = skill1.Level.ToString();
+            skill1Template.GetButton("SkillButton").onClick.AddListener(() => OnSkillListClick(skill1.Id));
+        }
+        else
+        {
+            skill1Template.gameObject.SetActive(false);
+        }
+        var skill2 = playerData.Skill2;
+        var skill2Template = GetTemplate("Skill2");
+        if (skill2.IsCorrect())
+        {
+            skill2Template.GetText("SkillName").text = skill2.Name;
+            skill2Template.GetText("SkillLevel").text = skill2.Level.ToString();
+            skill2Template.GetButton("SkillButton").onClick.AddListener(() => OnSkillListClick(skill2.Id));
+        }
+        else
+        {
+            skill2Template.gameObject.SetActive(false);
+        }
+        var skill3 = playerData.Armor;
+        var skill3Template = GetTemplate("Skill3");
+        if (skill3.IsCorrect())
+        {
+            skill3Template.GetText("SkillName").text = skill3.Name;
+            skill3Template.GetText("SkillLevel").text = skill3.Level.ToString();
+            skill3Template.GetButton("SkillButton").onClick.AddListener(() => OnSkillListClick(skill3.Id));
+        }
+        else
+        {
+            skill3Template.gameObject.SetActive(false);
+        }
+    }
+
+    private void UpdateSelectSkill()
+    {
+        var selected = GetTemplate("Select");
+        var firstSkill = G.Data.Skill.GetSkillData(_selectIndex);
+        if (firstSkill == null)
+            return;
+
+        selected.GetText("SkillName").text = firstSkill.Name;
+        selected.GetText("SkillLevel").text = firstSkill.Level.ToString();
+        selected.GetText("SkillDescription").text = firstSkill.Description;
+    }
+
+    private void UpdateSkillSlots(int id = -1)
+    {
+        if (id < 0)
+        {
+            foreach (var slotId in _skillSlots.Keys)
+            {
+                if (_skillSlots.TryGetValue(slotId, out var slot) == false)
+                    continue;
+                var skill = G.Data.Skill.GetSkillData(slotId);
+                if (skill == null)
+                    continue;
+
+                slot.GetText("SkillName").text = skill.Name;
+                slot.GetText("SkillLevel").text = skill.Level.ToString();
+            }
+        }
+        else
+        {
+            if (_skillSlots.TryGetValue(id, out var slot) == false)
+                return;
+            var skill = G.Data.Skill.GetSkillData(id);
+            if (skill == null)
+                return;
+
+            slot.GetText("SkillName").text = skill.Name;
+            slot.GetText("SkillLevel").text = skill.Level.ToString();
+        }
+    }
+
+    private void OnSkillSlotClick(int slot)
+    {
+        if (_selectSlotIndex == slot)
+            return;
+
+        _selectSlotIndex = slot;
+
+        UpdateSelectSkill();
+    }
+
+    private void OnSkillListClick(int id)
+    {
+        if (_selectIndex == id)
+            return;
+
+        _selectIndex = id;
+
+        UpdateSelectSkill();
+    }
+
+    private void OnSkillEquipClick()
+    {
+        var skill = G.Data.Skill.GetSkillData(_selectIndex);
+        if (skill == null)
+            return;
+        if (skill.HasSkill() == false)
+            return;
+
+        switch (_selectSlotIndex)
+        {
+            case 0:
+                G.Data.User.PlayerData.Skill1 = skill;
                 break;
-            case "HP":
-                _templates[target].GetText("StatUpCost").text = $"Diamond {userData.ActorData.Hp * 5}";
+            case 1:
+                G.Data.User.PlayerData.Skill2 = skill;
                 break;
-            case "MS":
-                _templates[target].GetText("StatUpCost").text = $"Diamond {userData.ActorData.MoveSpeed * 5}";
-                break;
-            case "AD":
-                _templates[target].GetText("StatUpCost").text = $"Diamond {userData.ActorData.AttackDamage * 5}";
-                break;
-            case "AS":
-                _templates[target].GetText("StatUpCost").text = $"Diamond {userData.ActorData.AttackSpeed * 5}";
-                break;
-            default:
-                _templates["LV"].GetImage("LevelBar").fillAmount = (float)userData.GetCurrency(CurrencyType.Exp) / (userData.ActorData.Level * 10);
-                _templates["HP"].GetText("StatUpCost").text = $"Diamond {userData.ActorData.Hp * 5}";
-                _templates["MS"].GetText("StatUpCost").text = $"Diamond {userData.ActorData.MoveSpeed * 5}";
-                _templates["AD"].GetText("StatUpCost").text = $"Diamond {userData.ActorData.AttackDamage * 5}";
-                _templates["AS"].GetText("StatUpCost").text = $"Diamond {userData.ActorData.AttackSpeed * 5}";
+            case 2:
+                G.Data.User.PlayerData.Skill3 = skill;
                 break;
         }
     }
 
-    private void OnClickLevelUpButton(string target)
+    private void OnSkillEnhanceClick()
     {
-        var userData = G.Data.User;
+        var skill = G.Data.Skill.GetSkillData(_selectIndex);
+        if (skill == null)
+            return;
+        if (skill.HasSkill() == false)
+            return;
 
-        switch (target)
+        if (G.Data.User.TryUseCurrency(CurrencyType.Ruby, skill.Level * 5))
         {
-            default:
-                break;
-            case "LV":
-                if (userData.TryUseCurrency(CurrencyType.Exp, userData.ActorData.Level * 10) == true)
-                {
-                    userData.ActorData.Level += 1;
-                    UpdateCost(target);
-                }
-                break;
-            case "HP":
-                if (userData.TryUseCurrency(CurrencyType.Diamond, userData.ActorData.Hp * 5) == true)
-                {
-                    userData.ActorData.Hp += 1;
-                    UpdateCost(target);
-                }
-                break;
-            case "MS":
-                if (userData.TryUseCurrency(CurrencyType.Diamond, userData.ActorData.MoveSpeed * 5) == true)
-                {
-                    userData.ActorData.MoveSpeed += 1;
-                    UpdateCost(target);
-                }
-                break;
-            case "AD":
-                if (userData.TryUseCurrency(CurrencyType.Diamond, userData.ActorData.AttackDamage * 5) == true)
-                {
-                    userData.ActorData.AttackDamage += 1;
-                    UpdateCost(target);
-                }
-                break;
-            case "AS":
-                if (userData.TryUseCurrency(CurrencyType.Diamond, userData.ActorData.AttackSpeed * 5) == true)
-                {
-                    userData.ActorData.AttackSpeed += 1;
-                    UpdateCost(target);
-                }
-                break;
-        }
-    }
-
-    private void UpdateCurrency(CurrencyData currencyData)
-    {
-        switch (currencyData.Id)
-        {
-            case (int)CurrencyType.Gold:
-                break;
-            case (int)CurrencyType.Diamond:
-                break;
-            case (int)CurrencyType.Ruby:
-                break;
-            case (int)CurrencyType.Exp:
-                UpdateCost("LV");
-                break;
+            skill.Level++;
         }
     }
 }
