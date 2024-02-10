@@ -18,17 +18,17 @@ public class SkillDialog : Dialog
             var instant = Instantiate(skillTemplate, content);
             var skill = skillDatas.GetSkillData(skillId);
             instant.GetText("SkillName").text = skill.Name;
-            instant.GetText("Skillevel").text = skill.Level.ToString();
+            instant.GetText("SkillLevel").text = skill.Level.ToString();
             instant.GetButton("SkillButton").onClick.AddListener(() => OnSkillListClick(skill.Id));
             _skillSlots.Add(skill.Id, instant);
         }
         skillTemplate.gameObject.SetActive(false);
 
-        var skill1Template = GetTemplate("Skill1");
+        var skill1Template = GetTemplate("Slot1");
         skill1Template.GetButton("SkillButton").onClick.AddListener(() => OnSkillSlotClick(0));
-        var skill2Template = GetTemplate("Skill2");
+        var skill2Template = GetTemplate("Slot2");
         skill2Template.GetButton("SkillButton").onClick.AddListener(() => OnSkillSlotClick(1));
-        var skill3Template = GetTemplate("Skill3");
+        var skill3Template = GetTemplate("Slot3");
         skill3Template.GetButton("SkillButton").onClick.AddListener(() => OnSkillSlotClick(2));
 
         var equipButton = GetButton("EquipButton");
@@ -41,9 +41,9 @@ public class SkillDialog : Dialog
     {
         base.OpenDialog();
 
-        UpdateEquipSkill();
-        UpdateSelectSkill();
         UpdateSkillSlots();
+        UpdateSelectSkill();
+        UpdateSkillist();
     }
 
     public override void CloseDialog()
@@ -51,41 +51,44 @@ public class SkillDialog : Dialog
         base.CloseDialog();
     }
 
-    private void UpdateEquipSkill()
+    private void UpdateSkillSlots()
     {
         var playerData = G.Data.User.PlayerData;
 
         var skill1 = playerData.Skill1;
-        var skill1Template = GetTemplate("Skill1");
+        var skill1Template = GetTemplate("Slot1");
         if (skill1.IsCorrect())
         {
+            skill1Template.gameObject.SetActive(true);
             skill1Template.GetText("SkillName").text = skill1.Name;
             skill1Template.GetText("SkillLevel").text = skill1.Level.ToString();
-            skill1Template.GetButton("SkillButton").onClick.AddListener(() => OnSkillListClick(skill1.Id));
+            skill1Template.GetButton("SkillButton").onClick.AddListener(() => OnSkillSlotClick(0));
         }
         else
         {
             skill1Template.gameObject.SetActive(false);
         }
         var skill2 = playerData.Skill2;
-        var skill2Template = GetTemplate("Skill2");
+        var skill2Template = GetTemplate("Slot2");
         if (skill2.IsCorrect())
         {
+            skill2Template.gameObject.SetActive(true);
             skill2Template.GetText("SkillName").text = skill2.Name;
             skill2Template.GetText("SkillLevel").text = skill2.Level.ToString();
-            skill2Template.GetButton("SkillButton").onClick.AddListener(() => OnSkillListClick(skill2.Id));
+            skill2Template.GetButton("SkillButton").onClick.AddListener(() => OnSkillSlotClick(1));
         }
         else
         {
             skill2Template.gameObject.SetActive(false);
         }
         var skill3 = playerData.Armor;
-        var skill3Template = GetTemplate("Skill3");
+        var skill3Template = GetTemplate("Slot3");
         if (skill3.IsCorrect())
         {
+            skill3Template.gameObject.SetActive(true);
             skill3Template.GetText("SkillName").text = skill3.Name;
             skill3Template.GetText("SkillLevel").text = skill3.Level.ToString();
-            skill3Template.GetButton("SkillButton").onClick.AddListener(() => OnSkillListClick(skill3.Id));
+            skill3Template.GetButton("SkillButton").onClick.AddListener(() => OnSkillSlotClick(2));
         }
         else
         {
@@ -102,10 +105,10 @@ public class SkillDialog : Dialog
 
         selected.GetText("SkillName").text = firstSkill.Name;
         selected.GetText("SkillLevel").text = firstSkill.Level.ToString();
-        selected.GetText("SkillDescription").text = firstSkill.Description;
+        selected.GetText("Description").text = firstSkill.Description;
     }
 
-    private void UpdateSkillSlots(int id = -1)
+    private void UpdateSkillist(int id = -1)
     {
         if (id < 0)
         {
