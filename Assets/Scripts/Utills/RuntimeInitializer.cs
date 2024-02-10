@@ -82,8 +82,8 @@ public class RuntimeInitializer
                 nowSkillData.Description = $"Skill{index} Description";
                 skillDataList.Add(nowSkillData);
             }
-            var itemDataToJson = JsonUtility.ToJson(skillDataList);
-            File.WriteAllText(itemDataPath, itemDataToJson);
+            var skillDataToJson = JsonUtility.ToJson(skillDataList);
+            File.WriteAllText(skillDataPath, skillDataToJson);
         }
         var skillataFromJson = File.ReadAllText(skillDataPath);
         var skillDatas = JsonUtility.FromJson<SkillDataList>(skillataFromJson);
