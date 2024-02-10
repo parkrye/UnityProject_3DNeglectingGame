@@ -9,4 +9,7 @@ public class Datas
 
     readonly private ItemDatas _item = new ItemDatas();
     public ItemDatas Item { get {  return _item; } }
+
+    readonly private SkillDatas _skill = new SkillDatas();
+    public SkillDatas Skill { get {  return _skill; } }
 }

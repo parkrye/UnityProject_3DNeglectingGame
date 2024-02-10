@@ -68,6 +68,30 @@ public class RuntimeInitializer
             G.Data.Item.AddEquipmentData(itemData);
         }
 
+        var skillDataPath = G.V.DataPath + "SkilData";
+        if (File.Exists(skillDataPath) == false)
+        {
+            var skillDataList = new SkillDataList();
+            for (int i = 0; i < 9; i++)
+            {
+                var index = i;
+                var nowSkillData = new SkillData();
+                nowSkillData.Id = G.V.SkillId + index;
+                nowSkillData.Name = $"Skill{index}";
+                nowSkillData.Level = 0;
+                nowSkillData.Description = $"Skill{index} Description";
+                skillDataList.Add(nowSkillData);
+            }
+            var itemDataToJson = JsonUtility.ToJson(skillDataList);
+            File.WriteAllText(itemDataPath, itemDataToJson);
+        }
+        var skillataFromJson = File.ReadAllText(skillDataPath);
+        var skillDatas = JsonUtility.FromJson<SkillDataList>(skillataFromJson);
+        foreach (var skillData in skillDatas.Data)
+        {
+            G.Data.Skill.AddSkillData(skillData);
+        }
+
         var rewardDataPath = G.V.DataPath + "RewardData";
         if (File.Exists(rewardDataPath) == false)
         {
