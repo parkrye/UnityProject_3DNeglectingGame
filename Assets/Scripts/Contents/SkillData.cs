@@ -9,6 +9,13 @@ public class SkillData
     public int Level;
     public string Description;
 
+    public bool IsCorrect()
+    {
+        if (Id < G.V.SkillId)
+            return false;
+        return true;
+    }
+
     public bool HasSkill()
     {
         return Level > 0;

@@ -10,6 +10,10 @@ public class PlayerData
     public ItemData Armor = new ItemData();
     public ItemData Accessory = new ItemData();
 
+    public SkillData Skill1 = new SkillData();
+    public SkillData Skill2 = new SkillData();
+    public SkillData Skill3 = new SkillData();
+
     public void AddCurrency(CurrencyData data)
     {
         Currency.Add(data);
