@@ -39,6 +39,11 @@ public class ItemData
             return false;
         return true;
     }
+
+    public bool HasItem()
+    {
+        return Level > 0;
+    }
 }
 
 [Serializable]
