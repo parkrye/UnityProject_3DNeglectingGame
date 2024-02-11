@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 
 public class SkillDialog : Dialog
 {
@@ -59,40 +60,39 @@ public class SkillDialog : Dialog
         var skill1Template = GetTemplate("Slot1");
         if (skill1.IsCorrect())
         {
-            skill1Template.gameObject.SetActive(true);
             skill1Template.GetText("SkillName").text = skill1.Name;
-            skill1Template.GetText("SkillLevel").text = skill1.Level.ToString();
-            skill1Template.GetButton("SkillButton").onClick.AddListener(() => OnSkillSlotClick(0));
+            skill1Template.GetText("SkillLevel").text = $"Lv.{skill1.Level}";
         }
         else
         {
-            skill1Template.gameObject.SetActive(false);
+            skill1Template.GetText("SkillName").text = string.Empty;
+            skill1Template.GetText("SkillLevel").text = string.Empty;
         }
+
         var skill2 = playerData.Skill2;
         var skill2Template = GetTemplate("Slot2");
         if (skill2.IsCorrect())
         {
-            skill2Template.gameObject.SetActive(true);
             skill2Template.GetText("SkillName").text = skill2.Name;
-            skill2Template.GetText("SkillLevel").text = skill2.Level.ToString();
-            skill2Template.GetButton("SkillButton").onClick.AddListener(() => OnSkillSlotClick(1));
+            skill2Template.GetText("SkillLevel").text = $"Lv.{skill2.Level}";
         }
         else
         {
-            skill2Template.gameObject.SetActive(false);
+            skill2Template.GetText("SkillName").text = string.Empty;
+            skill2Template.GetText("SkillLevel").text = string.Empty;
         }
-        var skill3 = playerData.Armor;
+
+        var skill3 = playerData.Skill3;
         var skill3Template = GetTemplate("Slot3");
         if (skill3.IsCorrect())
         {
-            skill3Template.gameObject.SetActive(true);
             skill3Template.GetText("SkillName").text = skill3.Name;
-            skill3Template.GetText("SkillLevel").text = skill3.Level.ToString();
-            skill3Template.GetButton("SkillButton").onClick.AddListener(() => OnSkillSlotClick(2));
+            skill3Template.GetText("SkillLevel").text = $"Lv.{skill3.Level}";
         }
         else
         {
-            skill3Template.gameObject.SetActive(false);
+            skill3Template.GetText("SkillName").text = string.Empty;
+            skill3Template.GetText("SkillLevel").text = string.Empty;
         }
     }
 
@@ -104,7 +104,7 @@ public class SkillDialog : Dialog
             return;
 
         selected.GetText("SkillName").text = firstSkill.Name;
-        selected.GetText("SkillLevel").text = firstSkill.Level.ToString();
+        selected.GetText("SkillLevel").text = $"Lv.{firstSkill.Level}";
         selected.GetText("Description").text = firstSkill.Description;
     }
 
@@ -121,7 +121,7 @@ public class SkillDialog : Dialog
                     continue;
 
                 slot.GetText("SkillName").text = skill.Name;
-                slot.GetText("SkillLevel").text = skill.Level.ToString();
+                slot.GetText("SkillLevel").text = $"Lv.{skill.Level}";
             }
         }
         else
@@ -133,7 +133,7 @@ public class SkillDialog : Dialog
                 return;
 
             slot.GetText("SkillName").text = skill.Name;
-            slot.GetText("SkillLevel").text = skill.Level.ToString();
+            slot.GetText("SkillLevel").text = $"Lv.{skill.Level}";
         }
     }
 
@@ -177,6 +177,8 @@ public class SkillDialog : Dialog
                 G.Data.User.PlayerData.Skill3 = skill;
                 break;
         }
+
+        UpdateSelectSkill();
     }
 
     private void OnSkillEnhanceClick()
@@ -190,6 +192,7 @@ public class SkillDialog : Dialog
         if (G.Data.User.TryUseCurrency(CurrencyType.Ruby, skill.Level * 5))
         {
             skill.Level++;
+            UpdateSelectSkill();
         }
     }
 }
