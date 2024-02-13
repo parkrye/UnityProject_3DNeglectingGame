@@ -5,6 +5,7 @@ public enum CurrencyType
     Diamond,
     Ruby,
     Exp,
+    Emerald,
 }
 
 [Serializable]

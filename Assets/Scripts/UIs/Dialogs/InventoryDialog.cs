@@ -167,7 +167,7 @@ public class InventoryDialog : Dialog
         if (equipment.HasItem() == false)
             return;
 
-        if (G.Data.User.TryUseCurrency(CurrencyType.Ruby, (equipment.Level + equipment.Value) * 5))
+        if (G.Data.User.TryUseCurrency(CurrencyType.Emerald, (equipment.Level + equipment.Value) * 5))
         {
             equipment.Level++;
         }

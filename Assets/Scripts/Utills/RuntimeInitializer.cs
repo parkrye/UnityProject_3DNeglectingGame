@@ -96,7 +96,7 @@ public class RuntimeInitializer
         if (File.Exists(rewardDataPath) == false)
         {
             var rewardDataList = new RewardDataList();
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < 5; i++)
             {
                 var id = i;
                 RewardData nowRewardData = new RewardData();
@@ -140,7 +140,7 @@ public class RuntimeInitializer
         {
             var reward = new RewardData();
             reward.AddReawrd(G.Data.Reward.GetReward(3));
-            reward.AddReawrd(G.Data.Reward.GetReward(enemyActorData.Id % 3));
+            reward.AddReawrd(G.Data.Reward.GetReward(enemyActorData.Id % 5));
             G.Data.Enemy.AddEnemyTable(enemyActorData, reward);
         }
     }
