@@ -72,7 +72,7 @@ public class BTA_CloseAttack : BTAction
 
     private async UniTask AttackCoolTimeRoutine()
     {
-        await UniTask.Delay(1000 / G.CurrentStage.PlayerActor.Data.AttackSpeed);
+        await UniTask.Delay(G.V.AttackDelayTime / G.CurrentStage.PlayerActor.Data.AttackSpeed);
         _isAttackable = true;
     }
 

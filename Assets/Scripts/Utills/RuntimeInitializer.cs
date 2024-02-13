@@ -34,8 +34,8 @@ public class RuntimeInitializer
             playerActorData.Level = 1;
             playerActorData.Hp = 10;
             playerActorData.MoveSpeed = 2;
-            playerActorData.AttackSpeed = 1;
-            playerActorData.AttackDamage = 1;
+            playerActorData.AttackSpeed = 10;
+            playerActorData.AttackDamage = 2;
             var playerActorDataToJson = JsonUtility.ToJson(playerActorData);
             File.WriteAllText(playerActorDataPath, playerActorDataToJson);
         }
@@ -127,7 +127,7 @@ public class RuntimeInitializer
                 nowEnemyActorData.Level = 1;
                 nowEnemyActorData.Hp = 10;
                 nowEnemyActorData.MoveSpeed = 1;
-                nowEnemyActorData.AttackSpeed = 1;
+                nowEnemyActorData.AttackSpeed = 5;
                 nowEnemyActorData.AttackDamage = 1;
                 enemyActorDataList.Add(nowEnemyActorData);
             }

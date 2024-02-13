@@ -24,7 +24,6 @@ public class BTA_E_CloseAttack : BTAction
                 if (_enemyActor.State == ActorState.Alive)
                 {
                     _state = ActionState.Working;
-                    _isAttackable = true;
                     AttackCoolTimeRoutine().Forget();
                 }
                 break;
@@ -62,9 +61,9 @@ public class BTA_E_CloseAttack : BTAction
 
     private async UniTask AttackCoolTimeRoutine()
     {
-        while(_enemyActor.State == ActorState.Alive)
+        while (_enemyActor.State == ActorState.Alive)
         {
-            await UniTask.Delay(1000 / _enemyActor.Data.EnemyActorData.AttackSpeed);
+            await UniTask.Delay(G.V.AttackDelayTime / _enemyActor.Data.EnemyActorData.AttackSpeed);
             _isAttackable = true;
         }
     }
