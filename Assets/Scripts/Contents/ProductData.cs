@@ -11,6 +11,8 @@ public class ProductData
     public string Descripntion;
     public int Cost;
 
+    public CurrencyType CurrencyType { get { return (CurrencyType)Type; } }
+
     public ProductData(int id, CurrencyType type, int count, string name, string descripntion, int cost)
     {
         Id = id;
