@@ -143,5 +143,27 @@ public class RuntimeInitializer
             reward.AddReawrd(G.Data.Reward.GetReward(enemyActorData.Id % 5));
             G.Data.Enemy.AddEnemyTable(enemyActorData, reward);
         }
+
+        var productDataPath = G.V.DataPath + "ProductData";
+        if (File.Exists(productDataPath) == false)
+        {
+            var productDataList = new ProductDataList();
+            for (int i = 1; i < 10; i++)
+            {
+                var id = i;
+                var currency = id % 5 != 0 ? (CurrencyType)(id % 5) : CurrencyType.Diamond;
+                ProductData newProductData = new ProductData(
+                    id, currency, i * 10, $"{(CurrencyType)(id % 5)}", $"{i * 10}", i * 5);
+                productDataList.Add(newProductData);
+            }
+            var productDataToJson = JsonUtility.ToJson(productDataList);
+            File.WriteAllText(productDataPath, productDataToJson);
+        }
+        var productDataFromJson = File.ReadAllText(productDataPath);
+        var productDatas = JsonUtility.FromJson<ProductDataList>(productDataFromJson);
+        foreach (var productdData in productDatas.Data)
+        {
+            G.Data.Product.AddProductTable(productdData);
+        }
     }
 }
