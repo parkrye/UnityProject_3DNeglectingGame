@@ -37,9 +37,26 @@ public class ShopDialog : Dialog
         if (product == null)
             return;
 
-        if(G.Data.User.TryUseCurrency(CurrencyType.Gold, product.Cost) == true)
+        switch (product.ProductType)
         {
-            G.Data.User.AddCurrency(product.CurrencyType, product.Count);
+            case ProductType.Currency:
+                if (G.Data.User.TryUseCurrency(product.CostType, product.Cost) == true)
+                {
+                    G.Data.User.AddCurrency((CurrencyType)product.TargetId, product.Count);
+                }
+                break;
+            case ProductType.Skill:
+                if (G.Data.User.TryUseCurrency(product.CostType, product.Cost) == true)
+                {
+                    G.Data.Skill.GetSkillData(id).Level++;
+                }
+                break;
+            case ProductType.Item:
+                if (G.Data.User.TryUseCurrency(product.CostType, product.Cost) == true)
+                {
+                    G.Data.Item.GetItemData(id).Level++;
+                }
+                break;
         }
     }
 }

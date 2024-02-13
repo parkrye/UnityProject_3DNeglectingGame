@@ -147,14 +147,33 @@ public class RuntimeInitializer
         var productDataPath = G.V.DataPath + "ProductData";
         if (File.Exists(productDataPath) == false)
         {
+            var productId = 0;
             var productDataList = new ProductDataList();
-            for (int i = 1; i < 10; i++)
+            for (int i = 1; i < 5; i++)
             {
-                var id = i;
-                var currency = id % 5 != 0 ? (CurrencyType)(id % 5) : CurrencyType.Diamond;
+                var thisId = productId;
                 ProductData newProductData = new ProductData(
-                    id, currency, i * 10, $"{(CurrencyType)(id % 5)}", $"{i * 10}", i * 5);
+                    thisId, ProductType.Currency, i, i * 10, $"{(CurrencyType)i}", $"{i * 10}", (int)CurrencyType.Gold, i * 10);
                 productDataList.Add(newProductData);
+                productId++;
+            }
+
+            foreach(var (id, skill) in G.Data.Skill.Skills)
+            {
+                var thisId = productId;
+                ProductData newProductData = new ProductData(
+                    thisId, ProductType.Skill, id, 1, $"{skill.Name}", $"{skill.Description}", (int)CurrencyType.Gold, 20);
+                productDataList.Add(newProductData);
+                productId++;
+            }
+
+            foreach (var (id, item) in G.Data.Item.Items)
+            {
+                var thisId = productId;
+                ProductData newProductData = new ProductData(
+                    thisId, ProductType.Item, id, 1, $"{item.Name}", $"{(ItemType)item.Type}", (int)CurrencyType.Gold, 20);
+                productDataList.Add(newProductData);
+                productId++;
             }
             var productDataToJson = JsonUtility.ToJson(productDataList);
             File.WriteAllText(productDataPath, productDataToJson);
