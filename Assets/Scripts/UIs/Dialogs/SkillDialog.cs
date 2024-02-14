@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Linq;
+using UnityEditor.Experimental.GraphView;
 
 public class SkillDialog : Dialog
 {
@@ -49,6 +51,7 @@ public class SkillDialog : Dialog
     public override void CloseDialog()
     {
         base.CloseDialog();
+        (_selectIndex, _) = G.Data.Skill.Skills.First();
     }
 
     private void UpdateSkillSlots()
@@ -57,54 +60,48 @@ public class SkillDialog : Dialog
 
         var skill1 = playerData.Skill1;
         var skill1Template = GetTemplate("Slot1");
-        if (skill1.IsCorrect())
+        var isCorrect = skill1.IsCorrect();
+        skill1Template.gameObject.SetActive(isCorrect);
+        if (isCorrect)
         {
             skill1Template.GetText("SkillName").text = skill1.Name;
             skill1Template.GetText("SkillLevel").text = $"Lv.{skill1.Level}";
         }
-        else
-        {
-            skill1Template.GetText("SkillName").text = string.Empty;
-            skill1Template.GetText("SkillLevel").text = string.Empty;
-        }
 
         var skill2 = playerData.Skill2;
         var skill2Template = GetTemplate("Slot2");
-        if (skill2.IsCorrect())
+        isCorrect = skill2.IsCorrect();
+        skill2Template.gameObject.SetActive(isCorrect);
+        if (isCorrect)
         {
             skill2Template.GetText("SkillName").text = skill2.Name;
             skill2Template.GetText("SkillLevel").text = $"Lv.{skill2.Level}";
         }
-        else
-        {
-            skill2Template.GetText("SkillName").text = string.Empty;
-            skill2Template.GetText("SkillLevel").text = string.Empty;
-        }
 
         var skill3 = playerData.Skill3;
         var skill3Template = GetTemplate("Slot3");
-        if (skill3.IsCorrect())
+        isCorrect = skill3.IsCorrect();
+        skill3Template.gameObject.SetActive(isCorrect);
+        if (isCorrect)
         {
             skill3Template.GetText("SkillName").text = skill3.Name;
             skill3Template.GetText("SkillLevel").text = $"Lv.{skill3.Level}";
-        }
-        else
-        {
-            skill3Template.GetText("SkillName").text = string.Empty;
-            skill3Template.GetText("SkillLevel").text = string.Empty;
         }
     }
 
     private void UpdateSelectSkill()
     {
         var selected = GetTemplate("Select");
-        var firstSkill = G.Data.Skill.GetSkillData(_selectIndex);
-        if (firstSkill == null)
-            return;
+        var skill = G.Data.Skill.GetSkillData(_selectIndex);
+        if (skill == null)
+            (_selectIndex, skill) = G.Data.Skill.Skills.First();
 
-        selected.GetText("SkillName").text = firstSkill.Name;
-        selected.GetText("SkillLevel").text = $"Lv.{firstSkill.Level}";
-        selected.GetText("Description").text = firstSkill.Description;
+        selected.GetText("SkillName").text = skill.Name;
+        selected.GetText("SkillLevel").text = $"Lv.{skill.Level}";
+        selected.GetText("Description").text = skill.Description;
+        selected.GetButton("EquipButton").gameObject.SetActive(skill.IsCorrect());
+        selected.GetButton("EnhanceButton").gameObject.SetActive(skill.IsCorrect());
+        selected.GetText("EnhanceText").text = $"Enhance\nRuby {skill.Level * 5}";
     }
 
     private void UpdateSkillist(int id = -1)

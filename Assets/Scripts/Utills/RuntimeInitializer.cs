@@ -72,7 +72,7 @@ public class RuntimeInitializer
         if (File.Exists(skillDataPath) == false)
         {
             var skillDataList = new SkillDataList();
-            for (int i = 0; i < 9; i++)
+            for (int i = 0; i < 4; i++)
             {
                 var index = i;
                 var nowSkillData = new SkillData();

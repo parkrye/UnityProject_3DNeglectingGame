@@ -13,6 +13,8 @@ public class SkillData
     {
         if (Id < G.V.SkillId)
             return false;
+        if(Level == 0)
+            return false;
         return true;
     }
 

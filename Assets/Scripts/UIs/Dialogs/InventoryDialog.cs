@@ -1,4 +1,7 @@
 using System.Collections.Generic;
+using System.Linq;
+using UnityEditor.Experimental.GraphView;
+using static UnityEditor.Progress;
 
 public class InventoryDialog : Dialog
 {
@@ -41,6 +44,7 @@ public class InventoryDialog : Dialog
     public override void CloseDialog()
     {
         base.CloseDialog();
+        (_selectIndex, _) = G.Data.Item.Items.First();
     }
 
     private void UpdateEquipItem()
@@ -49,53 +53,50 @@ public class InventoryDialog : Dialog
 
         var weapon = playerData.Weapon;
         var weaponTemplate = GetTemplate("Weapon");
-        if (weapon.IsCorrect())
+        var isCorrect = weapon.IsCorrect();
+        weaponTemplate.gameObject.SetActive(isCorrect);
+        if (isCorrect)
         {
             weaponTemplate.GetText("ItemName").text = weapon.Name;
             weaponTemplate.GetText("ItemLevel").text = weapon.Level.ToString();
             weaponTemplate.GetButton("ItemButton").onClick.AddListener(() => OnItemSlotClick(weapon.Id));
         }
-        else
-        {
-            weaponTemplate.gameObject.SetActive(false);
-        }
         var armor = playerData.Armor;
         var armorTemplate = GetTemplate("Armor");
-        if (armor.IsCorrect())
+        isCorrect = weapon.IsCorrect();
+        armorTemplate.gameObject.SetActive(isCorrect);
+        if (isCorrect)
         {
             armorTemplate.GetText("ItemName").text = armor.Name;
             armorTemplate.GetText("ItemLevel").text = armor.Level.ToString();
             armorTemplate.GetButton("ItemButton").onClick.AddListener(() => OnItemSlotClick(armor.Id));
         }
-        else
-        {
-            armorTemplate.gameObject.SetActive(false);
-        }
         var accessory = playerData.Armor;
         var accessoryTemplate = GetTemplate("Accessory");
-        if (accessory.IsCorrect())
+        isCorrect = weapon.IsCorrect();
+        accessoryTemplate.gameObject.SetActive(isCorrect);
+        if (isCorrect)
         {
             accessoryTemplate.GetText("ItemName").text = accessory.Name;
             accessoryTemplate.GetText("ItemLevel").text = accessory.Level.ToString();
             accessoryTemplate.GetButton("ItemButton").onClick.AddListener(() => OnItemSlotClick(accessory.Id));
-        }
-        else
-        {
-            accessoryTemplate.gameObject.SetActive(false);
         }
     }
 
     private void UpdateSelectItem()
     {
         var selected = GetTemplate("Select");
-        var firstItem = G.Data.Item.GetItemData(_selectIndex);
-        if (firstItem == null)
-            return;
+        var item = G.Data.Item.GetItemData(_selectIndex);
+        if (item == null)
+            (_selectIndex, item) = G.Data.Item.Items.First();
 
-        selected.GetText("ItemName").text = firstItem.Name;
-        selected.GetText("ItemLevel").text = firstItem.Level.ToString();
-        selected.GetText("ItemType").text = ((ItemType)firstItem.Type).ToString();
-        selected.GetText("ItemValue").text = firstItem.Value.ToString();
+        selected.GetText("ItemName").text = item.Name;
+        selected.GetText("ItemLevel").text = item.Level.ToString();
+        selected.GetText("ItemType").text = ((ItemType)item.Type).ToString();
+        selected.GetText("ItemValue").text = item.Value.ToString();
+        selected.GetButton("EquipButton").gameObject.SetActive(item.IsCorrect());
+        selected.GetButton("EnhanceButton").gameObject.SetActive(item.IsCorrect());
+        selected.GetText("EnhanceText").text = $"Enhance\nRuby {item.Level * item.Value}";
     }
 
     private void UpdateInventory(int id = -1)

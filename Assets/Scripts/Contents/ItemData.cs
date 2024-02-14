@@ -37,6 +37,8 @@ public class ItemData
     {
         if(Id < G.V.ItemId || Id >= G.V.RewardId)
             return false;
+        if (Level == 0)
+            return false;
         return true;
     }
 
