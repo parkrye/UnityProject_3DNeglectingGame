@@ -47,6 +47,7 @@ public class MainView : View
         GetButton("InventoryButton").onClick.AddListener(OnInventoryButtonClick);
         GetButton("ShopButton").onClick.AddListener(OnShopButtonClick);
         GetButton("MoreButton").onClick.AddListener(OnMoreButtonClick);
+        GetButton("ResetButton").onClick.AddListener(() => G.CurrentStage.ResetStage());
 
         GetImage("More").gameObject.SetActive(false);
 

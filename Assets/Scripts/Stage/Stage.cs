@@ -135,7 +135,7 @@ public class Stage : MonoBehaviour
         _actorPool.Release(enemy);
     }
 
-    private void ResetStage()
+    public void ResetStage()
     {
         for(int i = 0; i < _spawnedEnemyList.Count; i++)
         {
