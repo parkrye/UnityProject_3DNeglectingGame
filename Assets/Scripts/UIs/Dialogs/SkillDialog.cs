@@ -164,13 +164,13 @@ public class SkillDialog : Dialog
         switch (_selectSlotIndex)
         {
             case 0:
-                G.Data.User.PlayerData.Skill1 = skill;
+                G.Data.User.PlayerData.SetSkill(0, G.Data.User.PlayerData.Skill1, skill);
                 break;
             case 1:
-                G.Data.User.PlayerData.Skill2 = skill;
+                G.Data.User.PlayerData.SetSkill(1, G.Data.User.PlayerData.Skill2, skill);
                 break;
             case 2:
-                G.Data.User.PlayerData.Skill3 = skill;
+                G.Data.User.PlayerData.SetSkill(2, G.Data.User.PlayerData.Skill3, skill);
                 break;
         }
 

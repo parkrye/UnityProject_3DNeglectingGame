@@ -86,4 +86,14 @@ public class BTBranch : BTAction
             action.Reset();
         }
     }
+
+    public List<BTAction> GetChildren()
+    {
+        return _actions;
+    }
+
+    public void RemoveChildren(BTAction child)
+    {
+        _actions.Remove(child);
+    }
 }

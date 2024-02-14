@@ -8,10 +8,12 @@ public class PlayerActionHandler : MonoBehaviour
     {
         _root = new BTBranch(BranchType.BOTH);
 
-        BTBranch battleBranch = new BTBranch(BranchType.BOTH);
-        battleBranch.AddChild(new BTA_CloseAttack());
+        _root.AddChild(new BTA_CloseAttack());
+    }
 
-        _root.AddChild(battleBranch);
+    private void Start()
+    {
+        G.Data.User.PlayerData.SkillChangeEvent.AddListener(ModifySkill);
     }
 
     public void Work()
@@ -22,5 +24,11 @@ public class PlayerActionHandler : MonoBehaviour
     public void ResetBT()
     {
         _root.ResetChildren();
+    }
+
+    private void ModifySkill(int _, SkillData before,  SkillData after)
+    {
+        _root.RemoveChildren(G.Data.Skill.GetSkillAction(before.Id));
+        _root.AddChild(G.Data.Skill.GetSkillAction(after.Id));
     }
 }

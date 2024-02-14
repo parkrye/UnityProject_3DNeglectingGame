@@ -11,6 +11,7 @@ public class PlayerActor : Actor, IHitable
     private ActorData _data;
     public ActorData Data { get { return _data; } }
     private int _hp;
+    public bool IsDamaged { get { return _hp < Data.Hp; } }
     public NormalAnimationController Anim { get { return _anim; } }
     public UnityEvent DieEvent = new UnityEvent();
     public UnityEvent<float, bool> HPRatioEvent = new UnityEvent<float, bool>();

@@ -1,7 +1,8 @@
 using Cysharp.Threading.Tasks;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class BTA_CloseAttack : BTAction
+public class BTA_CloseDoubleAttack : BTAction
 {
     private Transform _enemyTransform;
     private bool _isAttackable = false;
@@ -82,14 +83,24 @@ public class BTA_CloseAttack : BTAction
         player.Anim.AttackEndEvent.RemoveListener(AttackReaction);
 
         var colliders = Physics.OverlapSphere(player.transform.position + player.transform.forward, G.V.CloseAttackRange, 1 << 10);
+        var targets = new Queue<IHitable>();
         foreach (var target in colliders)
         {
             var enemy = target.GetComponent<EnemyActor>();
             if (enemy != null)
-            {
-                enemy.Hit(player.Data.AttackDamage);
+                targets.Enqueue(enemy);
+            if (targets.Count == 2)
                 break;
-            }
+        }
+
+        if(targets.Count == 1)
+        {
+            targets.Dequeue().Hit(player.Data.AttackDamage * 1.5f);
+        }
+        else
+        {
+            targets.Dequeue().Hit(player.Data.AttackDamage * 0.8f);
+            targets.Dequeue().Hit(player.Data.AttackDamage * 0.8f);
         }
 
         AttackCoolTimeRoutine().Forget();
