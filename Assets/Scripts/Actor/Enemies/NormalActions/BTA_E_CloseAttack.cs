@@ -30,6 +30,7 @@ public class BTA_E_CloseAttack : BTAction
             case ActionState.Working:
                 if (Vector3.SqrMagnitude(player.transform.position - _enemyActor.transform.position) < G.V.SquareCloseAttackRange)
                 {
+                    _enemyActor.SetDestination(_enemyActor.transform.position);
                     _enemyActor.LookAt(player.transform.position);
                     _enemyActor.Anim.StopMoveAnimation();
                     if (_isAttackable)

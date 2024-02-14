@@ -41,7 +41,7 @@ public class PlayerActor : Actor, IHitable
         ActionRoutine().Forget();
 
         _navMesh = gameObject.AddComponent<NavMeshAgent>();
-        _navMesh.stoppingDistance = 3f;
+        _navMesh.stoppingDistance = 4f;
         _navMesh.speed = _data.MoveSpeed;
         HPRatioEvent?.Invoke(1f, false);
     }
