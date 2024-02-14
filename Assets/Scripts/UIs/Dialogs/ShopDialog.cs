@@ -11,11 +11,12 @@ public class ShopDialog : Dialog
 
         foreach (var (id, product) in products.Products)
         {
+            var thisId = id;
             var instant = Instantiate(productSlotTemplate, content);
             instant.GetText("Name").text = product.Name;
             instant.GetText("Description").text = product.Descripntion;
             instant.GetText("Cost").text = $"Gold {product.Cost}";
-            instant.GetButton("Button").onClick.AddListener(() => OnClickLevelUpButton(id));
+            instant.GetButton("Button").onClick.AddListener(() => OnClickLevelUpButton(thisId));
         }
 
         productSlotTemplate.gameObject.SetActive(false);
