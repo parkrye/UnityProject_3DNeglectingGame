@@ -39,7 +39,7 @@ public class BTA_SelfHeal : BTAction
 
     private async UniTask CoolTimeRoutine()
     {
-        await UniTask.Delay(G.V.AttackDelayTime / G.CurrentStage.PlayerActor.Data.AttackSpeed);
+        await UniTask.Delay(G.V.AttackDelayTime / G.CurrentStage.PlayerActor.GetStatus(Status.AttackSpeed));
         _isHealable = true;
     }
 
@@ -48,7 +48,7 @@ public class BTA_SelfHeal : BTAction
         var player = G.CurrentStage.PlayerActor;
         player.Anim.AttackEndEvent.RemoveListener(HealReaction);
 
-        player.Hit(-player.Data.Hp * 0.5f);
+        player.Hit(-player.GetStatus(Status.Hp) * 0.5f);
 
         CoolTimeRoutine().Forget();
     }

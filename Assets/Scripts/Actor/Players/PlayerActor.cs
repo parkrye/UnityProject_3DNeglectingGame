@@ -1,22 +1,23 @@
 using Cysharp.Threading.Tasks;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
 
-public class PlayerActor : Actor, IHitable, IDamagePublisher
+public class PlayerActor : Actor, IHitable, IFloatPublisher
 {
     private PlayerActionHandler _actionHandler;
     private NormalAnimationController _anim;
     private NavMeshAgent _navMesh;
     private ActorData _data;
-    public ActorData Data { get { return _data; } }
     private int _hp;
-    public bool IsDamaged { get { return _hp < Data.Hp; } }
+    public bool IsDamaged { get { return _hp < GetStatus(Status.Hp); } }
     public NormalAnimationController Anim { get { return _anim; } }
     public UnityEvent DieEvent = new UnityEvent();
     public UnityEvent<float, bool> HPRatioEvent = new UnityEvent<float, bool>();
-    private List<IDamageSubscriber> _subscribers = new List<IDamageSubscriber>();
+    private List<IFloatSubscriber> _damageSubscribers = new List<IFloatSubscriber>();
+    private Dictionary<Status, List<IFloatSubscriber>> _statusSubscribers = new Dictionary<Status, List<IFloatSubscriber>>();
 
     private void Awake()
     {
@@ -29,6 +30,10 @@ public class PlayerActor : Actor, IHitable, IDamagePublisher
 
         _type = ActorType.PC;
         _state = ActorState.Ready;
+
+        _statusSubscribers.Add(Status.MoveSpeed, new List<IFloatSubscriber>());
+        _statusSubscribers.Add(Status.AttackSpeed, new List<IFloatSubscriber>());
+        _statusSubscribers.Add(Status.AttackDamage, new List<IFloatSubscriber>());
     }
 
     private void OnDisable()
@@ -75,9 +80,9 @@ public class PlayerActor : Actor, IHitable, IDamagePublisher
 
     public bool Hit(float damage)
     {
-        var damageResult = Publish(damage);
+        var damageResult = DamagePublish(damage);
         _hp -= (int)damageResult;
-        HPRatioEvent?.Invoke((float)_hp / Data.Hp, false);
+        HPRatioEvent?.Invoke((float)_hp / GetStatus(Status.Hp), false);
         if (_hp <= 0)
         {
             _state = ActorState.Dead;
@@ -96,22 +101,67 @@ public class PlayerActor : Actor, IHitable, IDamagePublisher
         DieEvent?.Invoke();
     }
 
-    public void AddSubscriber(IDamageSubscriber subscriber)
+    public void AddSubscriber(IFloatSubscriber subscriber)
     {
-        _subscribers.Add(subscriber);
+
     }
 
-    public void RemoveSubscriber(IDamageSubscriber subscriber)
+    public void RemoveSubscriber(IFloatSubscriber subscriber)
     {
-        _subscribers.Remove(subscriber);
+
     }
 
-    public float Publish(float origin)
+    public void AddDamageSubscriber(IFloatSubscriber subscriber)
+    {
+        _damageSubscribers.Add(subscriber);
+    }
+
+    public void RemoveDamageSubscriber(IFloatSubscriber subscriber)
+    {
+        _damageSubscribers.Remove(subscriber);
+    }
+
+    private float DamagePublish(float origin)
     {
         var result = origin;
-        foreach(var subscriber in _subscribers) 
+        foreach(var subscriber in _damageSubscribers) 
         {
             result = subscriber.Modifiy(origin);
+        }
+        return result;
+    }
+
+    public int GetStatus(Status status)
+    {
+        var result = 0f;
+        switch(status)
+        {
+            case Status.Hp:
+                result = _data.Hp;
+                break;
+            case Status.MoveSpeed:
+                result = StatusPublish(status, _data.MoveSpeed);
+                break;
+            case Status.AttackSpeed:
+                result = StatusPublish(status, _data.AttackSpeed);
+                break;
+            case Status.AttackDamage:
+                result = StatusPublish(status, _data.AttackDamage);
+                break;
+        }
+        return (int)result;
+    }
+
+    private float StatusPublish(Status status, float value)
+    {
+        var result = value;
+        var subscribers = _statusSubscribers.Where(t => t.Key.Equals(status)).Select(t => t.Value).First();
+        if (subscribers == null)
+            return value;
+
+        foreach (var subscriber in subscribers)
+        {
+            result = subscriber.Modifiy(result);
         }
         return result;
     }

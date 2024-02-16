@@ -73,7 +73,7 @@ public class BTA_CloseDoubleAttack : BTAction
 
     private async UniTask AttackCoolTimeRoutine()
     {
-        await UniTask.Delay(G.V.AttackDelayTime / G.CurrentStage.PlayerActor.Data.AttackSpeed);
+        await UniTask.Delay(G.V.AttackDelayTime / G.CurrentStage.PlayerActor.GetStatus(Status.AttackSpeed));
         _isAttackable = true;
     }
 
@@ -93,14 +93,16 @@ public class BTA_CloseDoubleAttack : BTAction
                 break;
         }
 
-        if(targets.Count == 1)
+        var damage = player.GetStatus(Status.AttackDamage);
+
+        if (targets.Count == 1)
         {
-            targets.Dequeue().Hit(player.Data.AttackDamage * 1.5f);
+            targets.Dequeue().Hit(damage * 1.5f);
         }
         else
         {
-            targets.Dequeue().Hit(player.Data.AttackDamage * 0.8f);
-            targets.Dequeue().Hit(player.Data.AttackDamage * 0.8f);
+            targets.Dequeue().Hit(damage * 0.8f);
+            targets.Dequeue().Hit(damage * 0.8f);
         }
 
         AttackCoolTimeRoutine().Forget();
