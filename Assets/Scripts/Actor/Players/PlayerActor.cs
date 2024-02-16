@@ -1,9 +1,10 @@
 using Cysharp.Threading.Tasks;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
 
-public class PlayerActor : Actor, IHitable
+public class PlayerActor : Actor, IHitable, IDamagePublisher
 {
     private PlayerActionHandler _actionHandler;
     private NormalAnimationController _anim;
@@ -15,6 +16,7 @@ public class PlayerActor : Actor, IHitable
     public NormalAnimationController Anim { get { return _anim; } }
     public UnityEvent DieEvent = new UnityEvent();
     public UnityEvent<float, bool> HPRatioEvent = new UnityEvent<float, bool>();
+    private List<IDamageSubscriber> _subscribers = new List<IDamageSubscriber>();
 
     private void Awake()
     {
@@ -73,7 +75,8 @@ public class PlayerActor : Actor, IHitable
 
     public bool Hit(float damage)
     {
-        _hp -= (int)damage;
+        var damageResult = Publish(damage);
+        _hp -= (int)damageResult;
         HPRatioEvent?.Invoke((float)_hp / Data.Hp, false);
         if (_hp <= 0)
         {
@@ -91,5 +94,25 @@ public class PlayerActor : Actor, IHitable
     private void DieReaction()
     {
         DieEvent?.Invoke();
+    }
+
+    public void AddSubscriber(IDamageSubscriber subscriber)
+    {
+        _subscribers.Add(subscriber);
+    }
+
+    public void RemoveSubscriber(IDamageSubscriber subscriber)
+    {
+        _subscribers.Remove(subscriber);
+    }
+
+    public float Publish(float origin)
+    {
+        var result = origin;
+        foreach(var subscriber in _subscribers) 
+        {
+            result = subscriber.Modifiy(origin);
+        }
+        return result;
     }
 }
