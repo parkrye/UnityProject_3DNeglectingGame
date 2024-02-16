@@ -173,5 +173,14 @@ public class Stage : MonoBehaviour
         }
         var itemDataToJson = JsonUtility.ToJson(itemDataList);
         File.WriteAllText(itemDataPath, itemDataToJson);
+
+        var skillDataPath = G.V.DataPath + "SkillData";
+        var skillDataList = new SkillDataList();
+        foreach(var skill in G.Data.Skill.Skills.Values)
+        {
+            skillDataList.Add(skill);
+        }
+        var skillDataToJson = JsonUtility.ToJson(skillDataList);
+        File.WriteAllText(skillDataPath, skillDataToJson);
     }
 }
