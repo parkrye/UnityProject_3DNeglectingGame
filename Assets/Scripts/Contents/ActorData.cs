@@ -1,6 +1,15 @@
 using System;
 using System.Collections.Generic;
 
+public enum Status
+{
+    Level = 0,
+    Hp,
+    MoveSpeed,
+    AttackSpeed,
+    AttackDamage
+}
+
 [Serializable]
 public class ActorData
 {
@@ -14,7 +23,7 @@ public class ActorData
 
     public ActorData Clone()
     {
-        ActorData clone = new ActorData();
+        var clone = new ActorData();
         clone.Id = Id;
         clone.Name = Name;
         clone.Level = Level;
@@ -30,6 +39,67 @@ public class ActorData
         if (Id < G.V.ActorId || Id >= G.V.ItemId)
             return false;
         return true;
+    }
+
+    public float GetLevelUpCost(Status target)
+    {
+        switch(target)
+        {
+            case Status.Level:
+                return G.Data.User.GetCurrency(CurrencyType.Exp) / Level;
+            case Status.Hp:
+                return Hp;
+            case Status.MoveSpeed:
+                return MoveSpeed;
+            case Status.AttackSpeed:
+                return AttackSpeed;
+            case Status.AttackDamage:
+                return AttackDamage;
+        }
+        return -1;
+    }
+
+    public bool TryLevelUp(Status target)
+    {
+        switch (target)
+        {
+            case Status.Level:
+                if (G.Data.User.TryUseCurrency(CurrencyType.Exp, Level))
+                {
+                    Level++;
+                    return true;
+                }
+                break;
+            case Status.Hp:
+                if (G.Data.User.TryUseCurrency(CurrencyType.Diamond, Hp))
+                {
+                    Hp++;
+                    return true;
+                }
+                break;
+            case Status.MoveSpeed:
+                if (G.Data.User.TryUseCurrency(CurrencyType.Diamond, MoveSpeed))
+                {
+                    MoveSpeed++;
+                    return true;
+                }
+                break;
+            case Status.AttackSpeed:
+                if (G.Data.User.TryUseCurrency(CurrencyType.Diamond, AttackSpeed))
+                {
+                    AttackSpeed++;
+                    return true;
+                }
+                break;
+            case Status.AttackDamage:
+                if (G.Data.User.TryUseCurrency(CurrencyType.Diamond, AttackDamage))
+                {
+                    AttackDamage++;
+                    return true;
+                }
+                break;
+        }
+        return false;
     }
 }
 
