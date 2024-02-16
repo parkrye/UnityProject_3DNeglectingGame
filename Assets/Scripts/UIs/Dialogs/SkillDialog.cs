@@ -60,7 +60,7 @@ public class SkillDialog : Dialog
 
         var skill1 = playerData.Skill1;
         var skill1Template = GetTemplate("Slot1");
-        var isCorrect = skill1.IsCorrect();
+        var isCorrect = skill1 == null ? false : skill1.IsCorrect();
         skill1Template.gameObject.SetActive(isCorrect);
         if (isCorrect)
         {
@@ -70,7 +70,7 @@ public class SkillDialog : Dialog
 
         var skill2 = playerData.Skill2;
         var skill2Template = GetTemplate("Slot2");
-        isCorrect = skill2.IsCorrect();
+        isCorrect = skill2 == null ? false : skill2.IsCorrect();
         skill2Template.gameObject.SetActive(isCorrect);
         if (isCorrect)
         {
@@ -80,7 +80,7 @@ public class SkillDialog : Dialog
 
         var skill3 = playerData.Skill3;
         var skill3Template = GetTemplate("Slot3");
-        isCorrect = skill3.IsCorrect();
+        isCorrect = skill3 == null ? false : skill3.IsCorrect();
         skill3Template.gameObject.SetActive(isCorrect);
         if (isCorrect)
         {
