@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using UnityEngine.Events;
@@ -15,6 +16,7 @@ public class PlayerData
     public SkillData Skill2 { get; private set; }
     public SkillData Skill3 { get; private set; }
 
+    [JsonIgnore]
     public UnityEvent<int, SkillData, SkillData> SkillChangeEvent = new UnityEvent<int, SkillData, SkillData>();
 
     public void AddCurrency(CurrencyData data)
