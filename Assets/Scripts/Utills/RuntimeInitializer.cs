@@ -68,7 +68,7 @@ public class RuntimeInitializer
             G.Data.Item.AddEquipmentData(itemData);
         }
 
-        var skillDataPath = G.V.DataPath + "SkilData";
+        var skillDataPath = G.V.DataPath + "SkillData";
         if (File.Exists(skillDataPath) == false)
         {
             var skillDataList = new SkillDataList();
