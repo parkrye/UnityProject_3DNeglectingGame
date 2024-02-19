@@ -19,8 +19,8 @@ public class BTA_SelfHeal : BTAction
                 if (_isHealable && player.IsDamaged)
                 {
                     _isHealable = false;
-                    player.Anim.AttackEndEvent.AddListener(HealReaction);
-                    player.Anim.PlayAttackAnimation();
+                    player.Anim.DizzyEndEvent.AddListener(HealReaction);
+                    player.Anim.PlayDizzyAnimation();
                 }
                 break;
             case ActionState.End:
@@ -46,7 +46,7 @@ public class BTA_SelfHeal : BTAction
     private void HealReaction()
     {
         var player = G.CurrentStage.PlayerActor;
-        player.Anim.AttackEndEvent.RemoveListener(HealReaction);
+        player.Anim.DizzyEndEvent.RemoveListener(HealReaction);
 
         player.Hit(-player.GetStatus(Status.Hp) * 0.5f);
 

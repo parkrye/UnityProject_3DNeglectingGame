@@ -9,6 +9,7 @@ public class NormalAnimationController : MonoBehaviour
     public UnityEvent HitEndEvent = new UnityEvent();
     public UnityEvent DieEndEvent = new UnityEvent();
     public UnityEvent RecoveryEndEvent = new UnityEvent();
+    public UnityEvent DizzyEndEvent = new UnityEvent();
 
     private void Awake()
     {
@@ -93,6 +94,19 @@ public class NormalAnimationController : MonoBehaviour
         }
     }
 
+    public bool PlayDizzyAnimation()
+    {
+        try
+        {
+            _animator.SetTrigger("OnDizzy");
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
     public void OnAttackEndEvent()
     {
         AttackEndEvent?.Invoke();
@@ -111,5 +125,10 @@ public class NormalAnimationController : MonoBehaviour
     public void OnRecoveryEndEvent()
     {
         RecoveryEndEvent?.Invoke();
+    }
+
+    public void OnDizzyEndEvent()
+    {
+        DizzyEndEvent?.Invoke();
     }
 }
