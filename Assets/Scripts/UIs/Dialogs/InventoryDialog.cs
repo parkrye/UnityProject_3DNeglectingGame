@@ -54,33 +54,29 @@ public class InventoryDialog : Dialog
         var weapon = playerData.Weapon;
         var weaponTemplate = GetTemplate("Weapon");
         var isCorrect = weapon.IsCorrect();
-        weaponTemplate.gameObject.SetActive(isCorrect);
-        if (isCorrect)
-        {
-            weaponTemplate.GetText("ItemName").text = weapon.Name;
-            weaponTemplate.GetText("ItemLevel").text = weapon.Level.ToString();
-            weaponTemplate.GetButton("ItemButton").onClick.AddListener(() => OnItemSlotClick(weapon.Id));
-        }
+        weaponTemplate.GetImage("ItemIcon").enabled = isCorrect;
+        weaponTemplate.GetText("ItemName").text = weapon.Name;
+        weaponTemplate.GetText("ItemLevel").text = weapon.Level.ToString();
+        weaponTemplate.GetButton("ItemButton").onClick.RemoveAllListeners();
+        weaponTemplate.GetButton("ItemButton").onClick.AddListener(() => OnItemSlotClick(weapon.Id));
+
         var armor = playerData.Armor;
         var armorTemplate = GetTemplate("Armor");
         isCorrect = weapon.IsCorrect();
-        armorTemplate.gameObject.SetActive(isCorrect);
-        if (isCorrect)
-        {
-            armorTemplate.GetText("ItemName").text = armor.Name;
-            armorTemplate.GetText("ItemLevel").text = armor.Level.ToString();
-            armorTemplate.GetButton("ItemButton").onClick.AddListener(() => OnItemSlotClick(armor.Id));
-        }
+        armorTemplate.GetImage("ItemIcon").enabled = isCorrect;
+        armorTemplate.GetText("ItemName").text = weapon.Name;
+        armorTemplate.GetText("ItemLevel").text = weapon.Level.ToString();
+        armorTemplate.GetButton("ItemButton").onClick.RemoveAllListeners();
+        armorTemplate.GetButton("ItemButton").onClick.AddListener(() => OnItemSlotClick(weapon.Id));
+
         var accessory = playerData.Armor;
         var accessoryTemplate = GetTemplate("Accessory");
         isCorrect = weapon.IsCorrect();
-        accessoryTemplate.gameObject.SetActive(isCorrect);
-        if (isCorrect)
-        {
-            accessoryTemplate.GetText("ItemName").text = accessory.Name;
-            accessoryTemplate.GetText("ItemLevel").text = accessory.Level.ToString();
-            accessoryTemplate.GetButton("ItemButton").onClick.AddListener(() => OnItemSlotClick(accessory.Id));
-        }
+        accessoryTemplate.GetImage("ItemIcon").enabled = isCorrect;
+        accessoryTemplate.GetText("ItemName").text = weapon.Name;
+        accessoryTemplate.GetText("ItemLevel").text = weapon.Level.ToString();
+        accessoryTemplate.GetButton("ItemButton").onClick.RemoveAllListeners();
+        accessoryTemplate.GetButton("ItemButton").onClick.AddListener(() => OnItemSlotClick(weapon.Id));
     }
 
     private void UpdateSelectItem()
