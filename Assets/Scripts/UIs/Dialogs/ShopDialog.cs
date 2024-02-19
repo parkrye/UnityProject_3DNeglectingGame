@@ -49,13 +49,13 @@ public class ShopDialog : Dialog
             case ProductType.Skill:
                 if (G.Data.User.TryUseCurrency(product.CostType, product.Cost) == true)
                 {
-                    G.Data.Skill.GetSkillData(id).Level++;
+                    G.Data.Skill.GetSkillData(product.TargetId).Level++;
                 }
                 break;
             case ProductType.Item:
                 if (G.Data.User.TryUseCurrency(product.CostType, product.Cost) == true)
                 {
-                    G.Data.Item.GetItemData(id).Level++;
+                    G.Data.Item.GetItemData(product.TargetId).Level++;
                 }
                 break;
         }
