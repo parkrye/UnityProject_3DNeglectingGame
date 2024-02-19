@@ -28,7 +28,9 @@ public class PlayerActionHandler : MonoBehaviour
 
     private void ModifySkill(int _, SkillData before,  SkillData after)
     {
-        _root.RemoveChildren(G.Data.Skill.GetSkillAction(before.Id));
-        _root.AddChild(G.Data.Skill.GetSkillAction(after.Id));
+        if (before != null)
+            _root.RemoveChildren(G.Data.Skill.GetSkillAction(before.Id));
+        if (after != null)
+            _root.AddChild(G.Data.Skill.GetSkillAction(after.Id));
     }
 }

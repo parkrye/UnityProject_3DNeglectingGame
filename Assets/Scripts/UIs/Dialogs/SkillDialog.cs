@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor.Experimental.GraphView;
 
 public class SkillDialog : Dialog
 {
@@ -61,32 +60,23 @@ public class SkillDialog : Dialog
         var skill1 = playerData.Skill1;
         var skill1Template = GetTemplate("Slot1");
         var isCorrect = skill1 == null ? false : skill1.IsCorrect();
-        skill1Template.gameObject.SetActive(isCorrect);
-        if (isCorrect)
-        {
-            skill1Template.GetText("SkillName").text = skill1.Name;
-            skill1Template.GetText("SkillLevel").text = $"Lv.{skill1.Level}";
-        }
+        skill1Template.GetImage("SkillIcon").enabled = isCorrect;
+        skill1Template.GetText("SkillName").text = isCorrect ? skill1.Name : string.Empty;
+        skill1Template.GetText("SkillLevel").text = isCorrect ? $"Lv.{skill1.Level}" : string.Empty;
 
         var skill2 = playerData.Skill2;
         var skill2Template = GetTemplate("Slot2");
         isCorrect = skill2 == null ? false : skill2.IsCorrect();
-        skill2Template.gameObject.SetActive(isCorrect);
-        if (isCorrect)
-        {
-            skill2Template.GetText("SkillName").text = skill2.Name;
-            skill2Template.GetText("SkillLevel").text = $"Lv.{skill2.Level}";
-        }
+        skill2Template.GetImage("SkillIcon").enabled = isCorrect;
+        skill2Template.GetText("SkillName").text = isCorrect ? skill2.Name : string.Empty;
+        skill2Template.GetText("SkillLevel").text = isCorrect ? $"Lv.{skill2.Level}" : string.Empty;
 
         var skill3 = playerData.Skill3;
         var skill3Template = GetTemplate("Slot3");
         isCorrect = skill3 == null ? false : skill3.IsCorrect();
-        skill3Template.gameObject.SetActive(isCorrect);
-        if (isCorrect)
-        {
-            skill3Template.GetText("SkillName").text = skill3.Name;
-            skill3Template.GetText("SkillLevel").text = $"Lv.{skill3.Level}";
-        }
+        skill3Template.GetImage("SkillIcon").enabled = isCorrect;
+        skill3Template.GetText("SkillName").text = isCorrect ? skill3.Name : string.Empty;
+        skill3Template.GetText("SkillLevel").text = isCorrect ? $"Lv.{skill3.Level}" : string.Empty;
     }
 
     private void UpdateSelectSkill()
@@ -174,7 +164,7 @@ public class SkillDialog : Dialog
                 break;
         }
 
-        UpdateSelectSkill();
+        UpdateSkillSlots();
     }
 
     private void OnSkillEnhanceClick()

@@ -1,6 +1,7 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine.Events;
 
 [Serializable]
@@ -26,16 +27,46 @@ public class PlayerData
 
     public void SetSkill(int slot, SkillData before, SkillData after)
     {
-        switch(slot)
+        switch (slot)
         {
             case 0:
                 Skill1 = after;
+                if (Skill2 != null && Skill2.Id == after.Id)
+                {
+                    Skill2 = null;
+                    SkillChangeEvent.Invoke(1, after, null);
+                }
+                if (Skill3 != null && Skill3.Id == after.Id)
+                {
+                    Skill3 = null;
+                    SkillChangeEvent.Invoke(2, after, null);
+                }
                 break;
             case 1:
                 Skill2 = after;
+                if (Skill1 != null && Skill1.Id == after.Id)
+                {
+                    Skill1 = null;
+                    SkillChangeEvent.Invoke(0, after, null);
+                }
+                if (Skill3 != null && Skill3.Id == after.Id)
+                {
+                    Skill3 = null;
+                    SkillChangeEvent.Invoke(2, after, null);
+                }
                 break;
             case 2:
                 Skill3 = after;
+                if (Skill1 != null && Skill1.Id == after.Id)
+                {
+                    Skill1 = null;
+                    SkillChangeEvent.Invoke(0, after, null);
+                }
+                if (Skill2 != null && Skill2.Id == after.Id)
+                {
+                    Skill2 = null;
+                    SkillChangeEvent.Invoke(1, after, null);
+                }
                 break;
         }
         SkillChangeEvent.Invoke(slot, before, after);

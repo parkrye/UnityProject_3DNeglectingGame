@@ -1965,6 +1965,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Slot1
       objectReference: {fileID: 0}
+    - target: {fileID: 2385218941594272212, guid: 319c936a3e6e23346be791cd753e451f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8493195597179755497, guid: 319c936a3e6e23346be791cd753e451f, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
